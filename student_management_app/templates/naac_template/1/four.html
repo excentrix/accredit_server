@@ -1,0 +1,147 @@
+<!-- templates/Curriculum.html -->
+
+{% extends 'naac_template/base1.html' %}
+
+{% block page_title %}
+   <h1><u>Infrastructure and Learning Resources</u></h1>
+{% endblock page_title %}
+
+{%load static%}
+
+{% block main_content %}
+
+<style>
+    .accordion-content {
+        display: none;
+        overflow: hidden;
+      }
+      .accordion-header {
+        cursor: pointer;
+        padding: 10px;
+        background-color: #f1f1f1;
+        border: 1px solid #ccc;
+      }
+      .accordion-header.active {
+        background-color: #ccc;
+      }
+      .table-responsive {
+        margin-top: 10px;
+      }
+      button{
+        width:6rem !important;
+        font-size:0.8rem !important;
+      }
+      .description-text {
+        white-space: pre-line;
+        width: 300px; /* Adjust this value as needed */
+    }
+</style>
+<section class="content">
+    <div class="container">
+        <!-- Main Categories -->
+    
+        <div class="accordion">
+            {%  for section, items in grouped_items.items  %}
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    {{ section }}
+                </div>
+                <div class="accordion-content">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Metric</th>
+                                    <th style="width: 300px;">Description</th> <!-- Adjusted Width -->
+                                    <th>Upload</th>
+                                    <th>Generate</th>
+                                    <th style="width:8rem;">Progress %</th>
+                                    <th style="width:0.5rem;">Points</th> <!-- New Header -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in items %}
+                                <tr>
+                                    <td>{{ item.subsection_id }}</td>
+                                    <td>{{ item.title }}</td>
+                                    <td class="description-text">{{ item.description|linebreaks }}</td>
+                                    <td><button class="btn btn-primary">{{ item.upload_text }}</button></td>
+                                    <td><button class="btn btn-secondary">{{ item.generate_text }}</button></td>
+                                    <td style="width:8rem;">
+                                        <button class="btn btn-info progress-btn" onclick="editProgress4(this)">Progress %</button>
+                                    </td>
+                                    <td style="width:0.5rem;">
+                                        {{item.points}}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+          </div>
+        
+          <script>
+            function toggleAccordion(header) {
+              const content = header.nextElementSibling;
+              const isActive = header.classList.contains('active');
+        
+              // Collapse all accordion items
+              document.querySelectorAll('.accordion-content').forEach(item => item.style.display = 'none');
+              document.querySelectorAll('.accordion-header').forEach(item => item.classList.remove('active'));
+        
+              if (!isActive) {
+                header.classList.add('active');
+                content.style.display = 'block';
+              }
+            }
+
+            function editProgress4(button) {
+    // Create an input box for progress percentage
+    const input = document.createElement('input');
+    input.type = 'number';
+    input.min = '0';
+    input.max = '100';
+    input.className = 'form-control';
+    input.placeholder = 'Enter Progress %';
+    button.parentNode.replaceChild(input, button);
+
+    // Function to handle the update of the progress bar
+    function updateProgress4() {
+        const value = input.value;
+        if (value && value >= 0 && value <= 100) {
+            const progressBar = document.createElement('div');
+            progressBar.className = 'progress';
+            progressBar.innerHTML = `<div class="progress-bar bg-success" role="progressbar" style="width: ${value}%;" aria-valuenow="${value}" aria-valuemin="0" aria-valuemax="100">${value}%</div>`;
+            input.parentNode.replaceChild(progressBar, input);
+        } else {
+            button.parentNode.replaceChild(button, input);
+        }
+    }
+
+    // Listen for Enter key press
+    input.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            updateProgress4();
+        }
+    });
+
+    // Listen for click outside the input field or blur event
+    input.addEventListener('blur', function() {
+        updateProgress4();
+    });
+
+    // Automatically focus the input box
+    input.focus();
+}
+
+        
+          </script>
+    </div>
+</section>
+
+{% endblock main_content %}

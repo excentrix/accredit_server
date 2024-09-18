@@ -1,0 +1,183 @@
+{% load static %}
+
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <!-- Brand Logo -->
+      <a href="{% url 'student_home' %}" class="brand-link">
+        <img src="{% static 'dist/img/jecrc_logo.png' %}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3 ml-5"
+            style="opacity: .8">
+        <span class="brand-text font-weight-light">Naac</span>
+      </a>
+
+      <!-- Sidebar -->
+
+
+      <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <div class="image">
+            <img src="{% static 'dist/img/logo.png' %}" class="img-circle elevation-2 ml-5" alt="User Image" style="max-width:100%;">
+          </div>
+          <div class="info">
+            <a href="{% url 'student_profile' %}" class="d-block">{{ user.first_name }} {{ user.last_name }}</a>
+          </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+                with font-awesome or any other icon font library -->
+
+            <li class="nav-item">
+              {% url 'naac_home' as naac_home %}
+              <a href="{{ naac_home }}" class="nav-link {% if request.path == naac_home %} active {% endif %}">
+                <i class="nav-icon fas fa-home"></i>
+                <p>
+                  Home
+                </p>
+              </a>
+            </li>
+
+            {% comment %} <li class="nav-item">
+              {% url 'test' as test %}
+              <a href="{{ test }}" class="nav-link {% if request.path == test %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Home2
+                </p>
+              </a>
+            </li> {% endcomment %}
+
+            <li class="nav-item">
+              {% url 'curriculum' as curriculum %}
+              <a href="{{ curriculum }}" class="nav-link {% if request.path == curriculum %} active {% endif %}" title="1. Curricular Aspects">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>1.Curricular Aspects</p>
+              </a>
+            </li>
+            
+            <li class="nav-item">
+              {% url 'teaching2' as teaching2 %}
+              <a href="{{ teaching2 }}" class="nav-link {% if request.path == teaching2 %} active {% endif %}" title="2. Teaching - Learning and Evaluation">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>2.Teaching -Learning and Evaluation</p>
+              </a>
+            </li>
+            
+            <li class="nav-item">
+              {% url 'research3' as research3 %}
+              <a href="{{ research3 }}" class="nav-link {% if request.path == research3 %} active {% endif %}" title="3. Research and Outreach Activities">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>3.Research and Outreach Activities</p>
+              </a>
+            </li>
+            
+            <li class="nav-item">
+              {% url 'four' as four %}
+              <a href="{{ four }}" class="nav-link {% if request.path == four %} active {% endif %}" title="4. Infrastructure and Learning Resources">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>4. Infrastructure and Learning Resources</p>
+              </a>
+            </li>
+            
+            <li class="nav-item">
+              {% url 'five' as five %}
+              <a href="{{ five }}" class="nav-link {% if request.path == five %} active {% endif %}" title="5. Student Support and Progression">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>5. Student Support and Progression</p>
+              </a>
+            </li>
+            
+            <li class="nav-item">
+              {% url 'six' as six %}
+              <a href="{{ six }}" class="nav-link {% if request.path == six %} active {% endif %}" title="6. Governance, Leadership and Management">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>6. Governance, Leadership and Management</p>
+              </a>
+            </li>
+            
+            <li class="nav-item">
+              {% url 'seven' as seven %}
+              <a href="{{ seven }}" class="nav-link {% if request.path == seven %} active {% endif %}" title="7. Institutional Values and Best Practices">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>7. Institutional Values and Best Practices</p>
+              </a>
+            </li>            
+
+            <li class="nav-item">
+              {% url 'announcements' as announcements %}
+              <a id="announcement-icon" href="{{ announcements }}" class="nav-link {% if request.path == announcements %} active {% endif %}">
+                <i class="nav-icon fas fa-bell"></i>
+                <p>
+                  Announcements
+                </p>
+              </a>
+            </li>
+            <style>
+              .new-announcement {
+                  color: red;
+              }
+            </style>
+            <li class="nav-item">
+              {% url 'add_announcements' as add_announcements %}
+              <a href="{{ add_announcements }}" class="nav-link {% if request.path == add_announcements %} active {% endif %}">
+                <i class="nav-icon fas fa-plus-circle"></i>
+                <p>
+                  Add Announcement
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              {% url 'ss1_1' as ss1_1 %}
+              <a href="{{ ss1_1 }}" class="nav-link {% if request.path == ss1_1 %} active {% endif %}">
+                <i class="nav-icon fas fa-plus-circle"></i>
+                <p>
+                  Feedback
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              {% url 'naac_home' as naac_home %}
+              <a href="{{ naac_home }}" class="nav-link {% if request.path == naac_home %} active {% endif %}">
+                <i class="nav-icon fas fa-plus-circle"></i>
+                <p>
+                  View Attendance
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              {% url 'ss1_2' as ss1_2 %}
+              <a href="{{ ss1_2 }}" class="nav-link {% if request.path == ss1_2 %} active {% endif %}">
+                <i class="nav-icon fas fa-plus-circle"></i>
+                <p>
+                  View Marks
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              {% url 'ss1_3' as ss1_3 %}
+              <a href="{{ ss1_3 }}" class="nav-link {% if request.path == ss1_3 %} active {% endif %}">
+                <i class="nav-icon fas fa-plus-circle"></i>
+                <p>
+                  Admission
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              {% url 'support_page1' as support_page1 %}
+              <a href="{{ support_page1 }}" class="nav-link {% if request.path == support_page1 %} active {% endif %}">
+                <i class="nav-icon fas fa-phone"></i>
+                <p>
+                  Support
+                </p>
+              </a>
+            </li>
+
+          </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+      </div>
+      <!-- /.sidebar -->
+    </aside>

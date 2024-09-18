@@ -1,0 +1,15 @@
+{% extends 'staff_template/base_template.html' %}
+
+{% block main_content %}
+<h3>Create Examination</h3>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Create Examination</button>
+</form>
+
+{% endblock main_content%}
+
+
+

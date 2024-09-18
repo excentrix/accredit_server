@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}Upload Success{% endblock %}
+
+{% block content %}
+    <div class="alert alert-success" role="alert">
+        File uploaded successfully!
+    </div>
+    <a href="{% url 'file_list' %}" class="btn btn-primary">View all uploaded files</a>
+    <a href="{% url 'upload' %}" class="btn btn-secondary">Upload another file</a>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'naac_template/base1.html' %}
+
+{% block page_title %}
+   <h1><u> Student List</u></h1>
+{% endblock page_title %}
+
+{% load static %}
+
+{% block main_content%}
+    <style>
+        .indented-section {
+            padding-left: 4em;  /* Adjust the value as needed for the desired indentation */
+        }
+    </style>
+    <body>
+        <section class = "indented-section">
+            <table border="1">
+                <tr>
+                    <th>Name</th>
+                    <th>Mobile</th>
+                    <th>Email</th>
+                    <th>role</th>
+                </tr>
+                {% for student in students %}
+                <tr>
+                    <td>{{ student.name }}</td>
+                    <td>{{ student.mobile }}</td>
+                    <td>{{ student.email }}</td>
+                    <td>{{ student.role }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            <br><br>
+            <a href="{% url 'upload_excel' %}">Upload New Excel File</a>
+        </section>
+    </body>
+
+{%endblock main_content%}
+
+
+

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ form.name }}</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        <h1>{{ form.name }}</h1>
+        <p>{{ form.description }}</p>
+        <form>
+            {% for field in form.fields.all %}
+                <div class="form-group">
+                    <label>{{ field.label }}</label>
+                    {% if field.field_type == 'text' %}
+                        <input type="text" class="form-control" name="{{ field.label }}" {% if field.required %}required{% endif %}>
+                    {% elif field.field_type == 'textarea' %}
+                        <textarea class="form-control" name="{{ field.label }}" {% if field.required %}required{% endif %}></textarea>
+                    {% elif field.field_type == 'number' %}
+                        <input type="number" class="form-control" name="{{ field.label }}" {% if field.required %}required{% endif %}>
+                    {% elif field.field_type == 'date' %}
+                        <input type="date" class="form-control" name="{{ field.label }}" {% if field.required %}required{% endif %}>
+                    {% elif field.field_type == 'email' %}
+                        <input type="email" class="form-control" name="{{ field.label }}" {% if field.required %}required{% endif %}>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </form>
+    </div>
+</body>
+</html>
+
+
+<!--
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ form.name }}</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>{{ form.name }}</h1>
+        <p>{{ form.description }}</p>
+        <form>
+            {% for field in form.fields.all %}
+                <div class="form-group">
+                    <label>{{ field.label }}</label>
+                    {% if field.field_type == 'text' %}
+                        <input type="text" class="form-control" name="{{ field.label }}" {% if field.required %}required{% endif %}>
+                    {% elif field.field_type == 'textarea' %}
+                        <textarea class="form-control" name="{{ field.label }}" {% if field.required %}required{% endif %}></textarea>
+                    {% elif field.field_type == 'number' %}
+                        <input type="number" class="form-control" name="{{ field.label }}" {% if field.required %}required{% endif %}>
+                    {% elif field.field_type == 'date' %}
+                        <input type="date" class="form-control" name="{{ field.label }}" {% if field.required %}required{% endif %}>
+                    {% elif field.field_type == 'email' %}
+                        <input type="email" class="form-control" name="{{ field.label }}" {% if field.required %}required{% endif %}>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </form>
+    </div>
+</body>
+</html>
+-->

@@ -1,0 +1,49 @@
+<!--File upoad function integration-->
+
+{% extends 'naac_template/base1.html' %}
+
+{% block page_title %}
+   <h1><u> File Upload </u></h1>
+{% endblock page_title %}
+
+{% load static %}
+
+{% block main_content %}
+
+    {% block extra_styles %}
+        <style>
+            .center-button {
+                text-align: center;
+            }
+        </style>
+    {% endblock %}
+
+    <section class="content">
+        <br><br><br>
+        <div class="center-button">
+            <a href="{% url 'upload' %}">
+                <button>Click to view and upload files</button>
+            </a>
+        </div>
+    </section>
+
+{% endblock main_content%}
+
+
+
+
+
+<!-- index.html or another template 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to 1.1.1</title>
+</head>
+<body>
+    <h1>Welcome to file upload</h1>
+    <a href="{% url 'upload' %}"><button>Click to view and upload files</button></a>
+</body>
+</html>
+
+-->

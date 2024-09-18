@@ -1,0 +1,69 @@
+env/
+Lib/
+Scripts/
+pyvenv.cfg
+
+.github/
+
+# Ignore Python byte code files, virtual environment files, and database files
+__pycache__/
+*.pyc
+*.pyo
+*.db
+*.sqlite3
+
+# Ignore logs and error files
+logs/
+*.log
+*.log.*
+*.err
+
+# Ignore media files (user-uploaded content)
+media/
+static/uploads/
+
+# Ignore environment-specific settings files
+.env
+.env.*
+
+nltk/
+env/
+
+
+# Ignore secret key files
+*.key
+
+**/migrations/**
+!**/migrations
+!**/migrations/__init__.py
+
+# Ignore local development database
+db.sqlite3
+
+# Ignore compiled Python files
+*.pyc
+
+# Ignore development tools
+.vscode/
+.idea/
+
+# Ignore dependency directories and files
+venv/
+**/__pycache__
+node_modules/
+
+# Ignore the production static directory
+staticfiles/
+
+# Ignore any custom build or compiled directories
+build/
+dist/
+
+# Ignore temporary files and backup files
+*.swp
+*~
+*.bak
+
+# Ignore configuration files and settings that might be specific to your local setup
+.env
+*.config

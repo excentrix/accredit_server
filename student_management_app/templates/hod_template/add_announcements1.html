@@ -1,0 +1,47 @@
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+   <h1><u>Add Announcement</u></h1>
+{% endblock page_title %}
+
+{% block main_content %}
+<section class="d-flex justify-content-center mt-5">
+    <div class="card shadow-sm p-4" style="width: 40rem;">
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-success btn-lg">
+                        <i class="fas fa-save"></i> Save Announcement
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock main_content %}
+
+
+{%comment%}
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+   <h1><u>Add Announcement</u></h1>
+{% endblock page_title %}
+
+{% block main_content %}
+    <style>
+        .indented-section {
+            padding-left: 4em;  /* Adjust the value as needed for the desired indentation */
+        }
+    </style>
+    <section class = "indented-section">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Add Announcement</button>
+        </form>
+    </section>
+{% endblock main_content %}
+{%endcomment%}

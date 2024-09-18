@@ -1,0 +1,36 @@
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+   <h1><u>Dynamic Form Builder</u></h1>
+{% endblock page_title %}
+
+{% load static %}
+
+{% block main_content %}
+    {% block extra_styles %}
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+            .center-button {
+                text-align: center;
+            }
+        </style>
+    {% endblock %}
+
+    <div class="container mt-4">
+        <h1>Forms</h1>
+        <ul class="list-group">
+            {% for form in forms %}
+                <li class="list-group-item">
+                    <a href="{% url 'display_form1' form.id %}">{{ form.name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+        <br>
+        <a href="{% url 'create_form1' %}"><button>Create a new form</button></a>
+        <br>
+        <br>
+        <a href="{% url 'create_feedback' %}"><button>Done</button></a>
+    </div>
+
+{%endblock main_content%}
+

@@ -1,0 +1,90 @@
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+    <div class="d-flex justify-content-between align-items-center mt-4">
+        <h1 class="display-6"><u>Announcements</u></h1>
+    </div>
+{% endblock page_title %}
+
+{% block main_content %}
+    <div class="d-flex justify-content-center align-items-center mt-4">
+        <a href="{% url 'add_announcements1' %}" class="btn btn-success btn-lg">
+            <i class="fas fa-plus"></i> Add Announcement
+        </a>
+    </div>
+    <div class="container mt-4">
+        {% if announcements %}
+            <div class="row">
+                {% for announcement in announcements %}
+                    <div class="col-md-6 mb-4">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ announcement.title }}</h5>
+                                <p class="card-text">{{ announcement.content|linebreaksbr }}</p>
+                                <small class="text-muted">{{ announcement.created_at }}</small>
+                                <hr>
+                                <p><strong>Announced by:</strong> {{ announcement.announced_by }}</p>
+                                <p><strong>Audience:</strong> {{ announcement.audience }}</p>
+                                <a href="{% url 'edit_announcements' announcement.pk %}" class="btn btn-primary">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-info text-center" role="alert">
+                No announcements available.
+            </div>
+        {% endif %}
+    </div>
+{% endblock main_content %}
+
+
+{%comment%}
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+    <div class="d-flex justify-content-between align-items-center mt-4">
+        <h1 class="display-6"><u>Announcements</u></h1>
+        <a href="{% url 'add_announcements1' %}" class="btn btn-success btn-lg">
+            <i class="fas fa-plus"></i> Add Announcement
+        </a>
+    </div>
+{% endblock page_title %}
+
+{% block main_content %}
+    <div class="container mt-4">
+        {% if announcements %}
+            <div class="row">
+                {% for announcement in announcements %}
+                    <div class="col-md-6 mb-4">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ announcement.title }}</h5>
+                                <p class="card-text">{{ announcement.content|linebreaksbr }}</p>
+                                <small class="text-muted">{{ announcement.created_at }}</small>
+                                <hr>
+                                <p><strong>Announced by:</strong> {{ announcement.announced_by }}</p>
+                                <p><strong>Audience:</strong> {{ announcement.audience }}</p>
+                                <a href="{% url 'edit_announcements' announcement.pk %}" class="btn btn-primary">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-info text-center" role="alert">
+                No announcements available.
+            </div>
+        {% endif %}
+    </div>
+{% endblock main_content %}
+
+{%endcomment%}
+
+
+

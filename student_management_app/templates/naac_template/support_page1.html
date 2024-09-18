@@ -1,0 +1,40 @@
+{% extends 'naac_template/base_template.html' %}
+{% load static %}
+{% block main_content %}
+<div class="container mt-6">
+    <h1 class="text-center"><u>Contact Support</u></h1>
+    <br>
+    <section class="bg-light p-5 rounded">
+        <div>
+            {% if form_submitted %}
+                <div class="alert alert-success" role="alert">
+                    Thank you for reaching out! We will get back to you shortly.
+                </div>
+            {% endif %}
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    {{ form.issue_type.label_tag }} {{ form.issue_type }}
+                </div>
+                <div class="form-group">
+                    {{ form.query.label_tag }} {{ form.query }}
+                </div>
+                <div class="form-group">
+                    {{ form.email.label_tag }} {{ form.email }}
+                </div>
+                <div class="form-group">
+                    {{ form.phone_number.label_tag }} {{ form.phone_number }}
+                </div>
+                <div class="form-group">
+                    {{ form.name.label_tag }} {{ form.name }}
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-block">Submit</button>
+            </form>
+        </div>
+    </section>
+</div>
+<footer class="mt-4 text-center">
+    <p><b>For immediate assistance, contact us at +919638527410 or Naac@gmail.com</b></p>
+</footer>
+{% endblock main_content %}

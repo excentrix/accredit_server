@@ -1,0 +1,39 @@
+{% extends 'naac_template/base1.html' %}
+
+{% block page_title %}
+   <h1><u> Upload Excel File</u></h1>
+{% endblock page_title %}
+
+{% load static %}
+
+{% block main_content%}
+    <style>
+        .indented-section {
+            padding-left: 4em;  /* Adjust the value as needed for the desired indentation */
+        }
+    </style>
+    <body>
+        <section class = "indented-section">
+            {% if messages %}
+            <ul>
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Upload</button>
+            </form>
+
+            <a href="{% url 'download_template' %}">Download Excel Template</a>
+        </section>
+    </body>
+{%endblock main_content%}
+
+
+
+
+

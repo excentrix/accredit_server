@@ -1,0 +1,135 @@
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+    <u>Create Form</u>
+{% endblock page_title %}
+
+{% block main_content %}
+    <div class="container mt-2">
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label>Form Name:</label>
+                <input type="text" class="form-control" name="form_name" required>
+            </div>
+            <div class="form-group">
+                <label>Form Description:</label>
+                <textarea class="form-control" name="form_description"></textarea>
+            </div>
+            <div id="fields-container">
+                <!-- Fields will be dynamically added here -->
+            </div>
+            <button type="button" class="btn btn-secondary mb-3" onclick="addField()">Add Field</button>
+            <div class="form-group">
+                <label>Send To:</label>
+                <select multiple class="form-control" name="send_to[]">
+                    <option value="naac">NAAC</option>
+                    <option value="student">Student</option>
+                    <option value="Staff">Staff</option>
+                    <option value="parent">Parent</option>
+                    <option value="all">All of the Above</option>
+                </select>
+                <small class="form-text text-muted">Hold down the Ctrl (Windows) or Command (Mac) button to select multiple options.</small>
+            </div>
+            <div class="form-group">
+                <label>Category:</label>
+                <select class="form-control" name="category">
+                    <option value="1.4.1">1.4.1</option>
+                    <option value="1.4.2">1.4.2</option>
+                    <option value="2.2.2">2.2.2</option>
+                    <option value="2.4.3">2.4.3</option>
+                    <option value="2.6.2">2.6.2</option>
+                    <option value="5.1.1">5.1.1</option>
+                    <option value="6.5.4">6.5.4</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Create Form</button>
+        </form>
+    </div>
+
+    {% block custom_js %}
+    <script>
+        let fieldIndex = 0;
+        function addField() {
+            const fieldsContainer = document.getElementById('fields-container');
+            const fieldHTML = `
+                <div class="form-group">
+                    <label>Field Label:</label>
+                    <input type="text" class="form-control" name="field_label_${fieldIndex}" required>
+                    <label>Field Type:</label>
+                    <select class="form-control" name="field_type_${fieldIndex}">
+                        <option value="text">Text</option>
+                        <option value="textarea">Textarea</option>
+                        <option value="number">Number</option>
+                        <option value="date">Date</option>
+                        <option value="email">Email</option>
+                    </select>
+                    <label>Required:</label>
+                    <input type="checkbox" name="field_required_${fieldIndex}">
+                </div>
+            `;
+            fieldsContainer.insertAdjacentHTML('beforeend', fieldHTML);
+            fieldIndex++;
+        }
+    </script>
+    {% endblock custom_js %}
+{% endblock main_content %}
+
+
+
+
+
+{%comment%}
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+    Create Form
+{% endblock page_title %}
+
+{% block main_content %}
+    <div class="container mt-4">
+        <h1>Create Form</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label>Form Name:</label>
+                <input type="text" class="form-control" name="form_name" required>
+            </div>
+            <div class="form-group">
+                <label>Form Description:</label>
+                <textarea class="form-control" name="form_description"></textarea>
+            </div>
+            <div id="fields-container"></div>
+            <button type="button" class="btn btn-secondary" onclick="addField()">Add Field</button>
+            <button type="submit" class="btn btn-primary">Create Form</button>
+        </form>
+    </div>
+
+    {% block custom_js %}
+    <script>
+        let fieldIndex = 0;
+        function addField() {
+            const fieldsContainer = document.getElementById('fields-container');
+            const fieldHTML = `
+                <div class="form-group">
+                    <label>Field Label:</label>
+                    <input type="text" class="form-control" name="field_label_${fieldIndex}" required>
+                    <label>Field Type:</label>
+                    <select class="form-control" name="field_type_${fieldIndex}">
+                        <option value="text">Text</option>
+                        <option value="textarea">Textarea</option>
+                        <option value="number">Number</option>
+                        <option value="date">Date</option>
+                        <option value="email">Email</option>
+                    </select>
+                    <label>Required:</label>
+                    <input type="checkbox" name="field_required_${fieldIndex}">
+                </div>
+            `;
+            fieldsContainer.insertAdjacentHTML('beforeend', fieldHTML);
+            fieldIndex++;
+        }
+    </script>
+    {% endblock custom_js %}
+{% endblock main_content %}
+{%endcomment%}

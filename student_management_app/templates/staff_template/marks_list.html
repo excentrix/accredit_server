@@ -1,0 +1,84 @@
+{% extends 'staff_template/base_template.html' %}
+
+{% block main_content %}
+<h2>Marks Management</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Examination Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for exam in exams %}
+        <tr>
+            <td>{{ exam.exam_name }}</td>
+            <td>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#courseModal{{ exam.id }}">
+                    Enter Marks
+                </button>
+                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#bulkUploadModal{{ exam.id }}">
+                    Bulk Upload
+                </button>
+            </td>
+        </tr>
+
+        <!-- Modal for course selection (Enter Marks) -->
+        <div class="modal fade" id="courseModal{{ exam.id }}" tabindex="-1" role="dialog" aria-labelledby="courseModalLabel{{ exam.id }}" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="courseModalLabel{{ exam.id }}">Select Course for {{ exam.exam_name }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" action="{% url 'enter_marks_individual' exam.id %}">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="courseSelect{{ exam.id }}">Course</label>
+                                <select class="form-control" id="courseSelect{{ exam.id }}" name="course_id" required>
+                                    {% for course in exam.courses.all %}
+                                    <option value="{{ course.id }}">{{ course.course_name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Enter Marks</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal for course selection (Bulk Upload) -->
+        <div class="modal fade" id="bulkUploadModal{{ exam.id }}" tabindex="-1" role="dialog" aria-labelledby="bulkUploadModalLabel{{ exam.id }}" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="bulkUploadModalLabel{{ exam.id }}">Select Course for {{ exam.name }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="get" action="{% url 'bulk_upload_marks' exam.id 0 %}">
+                            <div class="form-group">
+                                <label for="bulkCourseSelect{{ exam.id }}">Course</label>
+                                <select class="form-control" id="bulkCourseSelect{{ exam.id }}" name="course_id" required>
+                                    {% for course in exam.courses.all %}
+                                    <option value="{{ course.id }}">{{ course.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-warning">Bulk Upload</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock main_content%}

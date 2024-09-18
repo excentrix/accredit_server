@@ -1,0 +1,19 @@
+{% extends 'student_template/base_template.html' %}
+
+{% block page_title %}
+   <h1><u>Announcements</u></h1>
+{% endblock page_title %}
+
+{% load static %}
+
+{% block main_content %}
+    <ul>
+        {% for announcement in announcements %}
+            <li>
+                <h2>{{ announcement.title }}</h2>
+                <p>{{ announcement.content }}</p>
+                <p><small>{{ announcement.created_at }}</small></p>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock main_content %}

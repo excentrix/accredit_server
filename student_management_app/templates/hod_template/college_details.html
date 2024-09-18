@@ -1,0 +1,101 @@
+{% extends 'hod_template/base_template.html' %}
+{% load static %}
+
+{% block main_content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h1 class="text-center mb-4">College Details</h1>
+            
+            <form method="post" enctype="multipart/form-data" class="form-horizontal">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="id_name">College Name:</label>
+                    <input type="text" name="name" id="id_name" class="form-control" value="{{ form.name.value }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="id_logo">College Logo:</label>
+                    <input type="file" name="logo" id="id_logo" class="form-control-file">
+                </div>
+
+                <div class="form-group">
+                    <label for="id_links">Links:</label>
+                    <textarea name="links" id="id_links" class="form-control">{{ form.links.value }}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_videos">Upload Videos:</label>
+                    <input type="file" name="videos" id="id_videos" class="form-control-file">
+                </div>
+
+                <div class="form-group">
+                    <label for="id_images">Upload Images:</label>
+                    <input type="file" name="images" id="id_images" class="form-control-file">
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">Save</button>
+            </form>
+            {%comment%}
+            {% if college_details %}
+            <div class="mt-5">
+                <h2 class="text-center">{{ college_details.name }}</h2>
+                {% if college_details.logo %}
+                <div class="text-center mb-3">
+                    <img src="{{ college_details.logo.url }}" alt="College Logo" class="img-fluid" style="max-width: 300px;">
+                </div>
+                {% endif %}
+                <h3>Links</h3>
+                <p>{{ college_details.links }}</p>
+                <h3>Videos</h3>
+                {% if college_details.videos %}
+                <div class="video-container mb-3">
+                    <video controls class="img-fluid">
+                        <source src="{{ college_details.videos.url }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                {% endif %}
+                <h3>Images</h3>
+                {% if image_urls %}
+                <div class="image-gallery">
+                    {% for image_url in image_urls %}
+                    <div class="gallery-item">
+                        <img src="{{ image_url }}" alt="College Image" class="img-fluid" style="max-width: 300px;">
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+        {%endcomment%}
+    </div>
+</div>
+
+<style>
+    .video-container {
+        text-align: center;
+    }
+
+    .image-gallery {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+    }
+
+    .gallery-item {
+        flex: 1 1 300px;
+        margin: 10px;
+    }
+</style>
+
+{% endblock main_content%}
+
+
+
+
+
+
+

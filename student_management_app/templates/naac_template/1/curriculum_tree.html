@@ -1,0 +1,43 @@
+<div class="accordion-item">
+    <div class="accordion-header" onclick="toggleAccordion(this)">
+        {{ item.section }} <!-- Display the section name -->
+    </div>
+    <div class="accordion-content">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Metric</th>
+                        <th>Description</th>
+                        <th>Upload</th>
+                        <th>Generate</th>
+                        <th style="width:8rem;">Progress %</th>
+                        <th style="width:0.5rem;">Points</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if item.is_leaf %}
+                        <tr>
+                            <td>{{ item.subsection_id }}</td>
+                            <td>{{ item.title }}</td>
+                            <td>{{ item.description }}</td>
+                            <td><button class="btn btn-primary">{{ item.upload_text }}</button></td>
+                            <td><button class="btn btn-secondary">{{ item.generate_text }}</button></td>
+                            <td style="width:8rem;">
+                                <button class="btn btn-info progress-btn" onclick="editProgress(this)">Progress %</button>
+                            </td>
+                            <td style="width:0.5rem;">
+                                8
+                            </td>
+                        </tr>
+                    {% else %}
+                        {% for child in item.subsections.all %}
+                            {% include 'naac_template/1/curriculum_tree.html' with item=child %}
+                        {% endfor %}
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,74 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Naac | NAAC Dashboard</title>
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+    {% block custom_css %}{% endblock custom_css %}
+</head>
+<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+    <!-- Navbar -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-2 flex items-center justify-center">
+            <div class="flex items-center justify-center">
+                <button id="menu-toggle" class="text-gray-500 focus:outline-none focus:text-gray-700 lg:hidden">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h4 class="ml-4 text-lg font-semibold text-gray-700">Naac | NAAC Dashboard</h4>
+            </div>
+            <div class="flex items-center space-x-4">
+                
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <div class="flex">
+      <!-- Sidebar -->
+      {%comment%}
+        <aside class="bg-gray-800 w-64 min-h-screen hidden lg:block" id="sidebar">
+            <div class="px-4 py-6">
+                {% include 'naac_template/side1.html' with user=user id=id %}
+            </div>
+        </aside>
+        {%endcomment%}
+        <!-- Main Content -->
+        <div class="flex-1 p-6">
+            <!-- Content Header -->
+            <div class="mb-6">
+                <h1 class="text-2xl font-semibold text-gray-800">
+                    {% block page_title %}
+                    {% endblock page_title %}
+                </h1>
+            </div>
+
+            <!-- Main Content -->
+            <div class="bg-white rounded-lg shadow p-6">
+                {% block main_content %}
+                {% endblock main_content %}
+            </div>
+        </div>
+    </div> 
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs" defer></script>
+    <script>
+        // Toggle the dropdown menu
+        document.getElementById('settings-dropdown').classList.toggle('hidden');
+
+        // Sidebar toggle for small screens
+        document.getElementById('menu-toggle').addEventListener('click', function () {
+            document.getElementById('sidebar').classList.toggle('hidden');
+        });
+    </script>
+
+    {% block custom_js %}{% endblock custom_js %}
+</body>
+</html>

@@ -1,0 +1,16 @@
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+   <h1><u>Edit Announcement</u></h1>
+{% endblock page_title %}
+
+{% block main_content %}
+    <section>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" name="save">Save Changes</button>
+            <button type="submit" name="delete" onclick="return confirm('Are you sure you want to delete this announcement?');">Delete Announcement</button>
+        </form>
+    </section>
+{% endblock main_content %}

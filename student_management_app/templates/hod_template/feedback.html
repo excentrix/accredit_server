@@ -1,0 +1,85 @@
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+    <div class="text my-6">
+        <h1 class="display-6"><u>Feedback</u></h1>
+    </div>
+{% endblock page_title %}
+
+{% block main_content %}
+    <section class="content">
+        <div class="container-fluid">
+            <!-- Cards Row -->
+            <div class="row">
+                <!-- Create Feedback Card -->
+                <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                    <div class="card text-center shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="nav-icon fas fa-comment"></i> Create Feedback</h5>
+                            <p class="card-text">Create a feedback form to get the necessry feedback.</p>
+                            <a href="{% url 'create_feedback' %}" class="btn btn-primary btn-lg">
+                                <i class="nav-icon fas fa-comment"></i> Create Feedback
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Student Feedback Card -->
+                <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                    <div class="card text-center shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-user-graduate"></i> Student Feedback</h5>
+                            <p class="card-text">View feedback from students to improve the system.</p>
+                            <a href="{% url 'student_feedback_message' %}" class="btn btn-primary btn-lg">
+                                <i class="fas fa-eye"></i> View Feedback
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+
+                <!-- Staff Feedback Card -->
+                <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                    <div class="card text-center shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-user-tie"></i> Staff Feedback</h5>
+                            <p class="card-text">View feedback from staffs to enhance performance.</p>
+                            <a href="{% url 'staff_feedback_message' %}" class="btn btn-secondary btn-lg">
+                                <i class="fas fa-eye"></i> View Feedback
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+{% endblock main_content %}
+
+
+
+
+
+{%comment%}
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+    <div class="text-center my-4">
+        <h1 class="display-6"><u>Feedback</u></h1>
+    </div>
+{% endblock page_title %}
+
+{% block main_content %}
+    <section class="d-flex justify-content-center align-items-center mt-5">
+        <div class="text-center">
+            <div class="btn-group" role="group" aria-label="Feedback Options">
+                <a href="{% url 'student_feedback_message' %}" class="btn btn-primary btn-lg mx-2">
+                    <i class="fas fa-user-graduate"></i> Student Feedback
+                </a>
+                <a href="{% url 'staff_feedback_message' %}" class="btn btn-secondary btn-lg mx-2">
+                    <i class="fas fa-user-tie"></i> Staff Feedback
+                </a>
+            </div>
+        </div>
+    </section>
+{% endblock main_content %}
+{%endcomment%}

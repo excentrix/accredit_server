@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Form</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <script>
+        let fieldIndex = 0;
+        function addField() {
+            const fieldsContainer = document.getElementById('fields-container');
+            const fieldHTML = `
+                <div class="form-group">
+                    <label>Field Label:</label>
+                    <input type="text" class="form-control" name="field_label_${fieldIndex}" required>
+                    <label>Field Type:</label>
+                    <select class="form-control" name="field_type_${fieldIndex}">
+                        <option value="text">Text</option>
+                        <option value="textarea">Textarea</option>
+                        <option value="number">Number</option>
+                        <option value="date">Date</option>
+                        <option value="email">Email</option>
+                    </select>
+                    <label>Required:</label>
+                    <input type="checkbox" name="field_required_${fieldIndex}">
+                </div>
+            `;
+            fieldsContainer.insertAdjacentHTML('beforeend', fieldHTML);
+            fieldIndex++;
+        }
+    </script>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1>Create Form</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label>Form Name:</label>
+                <input type="text" class="form-control" name="form_name" required>
+            </div>
+            <div class="form-group">
+                <label>Form Description:</label>
+                <textarea class="form-control" name="form_description"></textarea>
+            </div>
+            <div id="fields-container"></div>
+            <button type="button" class="btn btn-secondary" onclick="addField()">Add Field</button>
+            <button type="submit" class="btn btn-primary">Create Form</button>
+        </form>
+    </div>
+</body>
+</html>
+
+

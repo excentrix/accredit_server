@@ -1,0 +1,36 @@
+{% extends 'staff_template/base_template.html' %}
+{% block main_content %}
+<h2>Edit Examination</h2>
+<form method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="exam_name">Examination Name</label>
+        <input type="text" class="form-control" id="exam_name" name="exam_name" value="{{ exam.exam_name }}" required>
+    </div>
+    <div class="form-group">
+        <label for="exam_date">Date</label>
+        <input type="date" class="form-control" id="exam_date" name="exam_date" value="{{ exam.exam_date }}" required>
+    </div>
+    <div class="form-group">
+        <label for="exam_time">Time</label>
+        <input type="time" class="form-control" id="exam_time" name="exam_time" value="{{ exam.exam_time }}" required>
+    </div>
+    <div class="form-group">
+        <label for="courses">Courses</label>
+        <select multiple class="form-control" id="courses" name="courses" required>
+            {% for course in courses %}
+            <option value="{{ course.id }}" {% if course in exam.associated_courses.all %} selected {% endif %}>{{ course.course_name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="subjects">Subjects</label>
+        <select multiple class="form-control" id="subjects" name="subjects" required>
+            {% for subject in subjects %}
+            <option value="{{ subject.id }}" {% if subject in exam.subjects.all %} selected {% endif %}>{{ subject.subject_name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-success">Update Examination</button>
+</form>
+{% endblock main_content %}

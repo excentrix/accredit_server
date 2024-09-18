@@ -1,0 +1,12 @@
+{% extends 'staff_template/base_template.html' %}
+{% block main_content %}
+<h2>Bulk Upload Marks for {{ exam.exam_name }} - {{ course.course_name }}</h2>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="marks_file">Upload CSV/Excel File</label>
+        <input type="file" class="form-control-file" id="marks_file" name="marks_file" required>
+    </div>
+    <button type="submit" class="btn btn-success">Upload Marks</button>
+</form>
+{% endblock main_content%}

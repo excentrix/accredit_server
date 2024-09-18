@@ -1,0 +1,31 @@
+<!--File upoad function integration-->
+
+<!-- index.html or another template -->
+
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+   <h1><u>Dynamic Form Builder</u></h1>
+{% endblock page_title %}
+
+{% load static %}
+
+{% block main_content %}
+    {% block extra_styles %}
+    <style>
+        .center-button {
+            text-align: center;
+        }
+    </style>
+    {% endblock %}
+
+    <section class="content">
+        <br><br><br>
+        <div class="center-button">
+            <a href="{% url 'form_list1' %}">
+                <button>Click to view and create forms</button>
+            </a>
+        </div>
+    </section>
+{% endblock main_content %}
+
