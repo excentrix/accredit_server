@@ -465,11 +465,7 @@ class CurriculumItem(models.Model):
     subsection_id = models.CharField(max_length=255)
     title = models.CharField(max_length=255,blank = True)
     description = models.TextField(blank = True)
-    upload_text = models.CharField(max_length=255, default="Upload")
-    generate_text = models.CharField(max_length=255, default="Generate")
-    progress_percentage = models.IntegerField(default=0)  # New field for progress percentage
-    points = models.CharField(max_length=5,blank= True)
-
+    structure = models.TextField(blank = True)
 
     def __str__(self):
         return f'{self.section} - {self.title}'

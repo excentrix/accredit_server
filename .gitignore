@@ -37,8 +37,6 @@ env/
 !**/migrations
 !**/migrations/__init__.py
 
-# Ignore local development database
-db.sqlite3
 
 # Ignore compiled Python files
 *.pyc

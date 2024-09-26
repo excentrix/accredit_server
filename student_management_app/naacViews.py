@@ -109,13 +109,6 @@ def naac_home(request):
 
 
 def curriculum(request):
-    if request.method == "POST":
-        item_id = request.POST.get('item_id')
-        progress = request.POST.get('progress')
-        item = CurriculumItem.objects.get(id=item_id)
-        item.progress = progress
-        item.save()
-        return JsonResponse({'status': 'success'})
 
     curriculum_items = CurriculumItem.objects.all().order_by('section')
     grouped_items = {}
