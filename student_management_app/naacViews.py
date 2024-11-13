@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.contrib import messages
 from django.core.files.storage import FileSystemStorage #To upload Profile Picture
 from django.urls import reverse
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from itertools import groupby
@@ -27,6 +27,19 @@ from .models import StudentAdmission
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from .forms import SupportQueryForm
+
+#from io import BytesIO
+
+from .models import StudentOutgoingData
+
+import logging
+
+from django.contrib.auth.models import AnonymousUser
+from django.contrib.auth import get_user_model
+from django.utils import timezone
+
+import openpyxl
+from openpyxl.utils import get_column_letter
 
 def naac_home(request):
     print("Welcome to NAAC dashboard")
@@ -1154,5 +1167,122 @@ def staff_profile(request):
     pass
 
 
-def student_profile(requtest):
+def student_profile(request):
     pass
+from django.http import HttpResponse
+import json
+import openpyxl
+from .models import StudentOutgoingData, SecondItem
+from openpyxl.utils import get_column_letter
+from django.utils import timezone
+import logging
+
+@csrf_protect
+def save_user_data(request):
+    if request.method == 'POST':
+        try:
+            # Get form data excluding csrf token
+            form_data = {key: value for key, value in request.POST.items() if key != 'csrfmiddlewaretoken'}
+            
+            # Get or set user
+            if isinstance(request.user, AnonymousUser):
+                User = get_user_model()
+                user = User.objects.first()
+            else:
+                user = request.user
+
+            # Generate a unique identifier
+            unique_id = f"{user.id}_{form_data.get('enrollment_number', '')}_{timezone.now().timestamp()}"
+
+            # Create new StudentOutgoingData entry
+            StudentOutgoingData.objects.create(
+                unique_id=unique_id,
+                user=user,
+                ss_id=form_data.get('ss_id', ''),
+                data=form_data
+            )
+
+            return JsonResponse({
+                "status": "success", 
+                "message": "Data saved successfully"
+            })
+
+        except Exception as e:
+            logging.error(f"Error in save_user_data: {str(e)}")
+            return JsonResponse({
+                "status": "error",
+                "message": f"An unexpected error occurred: {str(e)}"
+            }, status=500)
+    
+    return JsonResponse({"status": "error", "message": "Invalid request method"}, status=405)
+
+@csrf_protect
+def export_to_excel(request):
+    if request.method =='POST':
+        try:
+            # Get all student data entries ordered by created_at
+            student_entries = StudentOutgoingData.objects.all().order_by('created_at')
+            
+            if not student_entries.exists():
+                return HttpResponse("No data to export")
+
+            # Create a new workbook and select the active sheet
+            wb = openpyxl.Workbook()
+            sheet = wb.active
+            sheet.title = "Outgoing Students"
+
+            # Add the title to the first row
+            sheet.merge_cells('A1:C1')  # Merge cells for the title
+            sheet['A1'] = "2.2 Number of outgoing / final year students during the year"
+            sheet['A1'].font = openpyxl.styles.Font(bold=True)  # Make the title bold
+
+            # Get headers from the first entry's data
+            first_entry = student_entries.first()
+            data = first_entry.data
+            if isinstance(data, str):
+                data = json.loads(data)
+            
+            headers = [key for key in data.keys() if key not in ['unique_id', 'ss_id']]
+
+            # Write headers in the second row
+            for col, header in enumerate(headers, start=1):
+                sheet.cell(row=2, column=col, value=header)
+
+            # Write data starting from the third row
+            for row, entry in enumerate(student_entries, start=3):
+                entry_data = entry.data
+                if isinstance(entry_data, str):
+                    entry_data = json.loads(entry_data)
+                    
+                for col, key in enumerate(headers, start=1):
+                    sheet.cell(row=row, column=col, value=entry_data.get(key, ''))
+
+            # Adjust column widths
+            for col in range(1, len(headers) + 1):
+                sheet.column_dimensions[get_column_letter(col)].width = 15
+
+            # Generate timestamp for unique filename
+            timestamp = timezone.now().strftime('%Y%m%d_%H%M%S')
+            filename = f'Passout_Student_Data_{timestamp}.xlsx'
+
+            # Create the HTTP response with the Excel file
+            response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+            response['Content-Disposition'] = f'attachment; filename="{filename}"'
+            wb.save(response)
+
+            # After successful export, clear the data from the database
+            StudentOutgoingData.objects.all().delete()
+
+            return response
+
+        except Exception as e:
+            logging.error(f"Error in export_to_excel: {str(e)}")
+            return HttpResponse(f"An error occurred while exporting data: {str(e)}")
+
+
+
+
+
+
+
+

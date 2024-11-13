@@ -3,7 +3,7 @@ from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.hashers import check_password
 from .models import CustomUser, Staffs, Students, AdminHOD, NAAC,Parent
 from django.contrib import messages
-
+from .models import SecondItem
 
 #OTP verification
 from django.conf import settings
@@ -100,6 +100,10 @@ def doLogin(request):
     elif user.user_type == CustomUser.HOD:
         return redirect('admin_home/')
     elif user.user_type == CustomUser.NAAC:
+        # Add the export functionality for the second subsection here
+        second_subsection = SecondItem.objects.filter(section="2.2 Number of outgoing / final year students during the year").first()
+        if second_subsection:
+            request.session['export_subsection_id'] = second_subsection.id
         return redirect('naac_home/')
     elif user.user_type == CustomUser.Parent:
         return redirect('parent_home/')
@@ -269,3 +273,5 @@ def get_user_type_from_email(email_id):
 		return CustomUser.EMAIL_TO_USER_TYPE_MAP[email_user_type]
 	except:
 		return None
+
+

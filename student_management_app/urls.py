@@ -1,11 +1,12 @@
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
 from . import views
 from .import HodViews, StaffViews, StudentViews, naacViews,ParentViews
 from django.conf import settings
 from django.conf.urls.static import static
-
 urlpatterns = [
+    # ... other URL patterns ...
+    
     path('admin/', admin.site.urls),
     path('', views.home, name="home"),
     path('contact', views.contact, name="contact"),
@@ -132,7 +133,9 @@ urlpatterns = [
     path('test/',naacViews.test,name = "test"),
     path('curriculum/',naacViews.curriculum,name = "curriculum"),
     path('update-progress/<int:item_id>/', naacViews.update_progress, name='update_progress'),
-
+    path('save-user-data/', naacViews.save_user_data, name='save_user_data'),
+    path('export-to-excel/', naacViews.export_to_excel, name='export_to_excel'),
+    
     path('teaching2/',naacViews.teaching2,name = "teaching2"),
     path('update-progress2/<int:item_id>/', naacViews.update_progress2, name='update_progress2'),
 
@@ -201,13 +204,19 @@ urlpatterns = [
     path('enter_marks/<int:exam_id>/<int:course_id>/', StaffViews.enter_marks_individual, name='enter_marks_individual'),
     path('marks/bulk_upload/<int:exam_id>/<int:course_id>/', StaffViews.bulk_upload_marks, name='bulk_upload_marks'),
     path('enter_marks/<int:exam_id>/', StaffViews.enter_marks_individual, name='enter_marks_individual'),
+    
 
-
-
+    
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+
+
+
+
 
 
 

@@ -9,6 +9,7 @@
 {% block main_content %}
 
 <section class="content">
+    {% csrf_token %}
     <div class="container mx-auto p-4 flex">
         <!-- Sidebar with Accordion -->
         <div class="w-1/3 border-r border-gray-200 overflow-y-auto h-screen">
@@ -18,6 +19,9 @@
                     <div class="accordion-header bg-gray-100 p-4 cursor-pointer flex justify-between items-center"
                         onclick="toggleAccordion(this)">
                         <span class="text-lg font-medium text-gray-700">{{ section }}</span>
+                        {% if section == "2.2 Number of outgoing / final year students during the year" %}
+                            <button onclick="exportData()" class="bg-green-500 text-white px-4 py-2 rounded">Export Data</button>
+                        {% endif %}
                         <svg class="w-5 h-5 text-gray-500 transition-transform transform rotate-0 accordion-icon"
                             fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -56,22 +60,33 @@
         <!-- Form Container -->
         <div id="formContainer" class="w-2/3 p-6 hidden flex flex-col bg-white rounded-lg shadow-lg ml-6 h-screen overflow-auto">
             <h2 class="text-xl font-semibold mb-4 text-gray-800" id="formTitle">Edit Details</h2>
-            <div id="dynamicFields"></div>
-            <div class="flex justify-end mt-6">
-                <button onclick="closeForm()" class="bg-gray-300 text-gray-700 px-4 py-2 rounded-md mr-2 hover:bg-gray-400 transition duration-150">Cancel</button>
-                <button onclick="saveDetails()" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-500 transition duration-150">Save</button>
-            </div>
+            <form id="outgoingStudentForm" method="POST" action="{% url 'save_user_data' %}">
+                {% csrf_token %}
+                <div id="dynamicFields">
+                    <div class="mb-4">
+                        <label for="passing_date" class="block text-gray-700 text-sm font-bold mb-2">Month & Year of passing final year/semester examinations:</label>
+                        <input type="date" name="passing_date" id="passing_date" required class="form-input mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 p-1">
+                    </div>
+                    <div class="mb-4">
+                        <label for="student_name" class="block text-gray-700 text-sm font-bold mb-2">Name of Student:</label>
+                        <input type="text" name="student_name" id="student_name" required class="form-input mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 p-1">
+                    </div>
+                    <div class="mb-4">
+                        <label for="enrollment_number" class="block text-gray-700 text-sm font-bold mb-2">Students' Enrollment Number:</label>
+                        <input type="text" name="enrollment_number" id="enrollment_number" required class="form-input mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 p-1">
+                    </div>
+                </div>
+                <div class="flex justify-end mt-6">
+                    <button type="button" onclick="closeForm()" class="bg-gray-300 text-gray-700 px-4 py-2 rounded-md mr-2 hover:bg-gray-400 transition duration-150">Cancel</button>
+                    <button type="submit" class="bg-blue-600 text-white hover:bg-blue-500 px-4 py-2 rounded Save">Save</button>
+                </div>
+            </form>
         </div>
-
     </div>
 
+    
     <script>
-
-const itemStructure = {
-    "Programme Code": "number",
-    "Programme Name": "text",
-    // Add more fields as needed
-};
+    let savedData = []; // Store saved data in memory
 
     function generateDynamicFields(structure) {
         const container = document.getElementById('dynamicFields');
@@ -86,6 +101,7 @@ const itemStructure = {
             // Create input
             const input = document.createElement('input');
             input.type = inputType;
+            input.name = labelText; // Use the full label text as the name
             input.id = labelText.replace(/ /g, '').toLowerCase(); // Generate id from label text
             input.className = 'form-input mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 p-1';
             
@@ -99,69 +115,115 @@ const itemStructure = {
         }
     }
 
+    function toggleAccordion(header) {
+        const content = header.nextElementSibling;
+        const icon = header.querySelector('.accordion-icon');
+        const isActive = content.classList.contains('hidden');
 
-        function toggleAccordion(header) {
-            const content = header.nextElementSibling;
-            const icon = header.querySelector('.accordion-icon');
-            const isActive = content.classList.contains('hidden');
+        document.querySelectorAll('.accordion-content').forEach(item => item.classList.add('hidden'));
+        document.querySelectorAll('.accordion-icon').forEach(icon => icon.classList.remove('rotate-180'));
 
-            document.querySelectorAll('.accordion-content').forEach(item => item.classList.add('hidden'));
-            document.querySelectorAll('.accordion-icon').forEach(icon => icon.classList.remove('rotate-180'));
+        if (isActive) {
+            content.classList.remove('hidden');
+            icon.classList.add('rotate-180');
+        }
+    }
 
-            if (isActive) {
-                content.classList.remove('hidden');
-                icon.classList.add('rotate-180');
+    function openForm(id, title, jsonString) {
+        // Set the form title or any other necessary information
+        document.getElementById('formTitle').innerText = `Add Details for ${title}`;
+
+        // Clear previous dynamic fields
+        const dynamicFieldsContainer = document.getElementById('dynamicFields');
+        dynamicFieldsContainer.innerHTML = '';
+
+        // Parse the incoming JSON string
+        let structure;
+        try {
+            structure = JSON.parse(jsonString);
+        } catch (error) {
+            console.error("Invalid JSON string:", jsonString);
+            alert("There was an error loading the form. Please try again.");
+            return; // Exit if there's an error
+        }
+
+        // Generate the dynamic fields based on the parsed structure
+        generateDynamicFields(structure);
+
+        // Show the form container
+        const formContainer = document.getElementById('formContainer');
+        formContainer.classList.remove('hidden');
+    }
+
+    function closeForm() {
+        document.getElementById('formContainer').classList.add('hidden');
+    }
+
+    function saveForm(event) {
+        event.preventDefault();
+        const form = document.getElementById('outgoingStudentForm');
+        const formData = new FormData(form);
+
+        fetch('/save-user-data/', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                alert(data.message);
+                form.reset(); // Clear form
+                closeForm(); // Close the form after successful save
+            } else {
+                alert('Error saving data: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error saving data. Please check the console for details.');
+        });
+    }
+
+    document.getElementById('outgoingStudentForm').addEventListener('submit', saveForm);
+
+    function exportData() {
+        fetch('/export-to-excel/', {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'),
+            },
+        })
+        .then(response => response.blob())
+        .then(blob => {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = 'Outgoing_Student_Data.xlsx';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
             }
         }
-
-        function openForm(id, title, jsonString) {
-            // Set the form title or any other necessary information
-            document.getElementById('formTitle').innerText = `Add Details for ${title}`;
-
-            // Clear previous dynamic fields
-            const dynamicFieldsContainer = document.getElementById('dynamicFields');
-            dynamicFieldsContainer.innerHTML = '';
-
-            // Parse the incoming JSON string
-            let structure;
-            try {
-                structure = JSON.parse(jsonString);
-            } catch (error) {
-                console.error("Invalid JSON string:", jsonString);
-                alert("There was an error loading the form. Please try again.");
-                return; // Exit if there's an error
-            }
-
-            // Generate the dynamic fields based on the parsed structure
-            generateDynamicFields(structure);
-
-            // Show the form container
-            const formContainer = document.getElementById('formContainer');
-            formContainer.classList.remove('hidden');
-        }
-
-        function closeForm() {
-            document.getElementById('formContainer').classList.add('hidden');
-        }
-
-        function saveDetails() {
-            const programmeCode = document.getElementById('programmeCode').value;
-            const programmeName = document.getElementById('programmeName').value;
-            const yearOfIntroduction = document.getElementById('yearOfIntroduction').value;
-            const cbcStatus = document.getElementById('cbcStatus').value;
-            const yearOfCbcImplementation = document.getElementById('yearOfCbcImplementation').value;
-            const yearOfRevision = document.getElementById('yearOfRevision').value;
-            const revisionCarriedOut = document.getElementById('revisionCarriedOut').value;
-            const percentageContent = document.getElementById('percentageContent').value;
-            const documentLink = document.getElementById('documentLink').value;
-
-            // Here you would implement the logic to save this data via a backend call or other means
-            console.log("Details saved:", {
-                programmeCode, programmeName, yearOfIntroduction, cbcStatus, yearOfCbcImplementation, yearOfRevision, revisionCarriedOut, percentageContent, documentLink
-            });
-
-            closeForm();  // Close the form after saving
-        }
+        return cookieValue;
+    }
     </script>
 </section>
 

@@ -1,185 +1,9 @@
-# from __future__ import unicode_literals
-# # AbstractUser is a full User model, complete with fields, as an abstract class so that you can inherit from it and add your own profile fields and methods
-# from django.contrib.auth.models import AbstractUser
-# from django.db import models
-#
-# # Create your models here.
-#
-#
-# class SessionYearModel(models.Model):
-#     id = models.AutoField(primary_key=True)
-#     session_start_year = models.DateField()
-#     session_end_year = models.DateField()
-#     objects = models.Manager()
-#
-#
-# # Overriding the Default Django Auth User and adding One More Field (user_type)
-# class CustomUser(AbstractUser):
-#     user_type_data = (("HOD", "HOD"), ("Staff", "Staff"), ("Student", "Student"))
-#     user_type = models.CharField(default=1, choices=user_type_data, max_length=10)
-#
-#
-# # An AutoField is an IntegerField that automatically increments according to available IDs. One usually won’t need to use this directly because a primary key field will automatically be added to your model if you don’t specify otherwise.
-#
-#
-# # auto_now fields are updated to the current timestamp every time an object is saved and are therefore perfect for tracking when an object was last modified, while an auto_now_add field is saved as the current timestamp when a row is first added
-#
-#
-# # https://docs.djangoproject.com/en/dev/topics/db/managers/
-#
-# class Courses(models.Model):
-#     id = models.AutoField(primary_key=True)
-#     course_name = models.CharField(max_length=255)
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
-#     objects = models.Manager()
-#
-#
-# # The on_delete method is used to tell Django what to do with model instances that depend on the model instance you delete. (e.g. a ForeignKey relationship). ... CASCADE will instruct Django to cascade the deleting effect i.e. delete all the Book model instances that depend on the Author model instance you deleted
-#
-# # Whenever the referenced object (post) is deleted, the objects referencing it (comments) are deleted as well.
-#
-# class Subjects(models.Model):
-#     id =models.AutoField(primary_key=True)
-#     subject_name = models.CharField(max_length=255)
-#     course_id = models.ForeignKey(Courses, on_delete=models.CASCADE, default=1) #need to give default course
-#     staff_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
-#     objects = models.Manager()
-#
-#
-# # it does nothing when a referenced object is deleted.
-#
-# class Students(models.Model):
-#     id = models.AutoField(primary_key=True)
-#     admin = models.OneToOneField(CustomUser, on_delete = models.CASCADE)
-#     gender = models.CharField(max_length=50)
-#     profile_pic = models.FileField()
-#     address = models.TextField()
-#     course_id = models.ForeignKey(Courses, on_delete=models.DO_NOTHING, default=1)
-#     session_year_id = models.ForeignKey(SessionYearModel, on_delete=models.CASCADE)
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
-#     objects = models.Manager()
-#
-#
-# class Attendance(models.Model):
-#     # Subject Attendance
-#     id = models.AutoField(primary_key=True)
-#     subject_id = models.ForeignKey(Subjects, on_delete=models.DO_NOTHING)
-#     attendance_date = models.DateField()
-#     session_year_id = models.ForeignKey(SessionYearModel, on_delete=models.CASCADE)
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
-#     objects = models.Manager()
-#
-#
-#
-# class AttendanceReport(models.Model):
-#     # Individual Student Attendance
-#     id = models.AutoField(primary_key=True)
-#     student_id = models.ForeignKey(Students, on_delete=models.DO_NOTHING)
-#     attendance_id = models.ForeignKey(Attendance, on_delete=models.CASCADE)
-#     status = models.BooleanField(default=False)
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
-#     objects = models.Manager()
-#
-#
-# class LeaveReportStudent(models.Model):
-#     id = models.AutoField(primary_key=True)
-#     student_id = models.ForeignKey(Students, on_delete=models.CASCADE)
-#     leave_date = models.CharField(max_length=255)
-#     leave_message = models.TextField()
-#     leave_status = models.IntegerField(default=0)
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
-#     objects = models.Manager()
-#
-#
-#
-# class FeedBackStudent(models.Model):
-#     id = models.AutoField(primary_key=True)
-#     student_id = models.ForeignKey(Students, on_delete=models.CASCADE)
-#     feedback = models.TextField()
-#     feedback_reply = models.TextField()
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
-#     objects = models.Manager()
-#
-# class StudentResult(models.Model):
-#     id = models.AutoField(primary_key=True)
-#     student_id = models.ForeignKey(Students, on_delete=models.CASCADE)
-#     # subject_id = models.ForeignKey(Subjects, on_delete=models.CASCADE)
-#     subject_exam_marks = models.FloatField(default=0)
-#     subject_assignment_marks = models.FloatField(default=0)
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
-#     objects = models.Manager()
-#
-#
-# class AdminHOD(models.Model):
-#     id = models.AutoField(primary_key=True)
-#     admin = models.OneToOneField(CustomUser, on_delete = models.CASCADE)
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
-#     objects = models.Manager()
-#
-# class Staffs(models.Model):
-#     id = models.AutoField(primary_key=True)
-#     admin = models.OneToOneField(CustomUser, on_delete = models.CASCADE)
-#     address = models.TextField()
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
-#     objects = models.Manager()
-#
-#
-# class LeaveReportStaff(models.Model):
-#     id = models.AutoField(primary_key=True)
-#     staff_id = models.ForeignKey(Staffs, on_delete=models.CASCADE)
-#     leave_date = models.CharField(max_length=255)
-#     leave_message = models.TextField()
-#     leave_status = models.IntegerField(default=0)
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
-#     objects = models.Manager()
-#
-#
-# class FeedBackStaffs(models.Model):
-#     id = models.AutoField(primary_key=True)
-#     staff_id = models.ForeignKey(Staffs, on_delete=models.CASCADE)
-#     feedback = models.TextField()
-#     feedback_reply = models.TextField()
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
-#     objects = models.Manager()
-#
-#
-#
-# class NotificationStudent(models.Model):
-#     id = models.AutoField(primary_key=True)
-#     student_id = models.ForeignKey(Students, on_delete=models.CASCADE)
-#     message = models.TextField()
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
-#     objects = models.Manager()
-#
-#
-# class NotificationStaffs(models.Model):
-#     id = models.AutoField(primary_key=True)
-#     stafff_id = models.ForeignKey(Staffs, on_delete=models.CASCADE)
-#     message = models.TextField()
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
-#     objects = models.Manager()
-#
-
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.utils import timezone
+from django.conf import settings
+from django.contrib.auth import get_user_model
 
 #OTP Verification model:
 class OTP(models.Model):
@@ -472,17 +296,21 @@ class CurriculumItem(models.Model):
     
 class SecondItem(models.Model):
     section = models.CharField(max_length=255)
-    subsection_id = models.CharField(max_length=255)
-    title = models.CharField(max_length = 2000,blank = True)
-    description = models.TextField(blank = True)
-    upload_text = models.CharField(max_length=255, default="Upload")
-    generate_text = models.CharField(max_length=255, default="Generate")
-    progress_percentage = models.IntegerField(default=0)  # New field for progress percentage
-    points = models.CharField(max_length=5,blank= True)
-
+    subsection_id = models.CharField(max_length=255, blank=True, null=True)
+    title = models.CharField(max_length=2000, blank=True)
+    description = models.TextField(blank=True)
+    structure = models.JSONField(default=dict)
+    student_data = models.JSONField(default=list)
 
     def __str__(self):
         return f'{self.section} - {self.title}'
+
+    def save(self, *args, **kwargs):
+        if isinstance(self.structure, str):
+            self.structure = json.loads(self.structure)
+        if isinstance(self.student_data, str):
+            self.student_data = json.loads(self.student_data)
+        super().save(*args, **kwargs)
     
 class ThirdItem(models.Model):
     section = models.CharField(max_length=255)
@@ -642,6 +470,41 @@ def save_user_profile(sender, instance, **kwargs):
         instance.staffs.save()
     if instance.user_type == 3:
         instance.students.save()
-    
+from django.db import models
+import json
+#from django.db import models
+#import json
+
+def get_default_user():
+    User = get_user_model()
+    return User.objects.first().id  # Returns the ID of the first user in the database
+
+class StudentOutgoingData(models.Model):
+    unique_id = models.CharField(max_length=255, unique=True,null=True)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
+    ss_id = models.CharField(max_length=50, null=True, blank=True)
+    data = models.JSONField(default=dict)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"User: {self.user.username if self.user else 'Anonymous'}, SS ID: {self.ss_id}"
+
+    class Meta:
+        ordering = ['-created_at']
+
+
+
+
+
+
+
+
+
+
 
 
