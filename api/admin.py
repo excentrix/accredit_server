@@ -12,7 +12,7 @@ class CustomUserAdmin(UserAdmin):
     search_fields = ['username', 'email', 'first_name', 'last_name', 'employee_id']
     fieldsets = UserAdmin.fieldsets + (
         ('Additional Information', {
-            'fields': ('role', 'department', 'phone_number', 'designation', 'employee_id'),
+            'fields': ('role', 'department'),
         }),
     )
 
