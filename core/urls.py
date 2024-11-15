@@ -36,6 +36,10 @@ urlpatterns = [
         'get': 'data',
         'post': 'data'
     }), name='template-data'),
+    path('templates/<str:code>/data/row/', TemplateViewSet.as_view({
+        'put': 'data_row',
+        'delete': 'data_row'
+    }), name='template-data-row'),
 ]
 
 logger.debug("Core URL patterns: %s", urlpatterns)

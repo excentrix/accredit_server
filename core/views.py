@@ -288,6 +288,110 @@ class TemplateViewSet(viewsets.ModelViewSet):
                 'status': 'error',
                 'message': str(e)
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            
+    @action(detail=True, methods=['put', 'delete'])
+    def data_row(self, request, code=None, *args, **kwargs):
+        template = self.get_object()
+        row_id = request.query_params.get('row_id')
+        
+        if not row_id:
+            return Response({
+                'status': 'error',
+                'message': 'row_id is required'
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            submission_data = SubmissionData.objects.get(
+                id=row_id,
+                submission__template=template,
+                submission__department=request.user.department
+            )
+        except SubmissionData.DoesNotExist:
+            return Response({
+                'status': 'error',
+                'message': 'Data row not found'
+            }, status=status.HTTP_404_NOT_FOUND)
+
+        # Check if submission is editable
+        if submission_data.submission.status not in ['draft', 'rejected']:
+            return Response({
+                'status': 'error',
+                'message': 'Cannot modify data that has been submitted or approved'
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        if request.method == 'PUT':
+            try:
+                with transaction.atomic():
+                    # Validate incoming data against template columns
+                    data = request.data.get('data', {})
+                    required_fields = [
+                        col['name'] for col in template.columns 
+                        if col.get('required', False)
+                    ]
+                    
+                    missing_fields = [
+                        field for field in required_fields 
+                        if field not in data or not data[field]
+                    ]
+                    
+                    if missing_fields:
+                        return Response({
+                            'status': 'error',
+                            'message': f'Missing required fields: {", ".join(missing_fields)}'
+                        }, status=status.HTTP_400_BAD_REQUEST)
+
+                    # Update the data
+                    submission_data.data = data
+                    submission_data.save()
+
+                    return Response({
+                        'status': 'success',
+                        'message': 'Data updated successfully',
+                        'data': {
+                            'id': submission_data.id,
+                            'row_number': submission_data.row_number,
+                            'data': submission_data.data
+                        }
+                    })
+
+            except Exception as e:
+                return Response({
+                    'status': 'error',
+                    'message': str(e)
+                }, status=status.HTTP_400_BAD_REQUEST)
+
+        elif request.method == 'DELETE':
+            try:
+                with transaction.atomic():
+                    # Store the row number before deleting
+                    deleted_row_number = submission_data.row_number
+                    submission_data.delete()
+
+                    # Reorder remaining rows
+                    subsequent_rows = SubmissionData.objects.filter(
+                        submission=submission_data.submission,
+                        row_number__gt=deleted_row_number
+                    ).order_by('row_number')
+
+                    for row in subsequent_rows:
+                        row.row_number -= 1
+                        row.save()
+
+                    return Response({
+                        'status': 'success',
+                        'message': 'Data row deleted successfully'
+                    })
+
+            except Exception as e:
+                return Response({
+                    'status': 'error',
+                    'message': str(e)
+                }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        return Response({
+            'status': 'error',
+            'message': 'Invalid method'
+        }, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 class DataSubmissionViewSet(viewsets.ModelViewSet):
     serializer_class = DataSubmissionSerializer
