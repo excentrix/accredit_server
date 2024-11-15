@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 router = DefaultRouter()
 router.register(r'departments', DepartmentViewSet)
 router.register(r'academic-years', AcademicYearViewSet)
-router.register(r'templates', TemplateViewSet)
+# router.register(r'templates', TemplateViewSet, basename='template')
 router.register(r'submissions', DataSubmissionViewSet, basename='submission')
 
 urlpatterns = [
@@ -25,6 +25,17 @@ urlpatterns = [
     path('auth/login/', AuthViewSet.as_view({'post': 'login'})),
     path('auth/logout/', AuthViewSet.as_view({'post': 'logout'})),
     path('auth/me/', AuthViewSet.as_view({'get': 'me'})),
+    path('templates/', TemplateViewSet.as_view({'get': 'list', 'post': 'create'}), name='template-list'),
+    path('templates/<str:code>/', TemplateViewSet.as_view({
+        'get': 'retrieve',
+        'put': 'update',
+        'patch': 'partial_update',
+        'delete': 'destroy'
+    }), name='template-detail'),
+    path('templates/<str:code>/data/', TemplateViewSet.as_view({
+        'get': 'data',
+        'post': 'data'
+    }), name='template-data'),
 ]
 
 logger.debug("Core URL patterns: %s", urlpatterns)

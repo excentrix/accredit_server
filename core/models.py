@@ -32,16 +32,21 @@ class Department(models.Model):
         return self.name
 
 class AcademicYear(models.Model):
-    year = models.CharField(max_length=9)  # Format: 2023-2024
+    year = models.CharField(max_length=7, unique=True)
+    start_date = models.DateField()
+    end_date = models.DateField()
     is_current = models.BooleanField(default=False)
-    
+
+    class Meta:
+        ordering = ['-year']
+
     def __str__(self):
         return self.year
-    
+
     def save(self, *args, **kwargs):
         if self.is_current:
-            # Set is_current=False for all other instances
-            AcademicYear.objects.exclude(id=self.id).update(is_current=False)
+            # Set all other years to not current
+            AcademicYear.objects.all().update(is_current=False)
         super().save(*args, **kwargs)
 
 class Template(models.Model):
