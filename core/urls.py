@@ -2,7 +2,7 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import (
-    DepartmentViewSet, AcademicYearViewSet,
+    DepartmentViewSet, AcademicYearViewSet, NameAutocompleteView,
     TemplateViewSet, DataSubmissionViewSet,
     ExportTemplateView
 )
@@ -26,9 +26,9 @@ urlpatterns = [
     path('auth/logout/', AuthViewSet.as_view({'post': 'logout'})),
     path('auth/me/', AuthViewSet.as_view({'get': 'me'})),
     path('templates/', TemplateViewSet.as_view({'get': 'list', 'post': 'create'}), name='template-list'),
-    path('templates/import-excel/', TemplateViewSet.as_view({
-            'post': 'import_from_excel'
-        }), name='template-import-excel'),
+    # path('templates/import-excel/', TemplateViewSet.as_view({
+    #         'post': 'import_from_excel'
+    #     }), name='template-import-excel'),
         path('templates/<str:code>/', TemplateViewSet.as_view({
             'get': 'retrieve',
             'put': 'update',
@@ -43,6 +43,7 @@ urlpatterns = [
         'put': 'data_row',
         'delete': 'data_row'
     }), name='template-data-row'),
+    path('autocomplete/', NameAutocompleteView.as_view(), name='name-autocomplete'),
 ]
 
 logger.debug("Core URL patterns: %s", urlpatterns)

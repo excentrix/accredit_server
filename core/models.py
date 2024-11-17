@@ -51,20 +51,23 @@ class AcademicYear(models.Model):
 
 class Template(models.Model):
     """Stores the structure of different NAAC document templates"""
-    code = models.CharField(max_length=20, unique=True)
+    id = models.AutoField(primary_key=True)
+    code = models.CharField(max_length=20)
     name = models.CharField(max_length=500)
-    description = models.TextField(null=True, blank=True)
-    headers = models.JSONField()
-    columns = models.JSONField()
+    # description = models.TextField(null=True, blank=True)
+    # headers = models.JSONField()
+    metadata = models.JSONField()
+    # columns = models.JSONField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    column_groups = models.JSONField(default=list)
+    # column_groups = models.JSONField(default=list)
     
     def __str__(self):
         return f"{self.code} - {self.name}"
     
-    class Meta:
-        ordering = ['code']
+    
+    # class Meta:
+    #     ordering = ['code']
 
 class DataSubmission(models.Model):
     """Tracks the submission status of data for each department"""

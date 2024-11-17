@@ -33,16 +33,16 @@ class AcademicYearSerializer(serializers.ModelSerializer):
 class TemplateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Template
-        fields = ['id', 'code', 'name', 'description', 'headers', 'columns', 'column_groups']
+        fields = ['id', 'code', 'name', 'metadata']
 
-    def validate_columns(self, value):
-        required_keys = {'name', 'display_name', 'type'}
-        for column in value:
-            if not all(key in column for key in required_keys):
-                raise serializers.ValidationError(
-                    "Each column must contain 'name', 'display_name', and 'type'"
-                )
-        return value
+    # def validate_columns(self, value):
+    #     required_keys = {'name', 'display_name', 'type'}
+    #     for column in value:
+    #         if not all(key in column for key in required_keys):
+    #             raise serializers.ValidationError(
+    #                 "Each column must contain 'name', 'display_name', and 'type'"
+    #             )
+    #     return value
 
 class SubmissionDataSerializer(serializers.ModelSerializer):
     class Meta:

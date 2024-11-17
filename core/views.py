@@ -140,7 +140,7 @@ class TemplateViewSet(viewsets.ModelViewSet):
     def get_object(self):
         try:
             # Get the lookup value from kwargs
-            lookup_value = self.kwargs.get(self.lookup_field) or self.kwargs.get('pk')
+            lookup_value = self.kwargs.get(self.lookup_field)
             # print(f"Attempting to find template with code: {lookup_value}")
             
             # Get all templates (for debugging)
@@ -169,6 +169,7 @@ class TemplateViewSet(viewsets.ModelViewSet):
                 {"detail": str(e)},
                 status=status.HTTP_404_NOT_FOUND
             )
+    
     def list(self, request, *args, **kwargs):
         queryset = self.get_queryset().order_by('code')
         print(f"List called, found {queryset.count()} templates")  # Debug print
@@ -398,129 +399,147 @@ class TemplateViewSet(viewsets.ModelViewSet):
             'message': 'Invalid method'
         }, status=status.HTTP_405_METHOD_NOT_ALLOWED)
         
-    @action(detail=False, methods=['post'])
-    def import_from_excel(self, request):
-        if 'file' not in request.FILES:
-            return Response({
-                'status': 'error',
-                'message': 'No file provided'
-            }, status=status.HTTP_400_BAD_REQUEST)
+    # @action(detail=False, methods=['post'])
+    # def import_from_excel(self, request):
+    #     if 'file' not in request.FILES:
+    #         return Response({
+    #             'status': 'error',
+    #             'message': 'No file provided'
+    #         }, status=status.HTTP_400_BAD_REQUEST)
 
-        file = request.FILES['file']
+    #     file = request.FILES['file']
         
-        try:
-            # Get template code from filename
-            template_code = file.name.split('.xlsx')[0]
-            if not re.match(r'^[\d.]+$', template_code):
-                return Response({
-                    'status': 'error',
-                    'message': 'Invalid filename format. Should be like "2.4.2.xlsx"'
-                }, status=status.HTTP_400_BAD_REQUEST)
+    #     try:
+    #         # Get template code from filename
+    #         template_code = file.name.split('.xlsx')[0]
+    #         if not re.match(r'^[\d.]+$', template_code):
+    #             return Response({
+    #                 'status': 'error',
+    #                 'message': 'Invalid filename format. Should be like "2.4.2.xlsx"'
+    #             }, status=status.HTTP_400_BAD_REQUEST)
 
-            wb = load_workbook(file)
-            ws = wb.active
+    #         wb = load_workbook(file)
+    #         ws = wb.active
 
-            headers = []
-            columns = []
-            related_metrics = []
-            template_name = None  # Initialize template_name
+    #         # headers = []
+    #         # columns = []
+    #         metadata = []
 
-            # Process rows to identify headers and columns
-            for row_index, row in enumerate(ws.rows, start=1):
-                first_cell = row[0].value
-                if not first_cell:
-                    continue
+    #         metadata_structure = {
+    #             'headers' : [],
+    #             'columns' : [],
+    #         }
+    #         column_structure = {
+    #             'name': '',
+    #             'type': '', # single/group
+    #             'columns': [] # if type is group
+    #         }
+    #         related_metrics = []
+    #         template_name = None  # Initialize template_name
+    #         table_count = 0
+    #         # Process rows to identify headers and columns
+    #         for row_index, row in enumerate(ws.rows, start=1):
+                
+    #             # Skip empty rows
+    #             if not any(cell.value for cell in row):
+    #                 continue
+    #             # first_cell = row[0].value
+    #             # if not first_cell:
+    #             #     continue
 
-                # Check if this is a header row (starts with a metric number)
-                if re.match(r'^\d+\.\d+\.\d+', str(first_cell)):
-                    current_header = first_cell.strip()
-                    headers.append(current_header)
+    #             # Check if this is a header row (starts with a metric number)
+    #             if re.match(r'^\d+\.\d+\.\d+', str(row[0].value)):
+    #                 current_header = row[0].value.strip()
+    #                 if table_count > 0:
+
+    #                 metadata.append
+    #                 headers.append(current_header)
                     
-                    # If this header matches our template code, it's our main header
-                    if current_header.startswith(template_code):
-                        template_name = current_header
-                    else:
-                        # This is a related metric
-                        related_metrics.append({
-                            "metric": current_header
-                        })
+    #                 # If this header matches our template code, it's our main header
+    #                 if current_header.startswith(template_code):
+    #                     template_name = current_header
+    #                 else:
+    #                     # This is a related metric
+    #                     related_metrics.append({
+    #                         "metric": current_header
+    #                     })
 
-                elif any(cell.value for cell in row):  # This is the columns row
-                    # Process column definitions
-                    for cell in row:
-                        if cell.value:
-                            column_name = cell.value.strip()
+    #             elif any(cell.value for cell in row):  # This is the columns row
+    #                 # Process column definitions
+    #                 for cell in row:
+    #                     if cell.value:
+    #                         column_name = cell.value.strip()
                             
-                            # Determine column type based on content
-                            column_type = 'string'  # default type
-                            if 'year' in column_name.lower():
-                                column_type = 'number'
-                            elif 'month' in column_name.lower() and 'year' in column_name.lower():
-                                column_type = 'date'
-                            elif any(word in column_name.lower() for word in ['whether', 'is', 'if']):
-                                column_type = 'select'
+    #                         # Determine column type based on content
+    #                         column_type = 'string'  # default type
+    #                         if 'year' in column_name.lower():
+    #                             column_type = 'number'
+    #                         elif 'month' in column_name.lower() and 'year' in column_name.lower():
+    #                             column_type = 'date'
+    #                         elif any(word in column_name.lower() for word in ['whether', 'is', 'if']):
+    #                             column_type = 'select'
 
-                            column = {
-                                'name': column_name.lower().replace(' ', '_').replace('/', '_').replace('?', '').replace(',', ''),
-                                'display_name': column_name,
-                                'type': column_type,
-                                'required': True,
-                                'description': f'Enter {column_name.lower()}',
-                                'options': ['Yes', 'No'] if column_type == 'select' else None
-                            }
-                            columns.append(column)
-                    break  # Stop after processing column headers
+    #                         column = {
+    #                             'name': column_name.lower().replace(' ', '_').replace('/', '_').replace('?', '').replace(',', ''),
+    #                             'display_name': column_name,
+    #                             'type': column_type,
+    #                             'required': True,
+    #                             'description': f'Enter {column_name.lower()}',
+    #                             'options': ['Yes', 'No'] if column_type == 'select' else None
+    #                         }
+    #                         columns.append(column)
+    #                 break  # Stop after processing column headers
 
-            if not template_name:
-                return Response({
-                    'status': 'error',
-                    'message': f'Could not find header for template {template_code}'
-                }, status=status.HTTP_400_BAD_REQUEST)
+    #         if not template_name:
+    #             return Response({
+    #                 'status': 'error',
+    #                 'message': f'Could not find header for template {template_code}'
+    #             }, status=status.HTTP_400_BAD_REQUEST)
 
-            # Create template data with metadata about related metrics
-            template_data = {
-                'code': template_code,
-                'name': template_name,
-                'description': f'Template for {template_name}',
-                'headers': headers,  # All metric headers
-                'metadata': {
-                    'related_metrics': related_metrics,
-                    'type': 'composite',  # Indicating this template serves multiple metrics
-                    'primary_metric': template_code,
-                },
-                'columns': columns
-            }
+    #         # Create template data with metadata about related metrics
+    #         template_data = {
+    #             'code': template_code,
+    #             'name': template_name,
+    #             'description': f'Template for {template_name}',
+    #             'headers': headers,  # All metric headers
+    #             'metadata': {
+    #                 'related_metrics': related_metrics,
+    #                 'type': 'composite',  # Indicating this template serves multiple metrics
+    #                 'primary_metric': template_code,
+    #             },
+    #             'columns': columns
+    #         }
 
-            # Print debug information
-            print("Template Data:", json.dumps(template_data, indent=2))
+    #         # Print debug information
+    #         print("Template Data:", json.dumps(template_data, indent=2))
 
-            # Save or update template
-            try:
-                template = Template.objects.get(code=template_code)
-                serializer = TemplateSerializer(template, data=template_data)
-            except Template.DoesNotExist:
-                serializer = TemplateSerializer(data=template_data)
+    #         # Save or update template
+    #         try:
+    #             template = Template.objects.get(code=template_code)
+    #             serializer = TemplateSerializer(template, data=template_data)
+    #         except Template.DoesNotExist:
+    #             serializer = TemplateSerializer(data=template_data)
 
-            if serializer.is_valid():
-                template = serializer.save()
-                return Response({
-                    'status': 'success',
-                    'message': f'Successfully imported template {template_code}',
-                    'data': serializer.data
-                })
-            else:
-                return Response({
-                    'status': 'error',
-                    'message': 'Invalid template data',
-                    'errors': serializer.errors
-                }, status=status.HTTP_400_BAD_REQUEST)
+    #         if serializer.is_valid():
+    #             template = serializer.save()
+    #             return Response({
+    #                 'status': 'success',
+    #                 'message': f'Successfully imported template {template_code}',
+    #                 'data': serializer.data
+    #             })
+    #         else:
+    #             return Response({
+    #                 'status': 'error',
+    #                 'message': 'Invalid template data',
+    #                 'errors': serializer.errors
+    #             }, status=status.HTTP_400_BAD_REQUEST)
 
-        except Exception as e:
-            print(f"Error during import: {str(e)}")  # Debug print
-            return Response({
-                'status': 'error',
-                'message': str(e)
-            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    #     except Exception as e:
+    #         print(f"Error during import: {str(e)}")  # Debug print
+    #         return Response({
+    #             'status': 'error',
+    #             'message': str(e)
+    #         }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def _process_column_groups(self, row):
         """Process row containing column group headers"""
@@ -761,3 +780,22 @@ class ExportTemplateView(APIView):
         response['Content-Disposition'] = f'attachment; filename="{filename}"'
 
         return response
+    
+class NameAutocompleteView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        query = request.GET.get('q', '')
+        if query:
+            # Fetch distinct names that contain the query string (case-insensitive)
+            # matching_names = (
+            #     Template.objects.filter(name__icontains=query)
+            #     .values_list('name', flat=True)
+            #     .distinct()[:10]  # Limit to top 10 suggestions
+            # )
+            matching_names = ['John Doe', 'Jane Doe', 'Alice Smith']
+            
+
+            return Response(list(matching_names), status=status.HTTP_200_OK)
+        
+        return Response([], status=status.HTTP_200_OK)
