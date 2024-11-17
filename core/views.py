@@ -8,7 +8,9 @@ from django.http import HttpResponse
 from .utils.excel_export import ExcelExporter
 from datetime import datetime
 import io
+import re
 from rest_framework.views import APIView
+import json
 
 from .models import (
     User, Department, AcademicYear, Template, 
@@ -18,6 +20,9 @@ from .serializers import (
     UserSerializer, DepartmentSerializer, AcademicYearSerializer,
     TemplateSerializer, DataSubmissionSerializer, SubmissionDataSerializer
 )
+
+from openpyxl import load_workbook
+from django.core.exceptions import ValidationError
 
 from rest_framework import viewsets, status, permissions
 from rest_framework.decorators import action
@@ -136,15 +141,15 @@ class TemplateViewSet(viewsets.ModelViewSet):
         try:
             # Get the lookup value from kwargs
             lookup_value = self.kwargs.get(self.lookup_field) or self.kwargs.get('pk')
-            print(f"Attempting to find template with code: {lookup_value}")
+            # print(f"Attempting to find template with code: {lookup_value}")
             
             # Get all templates (for debugging)
             all_templates = list(self.queryset.values_list('code', flat=True))
-            print(f"Available template codes: {all_templates}")
+            # print(f"Available template codes: {all_templates}")
             
             # Try to get the object
             obj = self.queryset.get(code=lookup_value)
-            print(f"Found template: {obj.code}")
+            # print(f"Found template: {obj.code}")
             
             # Check permissions
             self.check_object_permissions(self.request, obj)
@@ -392,7 +397,165 @@ class TemplateViewSet(viewsets.ModelViewSet):
             'status': 'error',
             'message': 'Invalid method'
         }, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+        
+    @action(detail=False, methods=['post'])
+    def import_from_excel(self, request):
+        if 'file' not in request.FILES:
+            return Response({
+                'status': 'error',
+                'message': 'No file provided'
+            }, status=status.HTTP_400_BAD_REQUEST)
 
+        file = request.FILES['file']
+        
+        try:
+            # Get template code from filename
+            template_code = file.name.split('.xlsx')[0]
+            if not re.match(r'^[\d.]+$', template_code):
+                return Response({
+                    'status': 'error',
+                    'message': 'Invalid filename format. Should be like "2.4.2.xlsx"'
+                }, status=status.HTTP_400_BAD_REQUEST)
+
+            wb = load_workbook(file)
+            ws = wb.active
+
+            headers = []
+            columns = []
+            related_metrics = []
+            template_name = None  # Initialize template_name
+
+            # Process rows to identify headers and columns
+            for row_index, row in enumerate(ws.rows, start=1):
+                first_cell = row[0].value
+                if not first_cell:
+                    continue
+
+                # Check if this is a header row (starts with a metric number)
+                if re.match(r'^\d+\.\d+\.\d+', str(first_cell)):
+                    current_header = first_cell.strip()
+                    headers.append(current_header)
+                    
+                    # If this header matches our template code, it's our main header
+                    if current_header.startswith(template_code):
+                        template_name = current_header
+                    else:
+                        # This is a related metric
+                        related_metrics.append({
+                            "metric": current_header
+                        })
+
+                elif any(cell.value for cell in row):  # This is the columns row
+                    # Process column definitions
+                    for cell in row:
+                        if cell.value:
+                            column_name = cell.value.strip()
+                            
+                            # Determine column type based on content
+                            column_type = 'string'  # default type
+                            if 'year' in column_name.lower():
+                                column_type = 'number'
+                            elif 'month' in column_name.lower() and 'year' in column_name.lower():
+                                column_type = 'date'
+                            elif any(word in column_name.lower() for word in ['whether', 'is', 'if']):
+                                column_type = 'select'
+
+                            column = {
+                                'name': column_name.lower().replace(' ', '_').replace('/', '_').replace('?', '').replace(',', ''),
+                                'display_name': column_name,
+                                'type': column_type,
+                                'required': True,
+                                'description': f'Enter {column_name.lower()}',
+                                'options': ['Yes', 'No'] if column_type == 'select' else None
+                            }
+                            columns.append(column)
+                    break  # Stop after processing column headers
+
+            if not template_name:
+                return Response({
+                    'status': 'error',
+                    'message': f'Could not find header for template {template_code}'
+                }, status=status.HTTP_400_BAD_REQUEST)
+
+            # Create template data with metadata about related metrics
+            template_data = {
+                'code': template_code,
+                'name': template_name,
+                'description': f'Template for {template_name}',
+                'headers': headers,  # All metric headers
+                'metadata': {
+                    'related_metrics': related_metrics,
+                    'type': 'composite',  # Indicating this template serves multiple metrics
+                    'primary_metric': template_code,
+                },
+                'columns': columns
+            }
+
+            # Print debug information
+            print("Template Data:", json.dumps(template_data, indent=2))
+
+            # Save or update template
+            try:
+                template = Template.objects.get(code=template_code)
+                serializer = TemplateSerializer(template, data=template_data)
+            except Template.DoesNotExist:
+                serializer = TemplateSerializer(data=template_data)
+
+            if serializer.is_valid():
+                template = serializer.save()
+                return Response({
+                    'status': 'success',
+                    'message': f'Successfully imported template {template_code}',
+                    'data': serializer.data
+                })
+            else:
+                return Response({
+                    'status': 'error',
+                    'message': 'Invalid template data',
+                    'errors': serializer.errors
+                }, status=status.HTTP_400_BAD_REQUEST)
+
+        except Exception as e:
+            print(f"Error during import: {str(e)}")  # Debug print
+            return Response({
+                'status': 'error',
+                'message': str(e)
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def _process_column_groups(self, row):
+        """Process row containing column group headers"""
+        column_groups = []
+        current_group = None
+        
+        for cell in row:
+            if cell.value:
+                current_group = cell.value.strip()
+            if current_group:
+                column_groups.append(current_group)
+            
+        return column_groups
+
+    def _create_columns_with_groups(self, row, column_groups):
+        """Create column definitions with their groups"""
+        columns = []
+        for idx, cell in enumerate(row):
+            if cell.value:
+                column_name = cell.value.strip()
+                group = column_groups[idx] if idx < len(column_groups) else None
+                
+                # Create column definition
+                column = {
+                    'name': f"{column_name.lower().replace(' ', '_')}",
+                    'display_name': column_name,
+                    'type': 'number',  # Default to number for this template
+                    'required': True,
+                    'description': f'Enter {column_name.lower()}',
+                    'group': group
+                }
+                
+                columns.append(column)
+        
+        return columns
 class DataSubmissionViewSet(viewsets.ModelViewSet):
     serializer_class = DataSubmissionSerializer
     permission_classes = [permissions.IsAuthenticated]

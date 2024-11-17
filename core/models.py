@@ -58,6 +58,7 @@ class Template(models.Model):
     columns = models.JSONField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    column_groups = models.JSONField(default=list)
     
     def __str__(self):
         return f"{self.code} - {self.name}"

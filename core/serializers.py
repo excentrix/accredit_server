@@ -33,7 +33,7 @@ class AcademicYearSerializer(serializers.ModelSerializer):
 class TemplateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Template
-        fields = ['id', 'code', 'name', 'description', 'headers', 'columns']
+        fields = ['id', 'code', 'name', 'description', 'headers', 'columns', 'column_groups']
 
     def validate_columns(self, value):
         required_keys = {'name', 'display_name', 'type'}

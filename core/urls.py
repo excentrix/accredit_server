@@ -26,12 +26,15 @@ urlpatterns = [
     path('auth/logout/', AuthViewSet.as_view({'post': 'logout'})),
     path('auth/me/', AuthViewSet.as_view({'get': 'me'})),
     path('templates/', TemplateViewSet.as_view({'get': 'list', 'post': 'create'}), name='template-list'),
-    path('templates/<str:code>/', TemplateViewSet.as_view({
-        'get': 'retrieve',
-        'put': 'update',
-        'patch': 'partial_update',
-        'delete': 'destroy'
-    }), name='template-detail'),
+    path('templates/import-excel/', TemplateViewSet.as_view({
+            'post': 'import_from_excel'
+        }), name='template-import-excel'),
+        path('templates/<str:code>/', TemplateViewSet.as_view({
+            'get': 'retrieve',
+            'put': 'update',
+            'patch': 'partial_update',
+            'delete': 'destroy'
+        }), name='template-detail'),
     path('templates/<str:code>/data/', TemplateViewSet.as_view({
         'get': 'data',
         'post': 'data'
