@@ -18,7 +18,7 @@ class DepartmentAdmin(admin.ModelAdmin):
 
 @admin.register(AcademicYear)
 class AcademicYearAdmin(admin.ModelAdmin):
-    list_display = ('year', 'is_current')
+    list_display = ('name', 'is_current')
     list_filter = ('is_current',)
 
 @admin.register(Template)

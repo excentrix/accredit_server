@@ -28,7 +28,7 @@ class LoginSerializer(serializers.Serializer):
 class AcademicYearSerializer(serializers.ModelSerializer):
     class Meta:
         model = AcademicYear
-        fields = ['id', 'year', 'is_current']
+        fields = ['id', 'name', 'start_date', 'end_date', 'is_current']
 
 class TemplateSerializer(serializers.ModelSerializer):
     class Meta:
@@ -47,26 +47,30 @@ class TemplateSerializer(serializers.ModelSerializer):
 class SubmissionDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = SubmissionData
-        fields = ['id', 'row_number', 'data', 'created_at', 'updated_at']
-        read_only_fields = ['created_at', 'updated_at']
+        fields = ['section_index', 'row_number', 'data']
 
 class DataSubmissionSerializer(serializers.ModelSerializer):
-    department_details = DepartmentSerializer(source='department', read_only=True)
-    template_details = TemplateSerializer(source='template', read_only=True)
-    academic_year_details = AcademicYearSerializer(source='academic_year', read_only=True)
-    submitted_by_details = UserSerializer(source='submitted_by', read_only=True)
-    verified_by_details = UserSerializer(source='verified_by', read_only=True)
     data_rows = SubmissionDataSerializer(many=True, read_only=True)
-
+    department_name = serializers.CharField(source='department.name', read_only=True)
+    template_name = serializers.CharField(source='template.name', read_only=True)
+    submitted_by_name = serializers.CharField(source='submitted_by.get_full_name', read_only=True)
+    academic_year_name = serializers.CharField(source='academic_year.name', read_only=True)
+    
     class Meta:
         model = DataSubmission
         fields = [
-            'id', 'department', 'department_details',
-            'academic_year', 'academic_year_details',
-            'template', 'template_details',
-            'submitted_by', 'submitted_by_details',
-            'verified_by', 'verified_by_details',
-            'status', 'submitted_at', 'verified_at',
-            'rejection_reason', 'data_rows'
+            'id', 'template', 'department', 'academic_year', 'academic_year_name',
+            'status', 'submitted_at', 'verified_by', 'verified_at', 
+            'rejection_reason', 'data_rows', 'department_name', 
+            'template_name', 'submitted_by_name'
         ]
-        read_only_fields = ['submitted_at', 'verified_at', 'submitted_by', 'verified_by']
+        read_only_fields = ['submitted_by', 'verified_by', 'verified_at']
+
+    def validate(self, data):
+        # Ensure user can only submit for their department
+        user = self.context['request'].user
+        if user.role == 'faculty' and data['department'] != user.department:
+            raise serializers.ValidationError(
+                "You can only submit data for your own department"
+            )
+        return data
