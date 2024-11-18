@@ -53,6 +53,7 @@ class DataSubmissionSerializer(serializers.ModelSerializer):
     data_rows = SubmissionDataSerializer(many=True, read_only=True)
     department_name = serializers.CharField(source='department.name', read_only=True)
     template_name = serializers.CharField(source='template.name', read_only=True)
+    template_code = serializers.CharField(source='template.code', read_only=True)
     submitted_by_name = serializers.CharField(source='submitted_by.get_full_name', read_only=True)
     academic_year_name = serializers.CharField(source='academic_year.name', read_only=True)
     
@@ -62,7 +63,7 @@ class DataSubmissionSerializer(serializers.ModelSerializer):
             'id', 'template', 'department', 'academic_year', 'academic_year_name',
             'status', 'submitted_at', 'verified_by', 'verified_at', 
             'rejection_reason', 'data_rows', 'department_name', 
-            'template_name', 'submitted_by_name'
+            'template_name', 'template_code','submitted_by_name'
         ]
         read_only_fields = ['submitted_by', 'verified_by', 'verified_at']
 

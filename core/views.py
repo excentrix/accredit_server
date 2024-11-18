@@ -14,10 +14,12 @@ from .tasks import process_academic_year_transition
 from .filters import DataSubmissionFilter
 from .utils.excel_export import ExcelExporter
 from datetime import datetime
+from django.utils import timezone
 import io
 import re
 from rest_framework.views import APIView
 import json
+from django.db import models
 
 from .models import (
     AcademicYearTransition, User, Department, AcademicYear, Template, 
@@ -145,6 +147,16 @@ class TemplateViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
     lookup_field='code'
     
+    def get_permissions(self):
+        """
+        Instantiates and returns the list of permissions that this view requires.
+        """
+        if self.action in ['approve_submission', 'reject_submission']:
+            permission_classes = [permissions.IsAuthenticated, IsIQACDirector]
+        else:
+            permission_classes = [permissions.IsAuthenticated]
+        return [permission() for permission in permission_classes]
+    
     def get_object(self):
         try:
             # Get the lookup value from kwargs
@@ -218,18 +230,24 @@ class TemplateViewSet(viewsets.ModelViewSet):
                             }
                         )
 
-                        # Validate incoming data against template columns
-                        data = request.data.get('data', {})
-                        required_fields = [
-                            col['name'] for col in template.columns 
-                            if col.get('required', False)
-                        ]
-                        
+                        # Get the data from request
+                        data = request.data
+
+                        # Get all required fields from template metadata
+                        required_fields = []
+                        for section in template.metadata:
+                            flat_columns = template._flatten_column_names(section['columns'])
+                            required_fields.extend([
+                                name for name, col in flat_columns.items()
+                                if col.get('required', False)
+                            ])
+
+                        # Validate required fields
                         missing_fields = [
                             field for field in required_fields 
                             if field not in data or not data[field]
                         ]
-                        
+
                         if missing_fields:
                             return Response({
                                 'status': 'error',
@@ -240,9 +258,11 @@ class TemplateViewSet(viewsets.ModelViewSet):
                         row_number = SubmissionData.objects.filter(
                             submission=submission
                         ).count() + 1
-                        
+
+                        # Create submission data
                         submission_data = SubmissionData.objects.create(
                             submission=submission,
+                            section_index=0,  # Assuming first section for now
                             row_number=row_number,
                             data=data
                         )
@@ -406,6 +426,264 @@ class TemplateViewSet(viewsets.ModelViewSet):
             'status': 'error',
             'message': 'Invalid method'
         }, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+        
+    @action(detail=True, methods=['get', 'post'], url_path='sections/(?P<section_index>\d+)/data')
+    def section_data(self, request, code=None, section_index=None):
+        """Handle section-specific data operations"""
+        try:
+            template = self.get_object()
+            current_year = AcademicYear.objects.filter(is_current=True).first()
+            section_index = int(section_index)
+
+            if not current_year:
+                return Response({
+                    'status': 'error',
+                    'message': 'No active academic year found'
+                }, status=status.HTTP_400_BAD_REQUEST)
+
+            if not request.user.department:
+                return Response({
+                    'status': 'error',
+                    'message': 'User has no associated department'
+                }, status=status.HTTP_400_BAD_REQUEST)
+
+            # Validate section index
+            if section_index >= len(template.metadata):
+                return Response({
+                    'status': 'error',
+                    'message': 'Invalid section index'
+                }, status=status.HTTP_400_BAD_REQUEST)
+
+            if request.method == 'GET':
+                try:
+                    submission = DataSubmission.objects.get(
+                        template=template,
+                        department=request.user.department,
+                        academic_year=current_year
+                    )
+                    data_rows = SubmissionData.objects.filter(
+                        submission=submission,
+                        section_index=section_index
+                    ).order_by('row_number')
+                    
+                    return Response({
+                        'status': 'success',
+                        'data': {
+                            'submission_id': submission.id,
+                            'status': submission.status,
+                            'rows': [
+                                {
+                                    'id': row.id,
+                                    'row_number': row.row_number,
+                                    'data': row.data
+                                } for row in data_rows
+                            ]
+                        }
+                    })
+                except DataSubmission.DoesNotExist:
+                    return Response({
+                        'status': 'success',
+                        'data': {
+                            'submission_id': None,
+                            'status': None,
+                            'rows': []
+                        }
+                    })
+
+            elif request.method == 'POST':
+                try:
+                    with transaction.atomic():
+                        # Get or create submission without creating data rows
+                        submission, _ = DataSubmission.objects.get_or_create(
+                            template=template,
+                            department=request.user.department,
+                            academic_year=current_year,
+                            defaults={
+                                'submitted_by': request.user,
+                                'status': 'draft'
+                            }
+                        )
+
+                        # Validate incoming data against template structure
+                        section = template.metadata[section_index]
+                        data = request.data
+                        
+                        # Validate required fields
+                        required_fields = []
+                        for column in section['columns']:
+                            if column.get('required', False):
+                                if column['type'] == 'single':
+                                    required_fields.append(column['name'])
+                                elif column['type'] == 'group':
+                                    for nested_col in column['columns']:
+                                        if nested_col.get('required', False):
+                                            required_fields.append(f"{column['name']}_{nested_col['name']}")
+
+                        missing_fields = [
+                            field for field in required_fields 
+                            if field not in data or not data[field]
+                        ]
+
+                        if missing_fields:
+                            return Response({
+                                'status': 'error',
+                                'message': f'Missing required fields: {", ".join(missing_fields)}'
+                            }, status=status.HTTP_400_BAD_REQUEST)
+
+                        # Get the next row number for this specific section
+                        row_number = SubmissionData.objects.filter(
+                            submission=submission,
+                            section_index=section_index
+                        ).count() + 1
+                        
+                        # Create data row only for this section
+                        submission_data = SubmissionData.objects.create(
+                            submission=submission,
+                            section_index=section_index,
+                            row_number=row_number,
+                            data=data
+                        )
+
+                        return Response({
+                            'status': 'success',
+                            'message': 'Data saved successfully',
+                            'data': {
+                                'id': submission_data.id,
+                                'row_number': row_number,
+                                'data': data
+                            }
+                        })
+
+                except Exception as e:
+                    return Response({
+                        'status': 'error',
+                        'message': str(e)
+                    }, status=status.HTTP_400_BAD_REQUEST)
+
+        except Exception as e:
+            return Response({
+                'status': 'error',
+                'message': str(e)
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    @action(detail=True, methods=['put', 'delete'], url_path=r'sections/(?P<section_index>\d+)/data/(?P<row_id>\d+)')
+    def section_data_row(self, request, code=None, section_index=None, row_id=None):
+        """
+        Handle section-specific row operations
+        
+        PUT: Update a specific row in a section
+        DELETE: Delete a specific row from a section
+        """
+        # Convert section_index and row_id to int
+        section_index = int(section_index)
+        row_id = int(row_id)
+        
+        try:
+            template = self.get_object()
+            
+            try:
+                submission_data = SubmissionData.objects.get(
+                    id=row_id,
+                    submission__template=template,
+                    submission__department=request.user.department,
+                    section_index=section_index
+                )
+            except SubmissionData.DoesNotExist:
+                return Response({
+                    'status': 'error',
+                    'message': 'Data row not found'
+                }, status=status.HTTP_404_NOT_FOUND)
+
+            # Check if submission is editable
+            if submission_data.submission.status not in ['draft', 'rejected']:
+                return Response({
+                    'status': 'error',
+                    'message': 'Cannot modify data that has been submitted or approved'
+                }, status=status.HTTP_400_BAD_REQUEST)
+
+            if request.method == 'PUT':
+                try:
+                    with transaction.atomic():
+                        # Validate incoming data
+                        section = template.metadata[section_index]
+                        data = request.data.get('data', {})
+                        
+                        # Validate required fields (same validation as POST)
+                        required_fields = []
+                        for column in section['columns']:
+                            if column.get('required', False):
+                                if column['type'] == 'single':
+                                    required_fields.append(column['name'])
+                                elif column['type'] == 'group':
+                                    for nested_col in column['columns']:
+                                        if nested_col.get('required', False):
+                                            required_fields.append(f"{column['name']}_{nested_col['name']}")
+
+                        missing_fields = [
+                            field for field in required_fields 
+                            if field not in data or not data[field]
+                        ]
+
+                        if missing_fields:
+                            return Response({
+                                'status': 'error',
+                                'message': f'Missing required fields: {", ".join(missing_fields)}'
+                            }, status=status.HTTP_400_BAD_REQUEST)
+
+                        # Update the data
+                        submission_data.data = data
+                        submission_data.save()
+
+                        return Response({
+                            'status': 'success',
+                            'message': 'Data updated successfully',
+                            'data': {
+                                'id': submission_data.id,
+                                'row_number': submission_data.row_number,
+                                'data': submission_data.data
+                            }
+                        })
+
+                except Exception as e:
+                    return Response({
+                        'status': 'error',
+                        'message': str(e)
+                    }, status=status.HTTP_400_BAD_REQUEST)
+
+            elif request.method == 'DELETE':
+                try:
+                    with transaction.atomic():
+                        # Store the row number before deleting
+                        deleted_row_number = submission_data.row_number
+                        submission_data.delete()
+
+                        # Reorder remaining rows
+                        subsequent_rows = SubmissionData.objects.filter(
+                            submission=submission_data.submission,
+                            section_index=section_index,
+                            row_number__gt=deleted_row_number
+                        ).order_by('row_number')
+
+                        for row in subsequent_rows:
+                            row.row_number -= 1
+                            row.save()
+
+                        return Response({
+                            'status': 'success',
+                            'message': 'Data row deleted successfully'
+                        })
+
+                except Exception as e:
+                    return Response({
+                        'status': 'error',
+                        'message': str(e)
+                    }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        except Exception as e:
+            return Response({
+                'status': 'error',
+                'message': str(e)
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
     @action(detail=False, methods=['POST'])
     def import_from_excel(self, request):
@@ -585,135 +863,198 @@ class TemplateViewSet(viewsets.ModelViewSet):
                 columns.append(column)
         
         return columns
-class DataSubmissionViewSet(viewsets.ModelViewSet):
-    serializer_class = DataSubmissionSerializer
-    permission_classes = [permissions.IsAuthenticated]
     
-    def get_queryset(self):
-        user = self.request.user
-        if user.role == 'faculty':
-            return DataSubmission.objects.filter(department=user.department)
-        return DataSubmission.objects.all()
+    @action(detail=True, methods=['get', 'post'], url_path='submission')
+    def submission_state(self, request, code=None):
+        """Get or create submission state for template"""
+        template = self.get_object()
+        current_year = AcademicYear.objects.filter(is_current=True).first()
 
-    def perform_create(self, serializer):
-        serializer.save(
-            submitted_by=self.request.user,
-            department=self.request.user.department
-        )
-
-
-    @action(detail=True, methods=['post'])
-    def submit_for_approval(self, request, pk=None):
-        submission = self.get_object()
-        if submission.submitted_by != request.user:
-            raise PermissionDenied("You don't have permission to submit this data")
-        
-        submission.status = 'submitted'
-        submission.save()
-        return Response({'status': 'submitted for approval'})
-
-    @action(detail=True, methods=['post'])
-    def approve(self, request, pk=None):
-        submission = self.get_object()
-        if request.user.role != 'iqac_director':
-            raise PermissionDenied("Only IQAC Director can approve submissions")
-        
-        submission.status = 'approved'
-        submission.verified_by = request.user
-        submission.save()
-        return Response({'status': 'submission approved'})
-
-    @action(detail=True, methods=['post'])
-    def reject(self, request, pk=None):
-        submission = self.get_object()
-        if request.user.role != 'iqac_director':
-            raise PermissionDenied("Only IQAC Director can reject submissions")
-        
-        reason = request.data.get('reason')
-        if not reason:
-            return Response(
-                {'error': 'Rejection reason is required'},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-        
-        submission.status = 'rejected'
-        submission.verified_by = request.user
-        submission.rejection_reason = reason
-        submission.save()
-        return Response({'status': 'submission rejected'})
-
-    @action(detail=True, methods=['post'])
-    def submit_data(self, request, pk=None):
-        submission = self.get_object()
-        if submission.submitted_by != request.user:
-            raise PermissionDenied("You don't have permission to submit data")
-        
-        data_rows = request.data.get('data_rows', [])
-        
-        with transaction.atomic():
-            # Clear existing data
-            submission.data_rows.all().delete()
-            
-            # Create new data rows
-            for index, row_data in enumerate(data_rows, 1):
-                SubmissionData.objects.create(
-                    submission=submission,
-                    row_number=index,
-                    data=row_data
-                )
-        
-        return Response({'status': 'data submitted successfully'})
-    
-    @action(detail=False, methods=['get'])
-    def export_template(self, request):
-        if request.user.role != 'iqac_director':
-            raise PermissionDenied("Only IQAC Director can export data")
-
-        template_code = request.query_params.get('template_code')
-        academic_year_id = request.query_params.get('academic_year')
-
-        if not template_code or not academic_year_id:
-            return Response(
-                {'error': 'template_code and academic_year are required'},
-                status=status.HTTP_400_BAD_REQUEST
-            )
+        if not current_year:
+            return Response({
+                'status': 'error',
+                'message': 'No active academic year found'
+            }, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            template = Template.objects.get(code=template_code)
-            academic_year = AcademicYear.objects.get(id=academic_year_id)
-        except (Template.DoesNotExist, AcademicYear.DoesNotExist):
-            return Response(
-                {'error': 'Invalid template_code or academic_year'},
-                status=status.HTTP_404_NOT_FOUND
+            submission = DataSubmission.objects.get(
+                template=template,
+                department=request.user.department,
+                academic_year=current_year
             )
+            serializer = DataSubmissionSerializer(submission)
+            return Response({
+                'status': 'success',
+                'data': serializer.data
+            })
+        except DataSubmission.DoesNotExist:
+            if request.method == 'POST':
+                submission = DataSubmission.objects.create(
+                    template=template,
+                    department=request.user.department,
+                    academic_year=current_year,
+                    submitted_by=request.user,
+                    status='draft'
+                )
+                serializer = DataSubmissionSerializer(submission)
+                return Response({
+                    'status': 'success',
+                    'data': serializer.data
+                })
+            return Response({
+                'status': 'success',
+                'data': None
+            })
 
-        # Get all approved submissions for this template and academic year
-        submissions = DataSubmission.objects.filter(
-            template=template,
-            academic_year=academic_year,
-            status='approved'
-        ).select_related('department').prefetch_related('data_rows')
+    @action(detail=True, methods=['post'], url_path='submit')
+    def submit_template(self, request, code=None):
+        """Submit template for review"""
+        template = self.get_object()
+        try:
+            submission = DataSubmission.objects.get(
+                template=template,
+                department=request.user.department,
+                academic_year=AcademicYear.objects.filter(is_current=True).first()
+            )
+            
+            if submission.status not in ['draft', 'rejected']:
+                return Response({
+                    'status': 'error',
+                    'message': 'Only draft or rejected submissions can be submitted'
+                }, status=status.HTTP_400_BAD_REQUEST)
 
-        # Create Excel file
-        exporter = ExcelExporter(template, academic_year)
-        workbook = exporter.export(submissions)
+            submission.status = 'submitted'
+            submission.submitted_at = timezone.now()
+            submission.save()
 
-        # Save to buffer
-        buffer = io.BytesIO()
-        workbook.save(buffer)
-        buffer.seek(0)
+            return Response({
+                'status': 'success',
+                'message': 'Template submitted successfully',
+                'data': DataSubmissionSerializer(submission).data
+            })
+        except DataSubmission.DoesNotExist:
+            return Response({
+                'status': 'error',
+                'message': 'No submission found'
+            }, status=status.HTTP_404_NOT_FOUND)
 
-        # Generate filename
-        filename = f"{template.code}_{academic_year.year}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.xlsx"
+    @action(detail=True, methods=['post'], url_path='withdraw')
+    def withdraw_submission(self, request, code=None):
+        """Withdraw submitted template"""
+        template = self.get_object()
+        try:
+            submission = DataSubmission.objects.get(
+                template=template,
+                department=request.user.department,
+                academic_year=AcademicYear.objects.filter(is_current=True).first()
+            )
+            
+            if submission.status != 'submitted':
+                return Response({
+                    'status': 'error',
+                    'message': 'Only submitted templates can be withdrawn'
+                }, status=status.HTTP_400_BAD_REQUEST)
 
-        # Create the HttpResponse object with Excel mime type
-        response = HttpResponse(
-            buffer.getvalue(),
-            content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-        )
-        response['Content-Disposition'] = f'attachment; filename="{filename}"'
+            submission.status = 'draft'
+            submission.save()
 
-        return response
+            return Response({
+                'status': 'success',
+                'message': 'Submission withdrawn successfully',
+                'data': DataSubmissionSerializer(submission).data
+            })
+        except DataSubmission.DoesNotExist:
+            return Response({
+                'status': 'error',
+                'message': 'No submission found'
+            }, status=status.HTTP_404_NOT_FOUND)
+            
+    @action(detail=True, methods=['post'], url_path='approve')
+    def approve_submission(self, request, code=None):
+        """Approve a submission (IQAC Director only)"""
+        if request.user.role != 'iqac_director':
+            return Response({
+                'status': 'error',
+                'message': 'Only IQAC Director can approve submissions'
+            }, status=status.HTTP_403_FORBIDDEN)
+
+        template = self.get_object()
+        try:
+            submission = DataSubmission.objects.get(
+                template=template,
+                department=request.data.get('department'),
+                academic_year=AcademicYear.objects.filter(is_current=True).first()
+            )
+            
+            if submission.status != 'submitted':
+                return Response({
+                    'status': 'error',
+                    'message': 'Only submitted data can be approved'
+                }, status=status.HTTP_400_BAD_REQUEST)
+
+            submission.status = 'approved'
+            submission.verified_by = request.user
+            submission.verified_at = timezone.now()
+            submission.save()
+
+            return Response({
+                'status': 'success',
+                'message': 'Submission approved successfully',
+                'data': DataSubmissionSerializer(submission).data
+            })
+        except DataSubmission.DoesNotExist:
+            return Response({
+                'status': 'error',
+                'message': 'No submission found'
+            }, status=status.HTTP_404_NOT_FOUND)
+
+    @action(detail=True, methods=['post'], url_path='reject')
+    def reject_submission(self, request, code=None):
+        """Reject a submission with comments (IQAC Director only)"""
+        if request.user.role != 'iqac_director':
+            return Response({
+                'status': 'error',
+                'message': 'Only IQAC Director can reject submissions'
+            }, status=status.HTTP_403_FORBIDDEN)
+
+        template = self.get_object()
+        try:
+            submission = DataSubmission.objects.get(
+                template=template,
+                department=request.data.get('department'),
+                academic_year=AcademicYear.objects.filter(is_current=True).first()
+            )
+            
+            if submission.status != 'submitted':
+                return Response({
+                    'status': 'error',
+                    'message': 'Only submitted data can be rejected'
+                }, status=status.HTTP_400_BAD_REQUEST)
+
+            reason = request.data.get('reason')
+            if not reason:
+                return Response({
+                    'status': 'error',
+                    'message': 'Rejection reason is required'
+                }, status=status.HTTP_400_BAD_REQUEST)
+
+            submission.status = 'rejected'
+            submission.verified_by = request.user
+            submission.verified_at = timezone.now()
+            submission.rejection_reason = reason
+            submission.save()
+
+            return Response({
+                'status': 'success',
+                'message': 'Submission rejected successfully',
+                'data': DataSubmissionSerializer(submission).data
+            })
+        except DataSubmission.DoesNotExist:
+            return Response({
+                'status': 'error',
+                'message': 'No submission found'
+            }, status=status.HTTP_404_NOT_FOUND)
+    
     
 class ExportTemplateView(APIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -815,29 +1156,64 @@ class DataSubmissionViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
     filterset_class = DataSubmissionFilter
     filter_backends = [DjangoFilterBackend, OrderingFilter]
-    ordering_fields = ['created_at', 'updated_at', 'academic_year__start_date']
+    ordering_fields = [
+        'created_at', 
+        'updated_at', 
+        'submitted_at',
+        'verified_at',
+        'academic_year__start_date',
+        'department__name',
+        'template__name',
+        'status'
+    ]
     ordering = ['-academic_year__start_date', '-updated_at']
-    
+
     def get_queryset(self):
-        """
-        Filter submissions based on user role:
-        - Faculty can only see their department's submissions
-        - IQAC Director can see all submissions
-        """
         user = self.request.user
         queryset = DataSubmission.objects.select_related(
-            'template', 'department', 'submitted_by', 'verified_by'
+            'template',
+            'department',
+            'academic_year',
+            'submitted_by',
+            'verified_by'
         ).prefetch_related('data_rows')
-        
+
+        # Filter based on user role
         if user.role == 'faculty':
-            return queryset.filter(department=user.department)
+            queryset = queryset.filter(department=user.department)
+        elif user.role == 'iqac_director':
+            # IQAC Director can see all submissions
+            pass
+        else:
+            # Other roles might have different restrictions
+            queryset = queryset.none()
+
+        return queryset
+
+    # Add this method to customize filter queryset
+    def filter_queryset(self, queryset):
+        queryset = super().filter_queryset(queryset)
+        
+        # Additional custom filtering
+        if self.request.query_params.get('is_current_year'):
+            queryset = queryset.filter(academic_year__is_current=True)
+            
+        search_query = self.request.query_params.get('search')
+        if search_query:
+            queryset = queryset.filter(
+                models.Q(template__name__icontains=search_query) |
+                models.Q(department__name__icontains=search_query) |
+                models.Q(submitted_by__username__icontains=search_query) |
+                models.Q(template__code__icontains=search_query)
+            )
+            
         return queryset
 
     def perform_create(self, serializer):
         """Set the submitted_by field to the current user"""
         serializer.save(submitted_by=self.request.user)
         
-    @action(detail=False)
+    @action(detail=False, methods=['get'], url_path='current_academic_year')
     def current_academic_year(self, request):
         """Get submissions for current academic year"""
         current_year = AcademicYear.objects.filter(is_current=True).first()
@@ -846,10 +1222,11 @@ class DataSubmissionViewSet(viewsets.ModelViewSet):
                 'status': 'error',
                 'message': 'No current academic year set'
             }, status=status.HTTP_404_NOT_FOUND)
-
+        print(current_year)
         queryset = self.filter_queryset(self.get_queryset().filter(
             academic_year=current_year
         ))
+        print(queryset)
         page = self.paginate_queryset(queryset)
         
         if page is not None:

@@ -39,10 +39,69 @@ urlpatterns = [
         'get': 'data',
         'post': 'data'
     }), name='template-data'),
+    path(
+    'templates/<str:code>/submission/',
+    TemplateViewSet.as_view({
+        'get': 'submission_state',
+        'post': 'submission_state'  # Changed from 'create_submission' to match viewset
+    }),
+    name='template-submission'
+    ),
+    
+    path(
+    'templates/<str:code>/submit/',
+    TemplateViewSet.as_view({
+        'post': 'submit_template'  # This matches your viewset method name
+    }),
+    name='template-submit'
+    ),    
+    
+    path(
+    'templates/<str:code>/withdraw/',
+    TemplateViewSet.as_view({
+        'post': 'withdraw_submission'
+    }),
+    name='template-withdraw'
+    ),
+    path(
+    'templates/<str:code>/approve/',
+    TemplateViewSet.as_view({
+        'post': 'approve_submission'
+    }),
+    name='template-approve'
+),
+
+path(
+    'templates/<str:code>/reject/',
+    TemplateViewSet.as_view({
+        'post': 'reject_submission'
+    }),
+    name='template-reject'
+),
     path('templates/<str:code>/data/row/', TemplateViewSet.as_view({
         'put': 'data_row',
         'delete': 'data_row'
     }), name='template-data-row'),
+    path(
+        'templates/<str:code>/sections/<int:section_index>/data/',
+        TemplateViewSet.as_view({
+            'get': 'section_data',
+            'post': 'section_data'
+        }),
+        name='template-section-data'
+    ),
+    
+    # Section-specific row operations
+    path(
+        'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/',
+        TemplateViewSet.as_view({
+            'put': 'section_data_row',
+            'delete': 'section_data_row'
+        }),
+        name='template-section-data-row'
+    ),
+    
+
     path('autocomplete/', NameAutocompleteView.as_view(), name='name-autocomplete'),
 ]
 

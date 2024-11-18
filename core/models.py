@@ -93,24 +93,239 @@ class AcademicYearTransition(models.Model):
         
         
 class Template(models.Model):
-    """Stores the structure of different NAAC document templates"""
     id = models.AutoField(primary_key=True)
-    code = models.CharField(max_length=20)
-    name = models.CharField(max_length=500)
-    # description = models.TextField(null=True, blank=True)
-    # headers = models.JSONField()
-    metadata = models.JSONField()
-    # columns = models.JSONField()
+    code = models.CharField(
+        max_length=20,
+        unique=True,
+        help_text="Template code (e.g., '2.1.1')"
+    )
+    name = models.CharField(
+        max_length=500,
+        help_text="Template name/title"
+    )
+    metadata = models.JSONField(
+        help_text="Template structure including sections, headers, and columns"
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    # column_groups = models.JSONField(default=list)
-    
+
+    class Meta:
+        ordering = ['code']
+        indexes = [
+            models.Index(fields=['code']),
+            models.Index(fields=['created_at']),
+        ]
+
     def __str__(self):
         return f"{self.code} - {self.name}"
+
+    def clean(self):
+        """Validate the template structure"""
+        if not isinstance(self.metadata, list):
+            raise ValidationError("Metadata must be a list of sections")
+
+        for section in self.metadata:
+            self._validate_section(section)
+
+    def _validate_section(self, section):
+        """Validate a single section structure"""
+        if not isinstance(section, dict):
+            raise ValidationError("Each section must be a dictionary")
+
+        required_keys = {'headers', 'columns'}
+        if not all(key in section for key in required_keys):
+            raise ValidationError(f"Section missing required keys: {required_keys}")
+
+        if not isinstance(section['headers'], list):
+            raise ValidationError("Headers must be a list")
+
+        if not isinstance(section['columns'], list):
+            raise ValidationError("Columns must be a list")
+
+        for column in section['columns']:
+            self._validate_column(column)
+
+    def _validate_column(self, column, is_nested=False):
+        """Validate a column definition"""
+        required_keys = {'name', 'type'}
+        if not all(key in column for key in required_keys):
+            raise ValidationError(f"Column missing required keys: {required_keys}")
+
+        if column['type'] not in ['single', 'group']:
+            raise ValidationError(f"Invalid column type: {column['type']}")
+
+        if column['type'] == 'single':
+            self._validate_single_column(column)
+        elif column['type'] == 'group':
+            if 'columns' not in column:
+                raise ValidationError("Group column must have nested columns")
+            for nested_column in column['columns']:
+                self._validate_column(nested_column, is_nested=True)
+
+    def _validate_single_column(self, column):
+        """Validate a single column definition"""
+        if 'data_type' not in column:
+            raise ValidationError("Single column must have data_type")
+
+        valid_data_types = {
+            'string', 'number', 'date', 'email', 
+            'url', 'option', 'file', 'boolean'
+        }
+        if column['data_type'] not in valid_data_types:
+            raise ValidationError(f"Invalid data_type: {column['data_type']}")
+
+        if column['data_type'] == 'option' and 'options' not in column:
+            raise ValidationError("Option type must have options list")
+
+    def get_flat_columns(self):
+        """Get flattened list of all columns"""
+        flat_columns = []
+        for section in self.metadata:
+            for column in section['columns']:
+                flat_columns.extend(self._flatten_column(column))
+        return flat_columns
+
+    def _flatten_column(self, column, prefix=''):
+        """Recursively flatten nested columns"""
+        flat_columns = []
+        current_name = f"{prefix}{column['name']}" if prefix else column['name']
+
+        if column['type'] == 'single':
+            flat_columns.append({
+                **column,
+                'name': current_name
+            })
+        elif column['type'] == 'group':
+            for nested_column in column['columns']:
+                flat_columns.extend(
+                    self._flatten_column(
+                        nested_column, 
+                        f"{current_name}_"
+                    )
+                )
+        return flat_columns
     
-    
-    # class Meta:
-    #     ordering = ['code']
+    def _flatten_column_names(self, columns, prefix=''):
+        """Get flattened dictionary of column names and their definitions"""
+        flat_columns = {}
+        for column in columns:
+            current_name = f"{prefix}{column['name']}" if prefix else column['name']
+            
+            if column['type'] == 'single':
+                flat_columns[current_name] = column
+            elif column['type'] == 'group':
+                flat_columns.update(
+                    self._flatten_column_names(
+                        column['columns'],
+                        f"{current_name}_"
+                    )
+                )
+        return flat_columns
+
+    def validate_data(self, data, section_index):
+        """Validate submitted data against template structure"""
+        if section_index >= len(self.metadata):
+            raise ValidationError("Invalid section index")
+
+        section = self.metadata[section_index]
+        flat_columns = self._flatten_column_names(section['columns'])
+        
+        # Validate required fields and data types
+        for column_name, column_def in flat_columns.items():
+            if column_def.get('required', False) and column_name not in data:
+                raise ValidationError(f"Required field missing: {column_name}")
+            
+            if column_name in data:
+                self._validate_field_value(
+                    data[column_name],
+                    column_def,
+                    column_name
+                )
+
+    def _flatten_column_names(self, columns, prefix=''):
+        """Get flattened dictionary of column names and their definitions"""
+        flat_columns = {}
+        for column in columns:
+            current_name = f"{prefix}{column['name']}" if prefix else column['name']
+            
+            if column['type'] == 'single':
+                flat_columns[current_name] = column
+            elif column['type'] == 'group':
+                flat_columns.update(
+                    self._flatten_column_names(
+                        column['columns'],
+                        f"{current_name}_"
+                    )
+                )
+        return flat_columns
+
+    def _validate_field_value(self, value, column_def, column_name):
+        """Validate a single field value"""
+        if value is None or value == '':
+            if column_def.get('required', False):
+                raise ValidationError(f"Required field empty: {column_name}")
+            return
+
+        data_type = column_def['data_type']
+        validation = column_def.get('validation', {})
+
+        try:
+            if data_type == 'number':
+                self._validate_number(value, validation)
+            elif data_type == 'date':
+                self._validate_date(value)
+            elif data_type == 'email':
+                self._validate_email(value)
+            elif data_type == 'url':
+                self._validate_url(value)
+            elif data_type == 'option':
+                self._validate_option(value, column_def.get('options', []))
+            elif data_type == 'string':
+                self._validate_string(value, validation)
+        except ValidationError as e:
+            raise ValidationError(f"{column_name}: {str(e)}")
+
+    # Add specific validation methods for each data type
+    def _validate_number(self, value, validation):
+        try:
+            num_value = float(value)
+            if 'min' in validation and num_value < validation['min']:
+                raise ValidationError(f"Value must be >= {validation['min']}")
+            if 'max' in validation and num_value > validation['max']:
+                raise ValidationError(f"Value must be <= {validation['max']}")
+        except (TypeError, ValueError):
+            raise ValidationError("Invalid number format")
+
+    def _validate_date(self, value):
+        # Add date validation logic
+        pass
+
+    def _validate_email(self, value):
+        # Add email validation logic
+        pass
+
+    def _validate_url(self, value):
+        # Add URL validation logic
+        pass
+
+    def _validate_option(self, value, options):
+        if value not in options:
+            raise ValidationError(f"Value must be one of: {', '.join(options)}")
+
+    def _validate_string(self, value, validation):
+        if not isinstance(value, str):
+            raise ValidationError("Value must be a string")
+        
+        if 'min_length' in validation and len(value) < validation['min_length']:
+            raise ValidationError(f"Minimum length is {validation['min_length']}")
+        
+        if 'max_length' in validation and len(value) > validation['max_length']:
+            raise ValidationError(f"Maximum length is {validation['max_length']}")
+        
+        if 'pattern' in validation and validation['pattern']:
+            import re
+            if not re.match(validation['pattern'], value):
+                raise ValidationError("Value does not match required pattern")
 
 class DataSubmission(models.Model):
     STATUS_CHOICES = (
@@ -172,6 +387,7 @@ class SubmissionData(models.Model):
 
     class Meta:
         ordering = ['section_index', 'row_number']
+        unique_together = ['submission', 'section_index', 'row_number']
         unique_together = ['submission', 'section_index', 'row_number']
 
     def clean(self):
