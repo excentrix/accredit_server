@@ -1664,7 +1664,8 @@ class DataSubmissionViewSet(viewsets.ModelViewSet):
                         'status': submission.status if submission else 'pending',
                         'last_updated': submission.updated_at if submission else None,
                         'verified_by': submission.verified_by.get_full_name() if submission and submission.verified_by else None,
-                        'rejection_reason': submission.rejection_reason if submission and submission.status == 'rejected' else None
+                        'rejection_reason': submission.rejection_reason if submission and submission.status == 'rejected' else None,
+                        'submission_id': submission.id if submission else None
                     })
 
                 department_data.append({
