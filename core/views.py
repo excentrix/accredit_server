@@ -47,6 +47,10 @@ from .serializers import (
 from .models import User, Department, Template, DataSubmission
 from .permissions import IsFaculty, IsIQACDirector, IsAdmin
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 class AuthViewSet(viewsets.ViewSet):
     permission_classes = [permissions.AllowAny]
 
@@ -134,13 +138,36 @@ class AcademicYearViewSet(viewsets.ModelViewSet):
     serializer_class = AcademicYearSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset().order_by('-start_date')  # Order by start_date instead of year
+        serializer = self.get_serializer(queryset, many=True)
+        return Response({
+            'status': 'success',
+            'data': serializer.data
+        })
+
+    @action(detail=False, methods=['GET'])
+    def current(self, request):
+        """Get the current academic year"""
+        try:
+            current_year = AcademicYear.objects.get(is_current=True)
+            serializer = self.get_serializer(current_year)
+            return Response({
+                'status': 'success',
+                'data': serializer.data
+            })
+        except AcademicYear.DoesNotExist:
+            return Response({
+                'status': 'error',
+                'message': 'No current academic year set'
+            }, status=status.HTTP_404_NOT_FOUND)
+
     @action(detail=True, methods=['post'])
     def set_current(self, request, pk=None):
         academic_year = self.get_object()
         academic_year.is_current = True
         academic_year.save()
         return Response({'status': 'academic year set as current'})
-
 class TemplateViewSet(viewsets.ModelViewSet):
     queryset = Template.objects.all()
     serializer_class = TemplateSerializer
@@ -1167,6 +1194,7 @@ class DataSubmissionViewSet(viewsets.ModelViewSet):
         'status'
     ]
     ordering = ['-academic_year__start_date', '-updated_at']
+    queryset = DataSubmission.objects.all()
 
     def get_queryset(self):
         user = self.request.user
@@ -1222,11 +1250,11 @@ class DataSubmissionViewSet(viewsets.ModelViewSet):
                 'status': 'error',
                 'message': 'No current academic year set'
             }, status=status.HTTP_404_NOT_FOUND)
-        print(current_year)
+        # print(current_year)
         queryset = self.filter_queryset(self.get_queryset().filter(
             academic_year=current_year
         ))
-        print(queryset)
+        # print(queryset)
         page = self.paginate_queryset(queryset)
         
         if page is not None:
@@ -1488,6 +1516,196 @@ class DataSubmissionViewSet(viewsets.ModelViewSet):
             'status': 'success',
             'message': 'Submission rejected'
         })
+        
+    @action(detail=False, methods=['GET'])
+    def stats(self, request):
+        """Get detailed submission statistics"""
+        current_date = timezone.now()
+        current_year = AcademicYear.objects.filter(is_current=True).first()
+        
+        if not current_year:
+            return Response({
+                'status': 'error',
+                'message': 'No current academic year set'
+            }, status=status.HTTP_404_NOT_FOUND)
+
+        # Base queryset for current academic year
+        base_queryset = self.get_queryset().filter(academic_year=current_year)
+
+        # Get today's date for daily stats
+        today = timezone.now().date()
+        yesterday = today - timezone.timedelta(days=1)
+        last_week = today - timezone.timedelta(days=7)
+        last_month = today - timezone.timedelta(days=30)
+
+        # Calculate review time for approved submissions
+        approved_submissions = base_queryset.filter(
+            status='approved',
+            verified_at__isnull=False
+        )
+        
+        avg_review_time = approved_submissions.annotate(
+            review_time=models.ExpressionWrapper(
+                models.F('verified_at') - models.F('submitted_at'),
+                output_field=models.DurationField()
+            )
+        ).aggregate(avg=models.Avg('review_time'))['avg']
+
+        stats = {
+            # Status counts
+            'pending': base_queryset.filter(status='submitted').count(),
+            'approved': base_queryset.filter(status='approved').count(),
+            'rejected': base_queryset.filter(status='rejected').count(),
+            'total': base_queryset.count(),
+            
+            # Time-based stats
+            'today': base_queryset.filter(created_at__date=today).count(),
+            'yesterday': base_queryset.filter(created_at__date=yesterday).count(),
+            'this_week': base_queryset.filter(created_at__date__gte=last_week).count(),
+            'this_month': base_queryset.filter(created_at__date__gte=last_month).count(),
+            
+            # Department stats
+            'departments': {
+                'total': base_queryset.values('department').distinct().count(),
+                'active_this_month': base_queryset.filter(
+                    created_at__date__gte=last_month
+                ).values('department').distinct().count(),
+            },
+            
+            # Performance metrics
+            'avg_review_time': str(avg_review_time) if avg_review_time else None,
+            'approval_rate': round(
+                (base_queryset.filter(status='approved').count() / base_queryset.count() * 100)
+                if base_queryset.count() > 0 else 0,
+                1
+            ),
+            
+            # Recent submissions
+            'recent_submissions': DataSubmissionSerializer(
+                base_queryset.order_by('-submitted_at')[:5],
+                many=True
+            ).data,
+            
+            # Template stats
+            'by_template': list(
+                base_queryset.values('template__name')
+                .annotate(
+                    total=models.Count('id'),
+                    pending=models.Count('id', filter=models.Q(status='submitted')),
+                    approved=models.Count('id', filter=models.Q(status='approved')),
+                    rejected=models.Count('id', filter=models.Q(status='rejected'))
+                )
+                .order_by('-total')
+            ),
+            
+            # Department stats
+            'by_department': list(
+                base_queryset.values('department__name')
+                .annotate(
+                    total=models.Count('id'),
+                    pending=models.Count('id', filter=models.Q(status='submitted')),
+                    approved=models.Count('id', filter=models.Q(status='approved')),
+                    rejected=models.Count('id', filter=models.Q(status='rejected'))
+                )
+                .order_by('-total')
+            )
+        }
+
+        return Response({
+            'status': 'success',
+            'data': stats
+        })
+        
+    @action(detail=False, methods=['GET'], url_path='department-breakdown', url_name='department-breakdown')
+    def department_breakdown(self, request):
+        logger.debug(f"Department breakdown called with academic_year: {request.query_params.get('academic_year')}")
+        try:
+            academic_year_id = request.query_params.get('academic_year')
+            
+            if academic_year_id:
+                academic_year = AcademicYear.objects.get(id=academic_year_id)
+            else:
+                academic_year = AcademicYear.objects.filter(is_current=True).first()
+                
+            if not academic_year:
+                return Response({
+                    'status': 'error',
+                    'message': 'No academic year found'
+                }, status=status.HTTP_404_NOT_FOUND)
+
+            # Get all departments and templates
+            departments = Department.objects.all()
+            templates = Template.objects.all()
+            total_templates = templates.count()
+
+            department_data = []
+            total_submissions = 0
+            completed_submissions = 0
+
+            for dept in departments:
+                # Get submissions for this department
+                submissions = DataSubmission.objects.filter(
+                    department=dept,
+                    academic_year=academic_year
+                ).select_related('template')
+
+                # Calculate department stats
+                dept_completed = submissions.filter(status='approved').count()
+                dept_total = total_templates
+                completion_rate = (dept_completed / dept_total * 100) if dept_total > 0 else 0
+
+                # Get template details
+                template_details = []
+                for template in templates:
+                    submission = submissions.filter(template=template).first()
+                    template_details.append({
+                        'code': template.code,
+                        'name': template.name,
+                        'status': submission.status if submission else 'pending',
+                        'last_updated': submission.updated_at if submission else None,
+                        'verified_by': submission.verified_by.get_full_name() if submission and submission.verified_by else None,
+                        'rejection_reason': submission.rejection_reason if submission and submission.status == 'rejected' else None
+                    })
+
+                department_data.append({
+                    'id': dept.id,
+                    'name': dept.name,
+                    'completion_rate': round(completion_rate, 1),
+                    'completed_submissions': dept_completed,
+                    'total_required': dept_total,
+                    'templates': template_details
+                })
+
+                total_submissions += dept_total
+                completed_submissions += dept_completed
+
+            overall_completion_rate = (completed_submissions / total_submissions * 100) if total_submissions > 0 else 0
+
+            return Response({
+                'status': 'success',
+                'data': {
+                    'academic_year': {
+                        'id': academic_year.id,
+                        'name': academic_year.name,  # Changed from year to name
+                        'is_current': academic_year.is_current
+                    },
+                    'overall_completion_rate': round(overall_completion_rate, 1),
+                    'completed_submissions': completed_submissions,
+                    'total_required_submissions': total_submissions,
+                    'departments': department_data
+                }
+            })
+
+        except AcademicYear.DoesNotExist:
+            return Response({
+                'status': 'error',
+                'message': 'Academic year not found'
+            }, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({
+                'status': 'error',
+                'message': str(e)
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
 class AcademicYearTransitionViewSet(viewsets.ViewSet):
     permission_classes = [permissions.IsAuthenticated, IsIQACDirector]

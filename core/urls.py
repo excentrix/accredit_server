@@ -25,6 +25,8 @@ urlpatterns = [
     path('auth/login/', AuthViewSet.as_view({'post': 'login'})),
     path('auth/logout/', AuthViewSet.as_view({'post': 'logout'})),
     path('auth/me/', AuthViewSet.as_view({'get': 'me'})),
+    path('submissions/stats/', DataSubmissionViewSet.as_view({'get': 'stats'}), name='submission-stats'),
+    path('submissions/department-breakdown/', DataSubmissionViewSet.as_view({'get': 'department_breakdown'}), name='department_breakdown'),
     path('templates/', TemplateViewSet.as_view({'get': 'list', 'post': 'create'}), name='template-list'),
     path('templates/import-excel/', TemplateViewSet.as_view({
             'post': 'import_from_excel'
