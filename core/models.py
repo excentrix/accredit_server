@@ -391,6 +391,33 @@ class DataSubmission(models.Model):
         # Ensure submission can only be verified if it's in submitted state
         if self.verified_by and self.status == 'draft':
             raise ValidationError("Cannot verify a draft submission")
+        
+    def get_status_display_class(self):
+        return f'status-{self.status.lower()}'
+
+    def can_be_verified(self):
+        return self.status == 'submitted'
+
+    def can_be_edited(self):
+        return self.status in ['draft', 'rejected']
+
+    def get_data_summary(self):
+        """Returns a summary of the submission data"""
+        total_rows = self.data_rows.count()
+        sections = self.data_rows.values('section_index').distinct().count()
+        return f"{total_rows} rows across {sections} sections"
+
+    def get_latest_history(self):
+        """Returns the latest history entry"""
+        return self.history.first()
+
+    class Meta:
+        ordering = ['-academic_year__start_date', '-updated_at']
+        unique_together = ['template', 'department', 'academic_year']
+        permissions = [
+            ("can_verify_submission", "Can verify submission"),
+            ("can_view_all_submissions", "Can view all submissions"),
+        ]
 
 class SubmissionData(models.Model):
     submission = models.ForeignKey(
@@ -405,9 +432,10 @@ class SubmissionData(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return f"Data for {self.submission} (Section {self.section_index}, Row {self.row_number})"
     class Meta:
         ordering = ['section_index', 'row_number']
-        unique_together = ['submission', 'section_index', 'row_number']
         unique_together = ['submission', 'section_index', 'row_number']
 
     def clean(self):
