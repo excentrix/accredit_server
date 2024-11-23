@@ -154,3 +154,10 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ),
 }
+
+
+EXPORTS_DIR = os.path.join(BASE_DIR, 'exports')
+
+# Create the directory if it doesn't exist
+if not os.path.exists(EXPORTS_DIR):
+    os.makedirs(EXPORTS_DIR)

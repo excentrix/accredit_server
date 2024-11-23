@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, Department, AcademicYear, Template, DataSubmission, SubmissionData, SubmissionHistory
+from .models import Criteria, User, Department, AcademicYear, Template, DataSubmission, SubmissionData, SubmissionHistory
 
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
@@ -84,4 +84,9 @@ class DataSubmissionSerializer(serializers.ModelSerializer):
                 "You can only submit data for your own department"
             )
         return data
-    
+
+
+class CriteriaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Criteria
+        fields = ['id', 'number', 'name', 'description']

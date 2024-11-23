@@ -1,3 +1,5 @@
+from wsgiref.util import FileWrapper
+from django.conf import settings
 from rest_framework import viewsets, status, permissions
 from rest_framework.filters import OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
@@ -6,7 +8,9 @@ from rest_framework.response import Response
 from rest_framework.exceptions import PermissionDenied, NotFound
 from django.shortcuts import get_object_or_404
 from django.db import transaction
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
+
+from .utils.excel_styles import ExcelStyles
 
 from .services import AcademicYearTransitionService
 from .tasks import process_academic_year_transition
@@ -22,16 +26,16 @@ import json
 from django.db import models
 
 from .models import (
-    AcademicYearTransition, SubmissionHistory, User, Department, AcademicYear, Template, 
+    AcademicYearTransition, Criteria, SubmissionHistory, User, Department, AcademicYear, Template, 
     DataSubmission, SubmissionData
 )
 from .serializers import (
-    UserSerializer, DepartmentSerializer, AcademicYearSerializer,
+    CriteriaSerializer, UserSerializer, DepartmentSerializer, AcademicYearSerializer,
     TemplateSerializer, DataSubmissionSerializer, SubmissionDataSerializer
 )
 
 import openpyxl
-from openpyxl import load_workbook
+from openpyxl import load_workbook, Workbook
 from django.core.exceptions import ValidationError
 
 from rest_framework import viewsets, status, permissions
@@ -51,6 +55,7 @@ from openpyxl.styles import Alignment, Font, PatternFill, Border, Side
 from openpyxl.utils import get_column_letter
 
 import logging
+from deepdiff import DeepDiff
 
 logger = logging.getLogger(__name__)
 
@@ -1740,140 +1745,124 @@ class AcademicYearTransitionViewSet(viewsets.ViewSet):
         })
         
 
+# from rest_framework.permissions import IsAuthenticated
+# from .permissions import IsIQACDirector
+import os
+
 class ExportTemplateView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request, *args, **kwargs):
         if request.user.role != 'iqac_director':
             return Response(
-                {"detail": "Only IQAC Director can export data"},
+                {"error": "Only IQAC Director can export data"},
                 status=status.HTTP_403_FORBIDDEN
             )
 
-        template_code = request.query_params.get('template_code')
-        academic_year_id = request.query_params.get('academic_year')
-
-        if not template_code or not academic_year_id:
-            return Response(
-                {'error': 'template_code and academic_year are required'},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-
         try:
-            template = Template.objects.get(code=template_code)
-            academic_year = AcademicYear.objects.get(id=academic_year_id)
-        except (Template.DoesNotExist, AcademicYear.DoesNotExist) as e:
-            return Response(
-                {'error': 'Invalid template_code or academic_year'},
-                status=status.HTTP_404_NOT_FOUND
-            )
+            # Create exports directory if it doesn't exist
+            exports_dir = os.path.join(settings.BASE_DIR, 'exports')
+            if not os.path.exists(exports_dir):
+                os.makedirs(exports_dir)
 
-        # Get all approved submissions
-        submissions = DataSubmission.objects.filter(
-            template=template,
-            academic_year=academic_year,
-            status='approved'
-        ).select_related('department').prefetch_related('data_rows')
+            # Get parameters
+            academic_year_id = request.query_params.get('academic_year')
+            export_type = request.query_params.get('type', 'template')
+            template_code = request.query_params.get('template_code')
+            criterion = request.query_params.get('criterion')
 
-        # Create workbook and styles
-        wb = Workbook()
-        ws = wb.active
-        ws.title = f"{template.code} Data"
+            print(f"Export request - Type: {export_type}, Academic Year: {academic_year_id}, Template: {template_code}, Criterion: {criterion}")
 
-        # Styles
-        header_font = Font(bold=True, size=12)
-        subheader_font = Font(bold=True, size=11)
-        normal_font = Font(size=10)
-        
-        header_fill = PatternFill(start_color="CCE5FF", end_color="CCE5FF", fill_type="solid")
-        subheader_fill = PatternFill(start_color="E6F3FF", end_color="E6F3FF", fill_type="solid")
-        
-        border = Border(
-            left=Side(style='thin'),
-            right=Side(style='thin'),
-            top=Side(style='thin'),
-            bottom=Side(style='thin')
-        )
-
-        # Write template information
-        ws['A1'] = f"Template: {template.name}"
-        ws['A2'] = f"Code: {template.code}"
-        ws['A3'] = f"Academic Year: {academic_year.name}"
-        ws['A4'] = f"Generated on: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
-
-        for cell in [ws['A1'], ws['A2'], ws['A3'], ws['A4']]:
-            cell.font = header_font
-
-        current_row = 6  # Start data from row 6
-
-        # Process each section
-        for section_index, section in enumerate(template.sections.all()):
-            # Write section header
-            section_header = ws.cell(row=current_row, column=1, value=f"Section {section_index + 1}: {section.name}")
-            section_header.font = header_font
-            section_header.fill = header_fill
-            ws.merge_cells(
-                start_row=current_row,
-                start_column=1,
-                end_row=current_row,
-                end_column=len(section.columns.all())
-            )
-            current_row += 1
-
-            # Write column headers
-            columns = section.columns.all().order_by('order')
-            for col_idx, column in enumerate(columns, start=1):
-                cell = ws.cell(row=current_row, column=col_idx, value=column.name)
-                cell.font = subheader_font
-                cell.fill = subheader_fill
-                cell.border = border
-                cell.alignment = Alignment(wrap_text=True)
-                
-                # Adjust column width based on content
-                ws.column_dimensions[get_column_letter(col_idx)].width = max(
-                    len(column.name.split()) * 5,
-                    15
+            if not academic_year_id:
+                return Response(
+                    {'error': 'academic_year is required'},
+                    status=status.HTTP_400_BAD_REQUEST
                 )
 
-            current_row += 1
+            try:
+                academic_year = AcademicYear.objects.get(id=academic_year_id)
+            except AcademicYear.DoesNotExist:
+                return Response(
+                    {'error': 'Invalid academic year'},
+                    status=status.HTTP_404_NOT_FOUND
+                )
 
-            # Write data for each submission
-            for submission in submissions:
-                section_data = submission.data_rows.filter(section_index=section_index)
-                
-                for row_data in section_data:
-                    for col_idx, column in enumerate(columns, start=1):
-                        value = row_data.data.get(column.name, '')
-                        cell = ws.cell(row=current_row, column=col_idx, value=value)
-                        cell.font = normal_font
-                        cell.border = border
-                        cell.alignment = Alignment(wrap_text=True)
-                    current_row += 1
+            # Get templates based on export type
+            if export_type == 'all':
+                templates = Template.objects.all().order_by('code')
+            elif export_type == 'criterion' and criterion:
+                templates = Template.objects.filter(code__startswith=f"{criterion}.").order_by('code')
+            elif export_type == 'template' and template_code:
+                templates = Template.objects.filter(code=template_code)
+            else:
+                return Response(
+                    {'error': 'Invalid export parameters'},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
 
-            # Add a blank row between sections
-            current_row += 1
+            if not templates.exists():
+                return Response(
+                    {'error': 'No templates found for the given criteria'},
+                    status=status.HTTP_404_NOT_FOUND
+                )
 
-        # Auto-adjust row heights
-        for row in ws.rows:
-            max_length = 0
-            for cell in row:
-                if cell.value:
-                    max_length = max(max_length, len(str(cell.value).split('\n')))
-            if max_length > 1:
-                ws.row_dimensions[cell.row].height = max_length * 15
+            print(f"Found {templates.count()} templates to export")
 
-        # Save to buffer
-        buffer = io.BytesIO()
-        wb.save(buffer)
-        buffer.seek(0)
+            # Create workbook
+            wb = Workbook()
+            wb.remove(wb.active)  # Remove default sheet
 
-        # Generate filename
-        filename = f"{template.code}_{academic_year.name}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.xlsx"
+            has_data = False
+            for template in templates:
+                print(f"Processing template: {template.code}")
+                submissions = DataSubmission.objects.filter(
+                    template=template,
+                    academic_year=academic_year,
+                    status='approved'
+                ).prefetch_related('data_rows')
 
-        response = HttpResponse(
-            buffer.getvalue(),
-            content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-        )
-        response['Content-Disposition'] = f'attachment; filename="{filename}"'
+                print(f"Found {submissions.count()} approved submissions for {template.code}")
 
-        return response
+                if submissions.exists():
+                    has_data = True
+                    ws = wb.create_sheet(title=template.code[:31])
+                    exporter = ExcelExporter(template, academic_year)
+                    exporter.export_to_worksheet(ws, submissions)
+
+            if not has_data:
+                return Response(
+                    {'error': 'No approved submissions found'},
+                    status=status.HTTP_404_NOT_FOUND
+                )
+
+            # Save to buffer
+            buffer = io.BytesIO()
+            wb.save(buffer)
+            buffer.seek(0)
+
+            # Generate filename
+            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+            filename = f"export_{export_type}_{academic_year.name}_{timestamp}.xlsx"
+
+            # Create response
+            response = HttpResponse(
+                buffer.getvalue(),
+                content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            )
+            response['Content-Disposition'] = f'attachment; filename="{filename}"'
+
+            print(f"Export completed successfully: {filename}")
+            return response
+
+        except Exception as e:
+            print(f"Export error: {str(e)}")
+            return Response(
+                {'error': str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+            
+            
+class CriteriaViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Criteria.objects.all()
+    serializer_class = CriteriaSerializer
+    permission_classes = [permissions.IsAuthenticated]

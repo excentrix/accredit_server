@@ -27,6 +27,21 @@ class User(AbstractUser):
 
     def __str__(self):
         return f"{self.username} ({self.get_role_display()})"
+    
+
+class Criteria(models.Model):
+    number = models.IntegerField(unique=True)
+    name = models.CharField(max_length=255)
+    description = models.TextField(null=True, blank=True)
+    order = models.IntegerField(default=0)
+
+    class Meta:
+        ordering = ['order', 'number']
+        verbose_name_plural = "Criteria"
+
+    def __str__(self):
+        return f"Criterion {self.number}: {self.name}"
+
 class Department(models.Model):
     name = models.CharField(max_length=100)
     code = models.CharField(max_length=20, unique=True)
@@ -102,6 +117,11 @@ class Template(models.Model):
     name = models.CharField(
         max_length=500,
         help_text="Template name/title"
+    )
+    criteria = models.ForeignKey(
+    'Criteria',
+    on_delete=models.PROTECT,
+    related_name='templates',
     )
     metadata = models.JSONField(
         help_text="Template structure including sections, headers, and columns"
