@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, Department, AcademicYear, Template, DataSubmission, SubmissionData
+from .models import User, Department, AcademicYear, Template, DataSubmission, SubmissionData, SubmissionHistory
 
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
@@ -48,6 +48,14 @@ class SubmissionDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = SubmissionData
         fields = ['section_index', 'row_number', 'data']
+        
+class SubmissionHistorySerializer(serializers.ModelSerializer):
+    performed_by_name = serializers.CharField(source='performed_by.get_full_name')
+    
+    class Meta:
+        model = SubmissionHistory
+        fields = ['id', 'action', 'performed_by_name', 'performed_at', 'details']
+
 
 class DataSubmissionSerializer(serializers.ModelSerializer):
     data_rows = SubmissionDataSerializer(many=True, read_only=True)
@@ -56,6 +64,7 @@ class DataSubmissionSerializer(serializers.ModelSerializer):
     template_code = serializers.CharField(source='template.code', read_only=True)
     submitted_by_name = serializers.CharField(source='submitted_by.get_full_name', read_only=True)
     academic_year_name = serializers.CharField(source='academic_year.name', read_only=True)
+    history = SubmissionHistorySerializer(many=True, read_only=True)
     
     class Meta:
         model = DataSubmission
@@ -63,7 +72,7 @@ class DataSubmissionSerializer(serializers.ModelSerializer):
             'id', 'template', 'department', 'academic_year', 'academic_year_name',
             'status', 'submitted_at', 'verified_by', 'verified_at', 
             'rejection_reason', 'data_rows', 'department_name', 
-            'template_name', 'template_code','submitted_by_name'
+            'template_name', 'template_code','submitted_by_name', 'history'
         ]
         read_only_fields = ['submitted_by', 'verified_by', 'verified_at']
 
@@ -75,3 +84,4 @@ class DataSubmissionSerializer(serializers.ModelSerializer):
                 "You can only submit data for your own department"
             )
         return data
+    

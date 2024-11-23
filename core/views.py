@@ -22,7 +22,7 @@ import json
 from django.db import models
 
 from .models import (
-    AcademicYearTransition, User, Department, AcademicYear, Template, 
+    AcademicYearTransition, SubmissionHistory, User, Department, AcademicYear, Template, 
     DataSubmission, SubmissionData
 )
 from .serializers import (
@@ -46,6 +46,9 @@ from .serializers import (
 )
 from .models import User, Department, Template, DataSubmission
 from .permissions import IsFaculty, IsIQACDirector, IsAdmin
+
+from openpyxl.styles import Alignment, Font, PatternFill, Border, Side
+from openpyxl.utils import get_column_letter
 
 import logging
 
@@ -1083,81 +1086,7 @@ class TemplateViewSet(viewsets.ModelViewSet):
             }, status=status.HTTP_404_NOT_FOUND)
     
     
-class ExportTemplateView(APIView):
-    permission_classes = [permissions.IsAuthenticated]
 
-    def get(self, request, *args, **kwargs):
-        print(f"Request user role: {request.user.role}")
-        print(f"Query params: {request.query_params}")
-
-        # Check if user is IQAC director
-        if request.user.role != 'iqac_director':
-            print("Access denied: User is not IQAC director")
-            return Response(
-                {"detail": "Only IQAC Director can export data"},
-                status=status.HTTP_403_FORBIDDEN
-            )
-
-        template_code = request.query_params.get('template_code')
-        academic_year_id = request.query_params.get('academic_year')
-
-        print(f"Looking for template: {template_code}, academic year: {academic_year_id}")
-
-        if not template_code or not academic_year_id:
-            print("Missing required parameters")
-            return Response(
-                {'error': 'template_code and academic_year are required'},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-
-        try:
-            template = Template.objects.get(code=template_code)
-            academic_year = AcademicYear.objects.get(id=academic_year_id)
-            print(f"Found template: {template.code} and academic year: {academic_year.year}")
-        except (Template.DoesNotExist, AcademicYear.DoesNotExist) as e:
-            print(f"Error finding template or academic year: {str(e)}")
-            return Response(
-                {'error': 'Invalid template_code or academic_year'},
-                status=status.HTTP_404_NOT_FOUND
-            )
-
-        # Get all approved submissions
-        submissions = DataSubmission.objects.filter(
-            template=template,
-            academic_year=academic_year,
-            status='approved'
-        ).select_related('department').prefetch_related('data_rows')
-
-        print(f"Found {submissions.count()} approved submissions")
-
-        # Create Excel file
-        try:
-            exporter = ExcelExporter(template, academic_year)
-            workbook = exporter.export(submissions)
-            print("Successfully created Excel file")
-        except Exception as e:
-            print(f"Error generating Excel file: {str(e)}")
-            return Response(
-                {'error': f'Error generating Excel file: {str(e)}'},
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR
-            )
-
-        # Save to buffer
-        buffer = io.BytesIO()
-        workbook.save(buffer)
-        buffer.seek(0)
-
-        # Generate filename
-        filename = f"{template.code}_{academic_year.year}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.xlsx"
-        print(f"Sending file: {filename}")
-
-        response = HttpResponse(
-            buffer.getvalue(),
-            content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-        )
-        response['Content-Disposition'] = f'attachment; filename="{filename}"'
-
-        return response
     
 class NameAutocompleteView(APIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -1238,8 +1167,12 @@ class DataSubmissionViewSet(viewsets.ModelViewSet):
         return queryset
 
     def perform_create(self, serializer):
-        """Set the submitted_by field to the current user"""
-        serializer.save(submitted_by=self.request.user)
+        submission = serializer.save(submitted_by=self.request.user)
+        SubmissionHistory.objects.create(
+            submission=submission,
+            action='created',
+            performed_by=self.request.user
+        )
         
     @action(detail=False, methods=['get'], url_path='current_academic_year')
     def current_academic_year(self, request):
@@ -1335,9 +1268,50 @@ class DataSubmissionViewSet(viewsets.ModelViewSet):
                 'message': str(e)
             }, status=status.HTTP_400_BAD_REQUEST)
 
-    @action(detail=True, methods=['put'])
+    def _track_changes(self, submission, previous_state, new_state, action, user, additional_details=None):
+        """Track changes in submission history"""
+        diff = DeepDiff(previous_state, new_state, ignore_order=True)
+        
+        details = {
+            'changes': [],
+            'additional_info': additional_details
+        }
+
+        # Process changes
+        if 'values_changed' in diff:
+            for path, change in diff['values_changed'].items():
+                details['changes'].append({
+                    'type': 'changed',
+                    'path': path,
+                    'old_value': change['old_value'],
+                    'new_value': change['new_value']
+                })
+
+        if 'dictionary_item_added' in diff:
+            for path in diff['dictionary_item_added']:
+                details['changes'].append({
+                    'type': 'added',
+                    'path': path
+                })
+
+        if 'dictionary_item_removed' in diff:
+            for path in diff['dictionary_item_removed']:
+                details['changes'].append({
+                    'type': 'removed',
+                    'path': path
+                })
+
+        SubmissionHistory.objects.create(
+            submission=submission,
+            action=action,
+            performed_by=user,
+            details=details,
+            previous_data=previous_state,
+            new_data=new_state
+        )
+
+    @action(detail=True, methods=['PUT'])
     def update_row(self, request, pk=None):
-        """Update an existing row"""
         submission = self.get_object()
         
         if submission.status not in ['draft', 'rejected']:
@@ -1346,23 +1320,33 @@ class DataSubmissionViewSet(viewsets.ModelViewSet):
                 'message': 'Cannot modify data in current status'
             }, status=status.HTTP_400_BAD_REQUEST)
 
-        row_id = request.data.get('row_id')
-        if not row_id:
-            return Response({
-                'status': 'error',
-                'message': 'row_id is required'
-            }, status=status.HTTP_400_BAD_REQUEST)
+        previous_state = self._get_submission_data_state(submission)
 
         try:
             with transaction.atomic():
+                # Update the data
+                row_id = request.data.get('row_id')
+                new_data = request.data.get('data', {})
+                
                 submission_data = get_object_or_404(
                     SubmissionData, 
                     submission=submission,
                     id=row_id
                 )
-                submission_data.data = request.data.get('data', {})
+                
+                submission_data.data = new_data
                 submission_data.full_clean()
                 submission_data.save()
+
+                # Get new state and track changes
+                new_state = self._get_submission_data_state(submission)
+                self._track_changes(
+                    submission=submission,
+                    previous_state=previous_state,
+                    new_state=new_state,
+                    action='updated',
+                    user=request.user
+                )
 
                 return Response({
                     'status': 'success',
@@ -1457,15 +1441,8 @@ class DataSubmissionViewSet(viewsets.ModelViewSet):
                 'message': str(e)
             }, status=status.HTTP_400_BAD_REQUEST)
 
-    @action(detail=True, methods=['post'])
+    @action(detail=True, methods=['POST'])
     def approve(self, request, pk=None):
-        """Approve a submission (IQAC Director only)"""
-        if not request.user.role == 'iqac_director':
-            return Response({
-                'status': 'error',
-                'message': 'Only IQAC Director can approve submissions'
-            }, status=status.HTTP_403_FORBIDDEN)
-
         submission = self.get_object()
         if submission.status != 'submitted':
             return Response({
@@ -1478,28 +1455,23 @@ class DataSubmissionViewSet(viewsets.ModelViewSet):
         submission.verified_at = timezone.now()
         submission.save()
 
+        # Record history
+        SubmissionHistory.objects.create(
+            submission=submission,
+            action='approved',
+            performed_by=request.user
+        )
+
         return Response({
             'status': 'success',
             'message': 'Submission approved'
         })
 
-    @action(detail=True, methods=['post'])
+    @action(detail=True, methods=['POST'])
     def reject(self, request, pk=None):
-        """Reject a submission with comments (IQAC Director only)"""
-        if not request.user.role == 'iqac_director':
-            return Response({
-                'status': 'error',
-                'message': 'Only IQAC Director can reject submissions'
-            }, status=status.HTTP_403_FORBIDDEN)
-
         submission = self.get_object()
-        if submission.status != 'submitted':
-            return Response({
-                'status': 'error',
-                'message': 'Only submitted data can be rejected'
-            }, status=status.HTTP_400_BAD_REQUEST)
-
         reason = request.data.get('reason')
+        
         if not reason:
             return Response({
                 'status': 'error',
@@ -1511,6 +1483,14 @@ class DataSubmissionViewSet(viewsets.ModelViewSet):
         submission.verified_at = timezone.now()
         submission.rejection_reason = reason
         submission.save()
+
+        # Record history
+        SubmissionHistory.objects.create(
+            submission=submission,
+            action='rejected',
+            performed_by=request.user,
+            details={'reason': reason}
+        )
 
         return Response({
             'status': 'success',
@@ -1707,6 +1687,8 @@ class DataSubmissionViewSet(viewsets.ModelViewSet):
                 'status': 'error',
                 'message': str(e)
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            
+    
         
 class AcademicYearTransitionViewSet(viewsets.ViewSet):
     permission_classes = [permissions.IsAuthenticated, IsIQACDirector]
@@ -1756,3 +1738,142 @@ class AcademicYearTransitionViewSet(viewsets.ViewSet):
             'error_log': transition.error_log,
             'processed_by': transition.processed_by.get_full_name()
         })
+        
+
+class ExportTemplateView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        if request.user.role != 'iqac_director':
+            return Response(
+                {"detail": "Only IQAC Director can export data"},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        template_code = request.query_params.get('template_code')
+        academic_year_id = request.query_params.get('academic_year')
+
+        if not template_code or not academic_year_id:
+            return Response(
+                {'error': 'template_code and academic_year are required'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        try:
+            template = Template.objects.get(code=template_code)
+            academic_year = AcademicYear.objects.get(id=academic_year_id)
+        except (Template.DoesNotExist, AcademicYear.DoesNotExist) as e:
+            return Response(
+                {'error': 'Invalid template_code or academic_year'},
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        # Get all approved submissions
+        submissions = DataSubmission.objects.filter(
+            template=template,
+            academic_year=academic_year,
+            status='approved'
+        ).select_related('department').prefetch_related('data_rows')
+
+        # Create workbook and styles
+        wb = Workbook()
+        ws = wb.active
+        ws.title = f"{template.code} Data"
+
+        # Styles
+        header_font = Font(bold=True, size=12)
+        subheader_font = Font(bold=True, size=11)
+        normal_font = Font(size=10)
+        
+        header_fill = PatternFill(start_color="CCE5FF", end_color="CCE5FF", fill_type="solid")
+        subheader_fill = PatternFill(start_color="E6F3FF", end_color="E6F3FF", fill_type="solid")
+        
+        border = Border(
+            left=Side(style='thin'),
+            right=Side(style='thin'),
+            top=Side(style='thin'),
+            bottom=Side(style='thin')
+        )
+
+        # Write template information
+        ws['A1'] = f"Template: {template.name}"
+        ws['A2'] = f"Code: {template.code}"
+        ws['A3'] = f"Academic Year: {academic_year.name}"
+        ws['A4'] = f"Generated on: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+
+        for cell in [ws['A1'], ws['A2'], ws['A3'], ws['A4']]:
+            cell.font = header_font
+
+        current_row = 6  # Start data from row 6
+
+        # Process each section
+        for section_index, section in enumerate(template.sections.all()):
+            # Write section header
+            section_header = ws.cell(row=current_row, column=1, value=f"Section {section_index + 1}: {section.name}")
+            section_header.font = header_font
+            section_header.fill = header_fill
+            ws.merge_cells(
+                start_row=current_row,
+                start_column=1,
+                end_row=current_row,
+                end_column=len(section.columns.all())
+            )
+            current_row += 1
+
+            # Write column headers
+            columns = section.columns.all().order_by('order')
+            for col_idx, column in enumerate(columns, start=1):
+                cell = ws.cell(row=current_row, column=col_idx, value=column.name)
+                cell.font = subheader_font
+                cell.fill = subheader_fill
+                cell.border = border
+                cell.alignment = Alignment(wrap_text=True)
+                
+                # Adjust column width based on content
+                ws.column_dimensions[get_column_letter(col_idx)].width = max(
+                    len(column.name.split()) * 5,
+                    15
+                )
+
+            current_row += 1
+
+            # Write data for each submission
+            for submission in submissions:
+                section_data = submission.data_rows.filter(section_index=section_index)
+                
+                for row_data in section_data:
+                    for col_idx, column in enumerate(columns, start=1):
+                        value = row_data.data.get(column.name, '')
+                        cell = ws.cell(row=current_row, column=col_idx, value=value)
+                        cell.font = normal_font
+                        cell.border = border
+                        cell.alignment = Alignment(wrap_text=True)
+                    current_row += 1
+
+            # Add a blank row between sections
+            current_row += 1
+
+        # Auto-adjust row heights
+        for row in ws.rows:
+            max_length = 0
+            for cell in row:
+                if cell.value:
+                    max_length = max(max_length, len(str(cell.value).split('\n')))
+            if max_length > 1:
+                ws.row_dimensions[cell.row].height = max_length * 15
+
+        # Save to buffer
+        buffer = io.BytesIO()
+        wb.save(buffer)
+        buffer.seek(0)
+
+        # Generate filename
+        filename = f"{template.code}_{academic_year.name}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.xlsx"
+
+        response = HttpResponse(
+            buffer.getvalue(),
+            content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+        response['Content-Disposition'] = f'attachment; filename="{filename}"'
+
+        return response

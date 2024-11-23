@@ -439,3 +439,16 @@ class SubmissionData(models.Model):
                     raise ValidationError(f"Invalid option for {column['name']}: {value}")
         except (ValueError, ValidationError) as e:
             raise ValidationError(f"Invalid {column['data_type']} for {column['name']}: {value}")
+        
+        
+class SubmissionHistory(models.Model):
+    submission = models.ForeignKey('DataSubmission', on_delete=models.CASCADE, related_name='history')
+    action = models.CharField(max_length=50)
+    performed_by = models.ForeignKey('User', on_delete=models.SET_NULL, null=True)
+    performed_at = models.DateTimeField(auto_now_add=True)
+    details = models.JSONField(null=True, blank=True)
+    previous_data = models.JSONField(null=True, blank=True)  # Store previous state
+    new_data = models.JSONField(null=True, blank=True)      # Store new state
+
+    class Meta:
+        ordering = ['-performed_at']
