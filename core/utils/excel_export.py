@@ -4,6 +4,8 @@ from openpyxl.styles import Alignment, PatternFill, Font, Border, Side
 from openpyxl.utils import get_column_letter
 from datetime import datetime
 
+from .excel_styles import ExcelStyles
+
 class ExcelExporter:
     def __init__(self, template, academic_year):
         self.template = template
@@ -12,48 +14,16 @@ class ExcelExporter:
         self.ws = self.wb.active
         self.current_row = 1
         
-        # Define styles
-        self.header_style = {
-            'font': Font(bold=True, size=12),
-            'fill': PatternFill(start_color="CCE5FF", end_color="CCE5FF", fill_type="solid"),
-            'border': Border(
-                left=Side(style='thin'),
-                right=Side(style='thin'),
-                top=Side(style='thin'),
-                bottom=Side(style='thin')
-            ),
-            'alignment': Alignment(horizontal='center', vertical='center', wrap_text=True)
-        }
-        
-        self.subheader_style = {
-            'font': Font(bold=True, size=11),
-            'fill': PatternFill(start_color="E6F3FF", end_color="E6F3FF", fill_type="solid"),
-            'border': Border(
-                left=Side(style='thin'),
-                right=Side(style='thin'),
-                top=Side(style='thin'),
-                bottom=Side(style='thin')
-            ),
-            'alignment': Alignment(horizontal='center', vertical='center', wrap_text=True)
-        }
-        
-        self.data_style = {
-            'font': Font(size=10),
-            'border': Border(
-                left=Side(style='thin'),
-                right=Side(style='thin'),
-                top=Side(style='thin'),
-                bottom=Side(style='thin')
-            ),
-            'alignment': Alignment(vertical='center', wrap_text=True)
-        }
+        # Use ExcelStyles instead of defining styles directly
+        self.header_style = ExcelStyles.get_header_style()
+        self.subheader_style = ExcelStyles.get_subheader_style()
+        self.data_style = ExcelStyles.get_data_style()
+        self.title_style = ExcelStyles.get_title_style()
 
     def _apply_styles(self, cell, styles):
-        for key, value in styles.items():
-            setattr(cell, key, value)
+        ExcelStyles.apply_styles(cell, styles)
 
     def _write_title_info(self):
-        # Write template and academic year information
         title_info = [
             f"Template: {self.template.name}",
             f"Code: {self.template.code}",
@@ -63,7 +33,7 @@ class ExcelExporter:
 
         for info in title_info:
             cell = self.ws.cell(row=self.current_row, column=1, value=info)
-            cell.font = Font(bold=True, size=12)
+            ExcelStyles.apply_styles(cell, self.title_style)  # Use title style
             self.current_row += 1
 
         # Add spacing
@@ -77,13 +47,17 @@ class ExcelExporter:
                 flat_columns.append(column)
             elif column['type'] == 'group':
                 for nested_column in column['columns']:
-                    nested_column['name'] = f"{column['name']}_{nested_column['name']}"
-                    flat_columns.append(nested_column)
+                    # Create a new column object to avoid modifying the original
+                    flattened_column = nested_column.copy()
+                    # Construct the flattened name to match the data structure
+                    flattened_column['name'] = f"{column['name']}_{nested_column['name']}"
+                    # Also store the display name for better readability
+                    flattened_column['display_name'] = f"{column.get('display_name', column['name'])} - {nested_column.get('display_name', nested_column['name'])}"
+                    flat_columns.append(flattened_column)
         return flat_columns
 
     def _write_section(self, section_index, submissions):
         try:
-            # Get section from template metadata
             if not self.template.metadata or section_index >= len(self.template.metadata):
                 print(f"Invalid section index: {section_index}")
                 return
@@ -92,53 +66,101 @@ class ExcelExporter:
             
             # Write section headers if present
             if 'headers' in section and section['headers']:
-                # Get the number of columns for merging
-                columns = self._get_flattened_columns(section['columns'])
-                last_column = len(columns) if columns else 1
+                total_columns = sum(
+                    len(col['columns']) if col['type'] == 'group' else 1 
+                    for col in section['columns']
+                )
                 
                 for header in section['headers']:
-                    merge_range = f'A{self.current_row}:{get_column_letter(max(1, last_column))}{self.current_row}'
+                    merge_range = f'A{self.current_row}:{get_column_letter(total_columns)}{self.current_row}'
                     self.ws.merge_cells(merge_range)
                     header_cell = self.ws.cell(row=self.current_row, column=1, value=header)
                     self._apply_styles(header_cell, self.header_style)
                     self.current_row += 1
 
-            # Get flattened columns
-            columns = self._get_flattened_columns(section['columns'])
-            if not columns:
-                print("No columns found in section")
-                return
+            # Write column group headers and subheaders
+            current_col = 1
+            column_mapping = []  # Store column name mapping for data rows
 
-            # Write column headers
-            for col_idx, column in enumerate(columns, start=1):
-                cell = self.ws.cell(row=self.current_row, column=col_idx, value=column['name'])
-                self._apply_styles(cell, self.subheader_style)
-                
-                # Set column width
-                column_letter = get_column_letter(col_idx)
-                self.ws.column_dimensions[column_letter].width = max(
-                    len(str(column['name'])) + 2,
-                    15
-                )
+            # First row: Group headers
+            group_header_row = self.current_row
+            for column in section['columns']:
+                if column['type'] == 'group':
+                    # Calculate span for group
+                    colspan = len(column['columns'])
+                    if colspan > 1:
+                        merge_range = f'{get_column_letter(current_col)}{group_header_row}:{get_column_letter(current_col + colspan - 1)}{group_header_row}'
+                        self.ws.merge_cells(merge_range)
+                    
+                    cell = self.ws.cell(
+                        row=group_header_row,
+                        column=current_col,
+                        value=column.get('display_name', column['name'])
+                    )
+                    self._apply_styles(cell, self.header_style)
 
-            self.current_row += 1
+                    # Write subheaders in next row
+                    for idx, subcol in enumerate(column['columns']):
+                        subcol_name = f"{column['name']}_{subcol['name']}"
+                        column_mapping.append(subcol_name)
+                        
+                        cell = self.ws.cell(
+                            row=group_header_row + 1,
+                            column=current_col + idx,
+                            value=subcol.get('display_name', subcol['name'])
+                        )
+                        self._apply_styles(cell, self.subheader_style)
+                        
+                        # Set column width
+                        col_letter = get_column_letter(current_col + idx)
+                        self.ws.column_dimensions[col_letter].width = max(
+                            len(str(subcol.get('display_name', subcol['name']))) + 2,
+                            15
+                        )
+                    
+                    current_col += colspan
+                else:
+                    # Single column
+                    column_mapping.append(column['name'])
+                    cell = self.ws.cell(
+                        row=group_header_row,
+                        column=current_col,
+                        value=column.get('display_name', column['name'])
+                    )
+                    self._apply_styles(cell, self.header_style)
+                    
+                    # Set column width
+                    col_letter = get_column_letter(current_col)
+                    self.ws.column_dimensions[col_letter].width = max(
+                        len(str(column.get('display_name', column['name']))) + 2,
+                        15
+                    )
+                    
+                    current_col += 1
+
+            # Move to data rows
+            self.current_row = group_header_row + 2
 
             # Write data rows
             for submission in submissions:
                 rows = submission.data_rows.filter(section_index=section_index)
                 for row_data in rows:
-                    for col_idx, column in enumerate(columns, start=1):
-                        value = row_data.data.get(column['name'], '')
+                    current_col = 1
+                    data = row_data.data.get('data', row_data.data)  # Handle both nested and flat data
+                    
+                    for col_name in column_mapping:
+                        value = data.get(col_name, '')
                         cell = self.ws.cell(
-                            row=self.current_row, 
-                            column=col_idx, 
+                            row=self.current_row,
+                            column=current_col,
                             value=value
                         )
                         style = self.data_style.copy()
-                        # Left align text for longer fields
                         if len(str(value)) > 50:
                             style['alignment'] = Alignment(horizontal='left', vertical='center', wrap_text=True)
                         self._apply_styles(cell, style)
+                        current_col += 1
+                    
                     self.current_row += 1
 
             # Add spacing after section
