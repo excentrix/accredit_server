@@ -30,17 +30,24 @@ class User(AbstractUser):
     
 
 class Criteria(models.Model):
-    number = models.IntegerField(unique=True)
+    board = models.ForeignKey(
+        'Board', 
+        on_delete=models.PROTECT,
+        related_name='criteria'
+    )
+    number = models.IntegerField()
     name = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
     order = models.IntegerField(default=0)
+    
 
     class Meta:
         ordering = ['order', 'number']
         verbose_name_plural = "Criteria"
+        unique_together = ['board', 'number']  # Changed from just unique=True on number
 
     def __str__(self):
-        return f"Criterion {self.number}: {self.name}"
+        return f"{self.board.name} Criterion {self.number}: {self.name}"
 
 class Department(models.Model):
     name = models.CharField(max_length=100)
@@ -106,6 +113,12 @@ class AcademicYearTransition(models.Model):
         ordering = ['-started_at']
         unique_together = ['from_year', 'to_year']
         
+class Board(models.Model):
+    name = models.CharField(max_length=100)
+    code = models.CharField(max_length=20, unique=True)
+    
+    def __str__(self):
+        return self.name
         
 class Template(models.Model):
     id = models.AutoField(primary_key=True)
@@ -128,6 +141,7 @@ class Template(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
 
     class Meta:
         ordering = ['code']
@@ -135,7 +149,12 @@ class Template(models.Model):
             models.Index(fields=['code']),
             models.Index(fields=['created_at']),
         ]
-
+        unique_together = ['criteria', 'code']
+        
+    @property
+    def board(self):
+        return self.criteria.board
+    
     def __str__(self):
         return f"{self.code} - {self.name}"
 
@@ -374,11 +393,14 @@ class DataSubmission(models.Model):
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
+    
     class Meta:
         unique_together = ['template', 'department', 'academic_year']
         ordering = ['-academic_year__start_date', '-updated_at']
 
+    @property
+    def board(self):
+        return self.template.criteria.board
 
     def __str__(self):
         return f"{self.template.code} - {self.department.name} ({self.academic_year})"
@@ -487,8 +509,7 @@ class SubmissionData(models.Model):
                     raise ValidationError(f"Invalid option for {column['name']}: {value}")
         except (ValueError, ValidationError) as e:
             raise ValidationError(f"Invalid {column['data_type']} for {column['name']}: {value}")
-        
-        
+              
 class SubmissionHistory(models.Model):
     submission = models.ForeignKey('DataSubmission', on_delete=models.CASCADE, related_name='history')
     action = models.CharField(max_length=50)

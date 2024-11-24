@@ -1,7 +1,7 @@
 # core/admin.py
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import User, Department, AcademicYear, Template, DataSubmission, SubmissionData
+from .models import Criteria, User, Department, AcademicYear, Template, DataSubmission, SubmissionData, Board
 from django.utils.safestring import mark_safe
 import json
 from django.utils import timezone
@@ -20,6 +20,10 @@ class CustomUserAdmin(UserAdmin):
 class DepartmentAdmin(admin.ModelAdmin):
     list_display = ('name', 'code')
     search_fields = ('name', 'code')
+@admin.register(Criteria)
+class CriteriaAdmin(admin.ModelAdmin):
+    list_display = ('board', 'number', 'name', 'description')
+    search_fields = ('name', 'number')
 
 @admin.register(AcademicYear)
 class AcademicYearAdmin(admin.ModelAdmin):
@@ -224,3 +228,7 @@ class SubmissionDataAdmin(admin.ModelAdmin):
         css = {
             'all': ['admin/css/custom.css']
         }
+
+@admin.register(Board)
+class BoardAdmin(admin.ModelAdmin):
+    list_display = ('name', 'code')
