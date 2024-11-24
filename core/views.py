@@ -1841,8 +1841,12 @@ class ExportTemplateView(APIView):
             buffer.seek(0)
 
             # Generate filename
-            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-            filename = f"export_{export_type}_{academic_year.name}_{timestamp}.xlsx"
+            if export_type == 'criterion' and criterion:
+                filename = f"export_{export_type}_{criterion}_{academic_year.name}.xlsx"
+            elif export_type == 'template' and template_code:
+                filename = f"export_{export_type}_{template_code}_{academic_year.name}.xlsx"
+            else:
+                filename = f"export_{export_type}_{academic_year.name}.xlsx"
 
             # Create response
             response = HttpResponse(
