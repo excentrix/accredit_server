@@ -228,10 +228,12 @@ class TemplateViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         selected_board = request.query_params.get('board')
         print(f"Selected board: {selected_board}")  # Debug print
+
         queryset = self.get_queryset().order_by('code')
-        template_list = queryset.filter(board=selected_board) if selected_board else queryset
+        if selected_board:
+            queryset = queryset.filter(board__code=selected_board)
         print(f"List called, found {queryset.count()} templates")  # Debug print
-        serializer = self.get_serializer(template_list, many=True)
+        serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
     
 
