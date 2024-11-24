@@ -128,6 +128,7 @@ class Template(models.Model):
     'Criteria',
     on_delete=models.PROTECT,
     related_name='templates',
+    null=True,
     )
     metadata = models.JSONField(
         help_text="Template structure including sections, headers, and columns"
@@ -136,8 +137,9 @@ class Template(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     board = models.ForeignKey(
         'Board', 
-        on_delete=models.PROTECT,
-        default=Board.objects.get(code="NAAC").id
+        on_delete=models.SET_NULL,
+        null=True,
+        # default=Board.objects.get(code="NAAC").id
     )
 
     class Meta:
@@ -387,8 +389,9 @@ class DataSubmission(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     board = models.ForeignKey(
         'Board', 
-        on_delete=models.PROTECT,
-        default=Board.objects.get(code="NAAC").id
+        on_delete=models.SET_NULL,
+        null=True,
+        # default=Board.objects.get(code="NAAC").id
     )
     class Meta:
         unique_together = ['template', 'department', 'academic_year']
