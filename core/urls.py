@@ -96,11 +96,6 @@ urlpatterns = [
         name='template-section-data'
     ),
 
-    path(
-        'boards/',
-        BoardViewSet.as_view(),
-        name='get'
-    ),
     
     # Section-specific row operations
     path(
@@ -113,6 +108,17 @@ urlpatterns = [
     ),
     
 
+    path('boards/', BoardViewSet.as_view(), name='board-list'),
+    path(
+        'boards/<str:code>/criteria/',
+        CriteriaViewSet.as_view({'get': 'list'}),
+        name='board-criteria'
+    ),
+    path(
+        'boards/<str:code>/templates/',
+        TemplateViewSet.as_view({'get': 'list'}),
+        name='board-templates'
+    ),
     path('autocomplete/', NameAutocompleteView.as_view(), name='name-autocomplete'),
 ]
 

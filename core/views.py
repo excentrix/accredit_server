@@ -192,6 +192,50 @@ class TemplateViewSet(viewsets.ModelViewSet):
             permission_classes = [permissions.IsAuthenticated]
         return [permission() for permission in permission_classes]
     
+    def get_queryset(self):
+        queryset = Template.objects.all()
+        
+        # Get query parameters
+        board_code = self.request.query_params.get('board')
+        academic_year_id = self.request.query_params.get('academic_year')
+
+        # Add debug logging
+        print(f"Filtering templates - Board: {board_code}, Academic Year: {academic_year_id}")
+
+        # Filter by board if provided
+        if board_code:
+            try:
+                queryset = queryset.filter(criteria__board__code__iexact=board_code)
+            except Exception as e:
+                print(f"Error filtering by board: {str(e)}")
+                raise
+
+        # Filter by academic year if needed (if you want to show only templates 
+        # that have submissions in that year, for example)
+        if academic_year_id:
+            try:
+                queryset = queryset.filter(
+                    datasubmission__academic_year_id=academic_year_id
+                ).distinct()
+            except Exception as e:
+                print(f"Error filtering by academic year: {str(e)}")
+                raise
+
+        print(f"Final query: {queryset.query}")
+        return queryset.order_by('code')
+
+    def list(self, request, *args, **kwargs):
+        try:
+            queryset = self.get_queryset()
+            serializer = self.get_serializer(queryset, many=True)
+            return Response(serializer.data)
+        except Exception as e:
+            print(f"Error in list method: {str(e)}")
+            return Response(
+                {'error': str(e)}, 
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+    
     def get_object(self):
         try:
             # Get the lookup value from kwargs
@@ -224,17 +268,7 @@ class TemplateViewSet(viewsets.ModelViewSet):
                 {"detail": str(e)},
                 status=status.HTTP_404_NOT_FOUND
             )
-    
-    def list(self, request, *args, **kwargs):
-        selected_board = request.query_params.get('board')
-        print(f"Selected board: {selected_board}")  # Debug print
 
-        queryset = self.get_queryset().order_by('code')
-        if selected_board:
-            queryset = queryset.filter(board__code=selected_board)
-        print(f"List called, found {queryset.count()} templates")  # Debug print
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
     
 
     @action(detail=True, methods=['post', 'get'])
@@ -1517,8 +1551,8 @@ class DataSubmissionViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['GET'])
     def stats(self, request):
         """Get detailed submission statistics"""
-        current_date = timezone.now()
         current_year = AcademicYear.objects.filter(is_current=True).first()
+        board_code = request.query_params.get('board')
         
         if not current_year:
             return Response({
@@ -1527,7 +1561,11 @@ class DataSubmissionViewSet(viewsets.ModelViewSet):
             }, status=status.HTTP_404_NOT_FOUND)
 
         # Base queryset for current academic year
-        base_queryset = self.get_queryset().filter(academic_year=current_year)
+        base_queryset = self.get_queryset().filter(academic_year=current_year)  # Added academic year filter
+        if board_code:
+            base_queryset = base_queryset.filter(
+                template__criteria__board__code=board_code
+            )
 
         # Get today's date for daily stats
         today = timezone.now().date()
@@ -1538,7 +1576,8 @@ class DataSubmissionViewSet(viewsets.ModelViewSet):
         # Calculate review time for approved submissions
         approved_submissions = base_queryset.filter(
             status='approved',
-            verified_at__isnull=False
+            verified_at__isnull=False,
+            submitted_at__isnull=False  # Added this check
         )
         
         avg_review_time = approved_submissions.annotate(
@@ -1548,12 +1587,16 @@ class DataSubmissionViewSet(viewsets.ModelViewSet):
             )
         ).aggregate(avg=models.Avg('review_time'))['avg']
 
+        total_submissions = base_queryset.count()
+        approved_count = base_queryset.filter(status='approved').count()
+
         stats = {
             # Status counts
             'pending': base_queryset.filter(status='submitted').count(),
-            'approved': base_queryset.filter(status='approved').count(),
+            'approved': approved_count,
             'rejected': base_queryset.filter(status='rejected').count(),
-            'total': base_queryset.count(),
+            'draft': base_queryset.filter(status='draft').count(),  # Added draft count
+            'total': total_submissions,
             
             # Time-based stats
             'today': base_queryset.filter(created_at__date=today).count(),
@@ -1572,41 +1615,74 @@ class DataSubmissionViewSet(viewsets.ModelViewSet):
             # Performance metrics
             'avg_review_time': str(avg_review_time) if avg_review_time else None,
             'approval_rate': round(
-                (base_queryset.filter(status='approved').count() / base_queryset.count() * 100)
-                if base_queryset.count() > 0 else 0,
+                (approved_count / total_submissions * 100)
+                if total_submissions > 0 else 0,
                 1
             ),
             
             # Recent submissions
             'recent_submissions': DataSubmissionSerializer(
-                base_queryset.order_by('-submitted_at')[:5],
+                base_queryset.filter(submitted_at__isnull=False)  # Only show actually submitted ones
+                .order_by('-submitted_at')[:5],
                 many=True
             ).data,
             
             # Template stats
             'by_template': list(
-                base_queryset.values('template__name')
+                base_queryset.values(
+                    'template__code',
+                    'template__name',
+                    'template__criteria__number'
+                )
                 .annotate(
                     total=models.Count('id'),
                     pending=models.Count('id', filter=models.Q(status='submitted')),
                     approved=models.Count('id', filter=models.Q(status='approved')),
-                    rejected=models.Count('id', filter=models.Q(status='rejected'))
+                    rejected=models.Count('id', filter=models.Q(status='rejected')),
+                    draft=models.Count('id', filter=models.Q(status='draft'))
                 )
-                .order_by('-total')
+                .order_by('template__criteria__number', 'template__code')
             ),
             
             # Department stats
             'by_department': list(
-                base_queryset.values('department__name')
+                base_queryset.values(
+                    'department__code',
+                    'department__name'
+                )
                 .annotate(
                     total=models.Count('id'),
                     pending=models.Count('id', filter=models.Q(status='submitted')),
                     approved=models.Count('id', filter=models.Q(status='approved')),
-                    rejected=models.Count('id', filter=models.Q(status='rejected'))
+                    rejected=models.Count('id', filter=models.Q(status='rejected')),
+                    draft=models.Count('id', filter=models.Q(status='draft'))
                 )
-                .order_by('-total')
+                .order_by('department__name')
+            ),
+            
+            # Board stats
+            'by_board': list(
+                base_queryset.values(
+                    'template__criteria__board__code',
+                    'template__criteria__board__name'
+                )
+                .annotate(
+                    total=models.Count('id'),
+                    pending=models.Count('id', filter=models.Q(status='submitted')),
+                    approved=models.Count('id', filter=models.Q(status='approved')),
+                    rejected=models.Count('id', filter=models.Q(status='rejected')),
+                    draft=models.Count('id', filter=models.Q(status='draft')),
+                    templates_count=models.Count('template', distinct=True),
+                    departments_count=models.Count('department', distinct=True)
+                )
+                .order_by('template__criteria__board__name')
             )
         }
+
+        return Response({
+            'status': 'success',
+            'data': stats
+        })
 
         # stats['by_board'] = list(
         # base_queryset.values('board__name')
@@ -1618,10 +1694,10 @@ class DataSubmissionViewSet(viewsets.ModelViewSet):
         #     )
         #     .order_by('-total')
         # )
-        return Response({
-            'status': 'success',
-            'data': stats
-        })
+        # return Response({
+        #     'status': 'success',
+        #     'data': stats
+        # })
         
     @action(detail=False, methods=['GET'], url_path='department-breakdown', url_name='department-breakdown')
     def department_breakdown(self, request):
@@ -1782,40 +1858,42 @@ class ExportTemplateView(APIView):
             )
 
         try:
-            # Create exports directory if it doesn't exist
-            exports_dir = os.path.join(settings.BASE_DIR, 'exports')
-            if not os.path.exists(exports_dir):
-                os.makedirs(exports_dir)
-
             # Get parameters
-            academic_year_id = request.query_params.get('academic_year')
+            academic_year = request.query_params.get('academic_year')
             export_type = request.query_params.get('type', 'template')
             template_code = request.query_params.get('template_code')
             criterion = request.query_params.get('criterion')
+            board_code = request.query_params.get('board')
 
-            print(f"Export request - Type: {export_type}, Academic Year: {academic_year_id}, Template: {template_code}, Criterion: {criterion}")
-
-            if not academic_year_id:
+            if not board_code:
                 return Response(
-                    {'error': 'academic_year is required'},
+                    {'error': 'board is required'},
                     status=status.HTTP_400_BAD_REQUEST
                 )
 
             try:
-                academic_year = AcademicYear.objects.get(id=academic_year_id)
-            except AcademicYear.DoesNotExist:
+                board = Board.objects.get(code=board_code)
+            except Board.DoesNotExist:
                 return Response(
-                    {'error': 'Invalid academic year'},
+                    {'error': 'Invalid board'},
                     status=status.HTTP_404_NOT_FOUND
                 )
 
-            # Get templates based on export type
+            # Get templates based on export type and board
             if export_type == 'all':
-                templates = Template.objects.all().order_by('code')
+                templates = Template.objects.filter(
+                    criteria__board=board
+                ).order_by('code')
             elif export_type == 'criterion' and criterion:
-                templates = Template.objects.filter(code__startswith=f"{criterion}.").order_by('code')
+                templates = Template.objects.filter(
+                    criteria__board=board,
+                    code__startswith=f"{criterion}."
+                ).order_by('code')
             elif export_type == 'template' and template_code:
-                templates = Template.objects.filter(code=template_code)
+                templates = Template.objects.filter(
+                    criteria__board=board,
+                    code=template_code
+                )
             else:
                 return Response(
                     {'error': 'Invalid export parameters'},
@@ -1893,6 +1971,12 @@ class CriteriaViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = CriteriaSerializer
     permission_classes = [permissions.IsAuthenticated]
     
+    def get_queryset(self):
+        queryset = Criteria.objects.all()
+        board = self.request.query_params.get('board')
+        if board:
+            queryset = queryset.filter(board__code=board)
+        return queryset.order_by('order', 'number')
 
 class BoardViewSet(APIView):
     def get(self, request):
