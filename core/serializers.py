@@ -3,7 +3,7 @@ from .models import Criteria, User, Department, AcademicYear, Template, DataSubm
 
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from .models import Department, Template, DataSubmission
+from .models import Department, Template, DataSubmission, Board
 
 User = get_user_model()
 
@@ -31,9 +31,22 @@ class AcademicYearSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'start_date', 'end_date', 'is_current']
 
 class TemplateSerializer(serializers.ModelSerializer):
+
+    board = serializers.PrimaryKeyRelatedField(
+        queryset=Board.objects.all()
+    )
     class Meta:
         model = Template
-        fields = ['id', 'code', 'name', 'metadata']
+        fields = ['id', 'code', 'name', 'metadata', 'board']
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['board'] = {
+            'id': instance.board.id,
+            'name': instance.board.name,
+            'code': instance.board.code
+        }
+        return representation
 
     # def validate_columns(self, value):
     #     required_keys = {'name', 'display_name', 'type'}
@@ -90,3 +103,10 @@ class CriteriaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Criteria
         fields = ['id', 'number', 'name', 'description']
+        
+class BoardSerializer(serializers.ModelSerializer):
+    
+
+    class Meta:
+        model = Board
+        fields = ['id', 'name', 'code']

@@ -27,11 +27,11 @@ from django.db import models
 
 from .models import (
     AcademicYearTransition, Criteria, SubmissionHistory, User, Department, AcademicYear, Template, 
-    DataSubmission, SubmissionData
+    DataSubmission, SubmissionData, Board
 )
 from .serializers import (
     CriteriaSerializer, UserSerializer, DepartmentSerializer, AcademicYearSerializer,
-    TemplateSerializer, DataSubmissionSerializer, SubmissionDataSerializer
+    TemplateSerializer, DataSubmissionSerializer, SubmissionDataSerializer, BoardSerializer
 )
 
 import openpyxl
@@ -226,9 +226,12 @@ class TemplateViewSet(viewsets.ModelViewSet):
             )
     
     def list(self, request, *args, **kwargs):
+        selected_board = request.query_params.get('board')
+        print(f"Selected board: {selected_board}")  # Debug print
         queryset = self.get_queryset().order_by('code')
+        template_list = queryset.filter(board=selected_board) if selected_board else queryset
         print(f"List called, found {queryset.count()} templates")  # Debug print
-        serializer = self.get_serializer(queryset, many=True)
+        serializer = self.get_serializer(template_list, many=True)
         return Response(serializer.data)
     
 
@@ -904,6 +907,7 @@ class TemplateViewSet(viewsets.ModelViewSet):
         """Get or create submission state for template"""
         template = self.get_object()
         current_year = AcademicYear.objects.filter(is_current=True).first()
+        # board = Board.objects.get(id=request.data.get('board'))
 
         if not current_year:
             return Response({
@@ -915,7 +919,8 @@ class TemplateViewSet(viewsets.ModelViewSet):
             submission = DataSubmission.objects.get(
                 template=template,
                 department=request.user.department,
-                academic_year=current_year
+                academic_year=current_year,
+                # board=board
             )
             serializer = DataSubmissionSerializer(submission)
             return Response({
@@ -929,6 +934,7 @@ class TemplateViewSet(viewsets.ModelViewSet):
                     department=request.user.department,
                     academic_year=current_year,
                     submitted_by=request.user,
+                    # board=Board.objects.get(id=request.data.get('board')),
                     status='draft'
                 )
                 serializer = DataSubmissionSerializer(submission)
@@ -1136,6 +1142,7 @@ class DataSubmissionViewSet(viewsets.ModelViewSet):
             'template',
             'department',
             'academic_year',
+            # 'board'
             'submitted_by',
             'verified_by'
         ).prefetch_related('data_rows')
@@ -1156,6 +1163,9 @@ class DataSubmissionViewSet(viewsets.ModelViewSet):
     def filter_queryset(self, queryset):
         queryset = super().filter_queryset(queryset)
         
+        # board = self.request.query_params.get('board')
+        # if board:
+        #     queryset = queryset.filter(board_id=board)
         # Additional custom filtering
         if self.request.query_params.get('is_current_year'):
             queryset = queryset.filter(academic_year__is_current=True)
@@ -1596,6 +1606,16 @@ class DataSubmissionViewSet(viewsets.ModelViewSet):
             )
         }
 
+        # stats['by_board'] = list(
+        # base_queryset.values('board__name')
+        #     .annotate(
+        #         total=models.Count('id'),
+        #         pending=models.Count('id', filter=models.Q(status='submitted')),
+        #         approved=models.Count('id', filter=models.Q(status='approved')),
+        #         rejected=models.Count('id', filter=models.Q(status='rejected'))
+        #     )
+        #     .order_by('-total')
+        # )
         return Response({
             'status': 'success',
             'data': stats
@@ -1870,3 +1890,9 @@ class CriteriaViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Criteria.objects.all()
     serializer_class = CriteriaSerializer
     permission_classes = [permissions.IsAuthenticated]
+    
+
+class BoardViewSet(APIView):
+    def get(self, request):
+        boards = Board.objects.all()
+        return Response(BoardSerializer(boards, many=True).data)

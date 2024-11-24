@@ -106,6 +106,12 @@ class AcademicYearTransition(models.Model):
         ordering = ['-started_at']
         unique_together = ['from_year', 'to_year']
         
+class Board(models.Model):
+    name = models.CharField(max_length=100)
+    code = models.CharField(max_length=20, unique=True)
+    
+    def __str__(self):
+        return self.name
         
 class Template(models.Model):
     id = models.AutoField(primary_key=True)
@@ -128,6 +134,11 @@ class Template(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    board = models.ForeignKey(
+        'Board', 
+        on_delete=models.PROTECT,
+        default=Board.objects.get(code="NAAC").id
+    )
 
     class Meta:
         ordering = ['code']
@@ -374,7 +385,11 @@ class DataSubmission(models.Model):
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
+    board = models.ForeignKey(
+        'Board', 
+        on_delete=models.PROTECT,
+        default=Board.objects.get(code="NAAC").id
+    )
     class Meta:
         unique_together = ['template', 'department', 'academic_year']
         ordering = ['-academic_year__start_date', '-updated_at']
@@ -487,8 +502,7 @@ class SubmissionData(models.Model):
                     raise ValidationError(f"Invalid option for {column['name']}: {value}")
         except (ValueError, ValidationError) as e:
             raise ValidationError(f"Invalid {column['data_type']} for {column['name']}: {value}")
-        
-        
+              
 class SubmissionHistory(models.Model):
     submission = models.ForeignKey('DataSubmission', on_delete=models.CASCADE, related_name='history')
     action = models.CharField(max_length=50)

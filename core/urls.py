@@ -4,10 +4,10 @@ from rest_framework.routers import DefaultRouter
 from .views import (
     CriteriaViewSet, DepartmentViewSet, AcademicYearViewSet, NameAutocompleteView,
     TemplateViewSet, DataSubmissionViewSet,
-    ExportTemplateView
+    ExportTemplateView, Board
 )
 
-from .views import AuthViewSet, UserViewSet, TemplateViewSet, DataSubmissionViewSet
+from .views import AuthViewSet, UserViewSet, TemplateViewSet, DataSubmissionViewSet, BoardViewSet
 
 import logging
 
@@ -74,15 +74,15 @@ urlpatterns = [
         'post': 'approve_submission'
     }),
     name='template-approve'
-),
+    ),
 
-path(
+    path(
     'templates/<str:code>/reject/',
     TemplateViewSet.as_view({
         'post': 'reject_submission'
     }),
     name='template-reject'
-),
+    ),
     path('templates/<str:code>/data/row/', TemplateViewSet.as_view({
         'put': 'data_row',
         'delete': 'data_row'
@@ -94,6 +94,12 @@ path(
             'post': 'section_data'
         }),
         name='template-section-data'
+    ),
+
+    path(
+        'boards/',
+        BoardViewSet.as_view(),
+        name='get'
     ),
     
     # Section-specific row operations

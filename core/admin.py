@@ -1,7 +1,7 @@
 # core/admin.py
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import User, Department, AcademicYear, Template, DataSubmission, SubmissionData
+from .models import User, Department, AcademicYear, Template, DataSubmission, SubmissionData, Board
 from django.utils.safestring import mark_safe
 import json
 from django.utils import timezone
@@ -224,3 +224,7 @@ class SubmissionDataAdmin(admin.ModelAdmin):
         css = {
             'all': ['admin/css/custom.css']
         }
+
+@admin.register(Board)
+class BoardAdmin(admin.ModelAdmin):
+    list_display = ('name', 'code')

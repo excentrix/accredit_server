@@ -34,12 +34,16 @@ class DataSubmissionFilter(filters.FilterSet):
     # Search filters
     search = filters.CharFilter(method='filter_search')
 
+    # Board filters
+    board = filters.CharFilter(field_name='board')
+
     def filter_search(self, queryset, name, value):
         return queryset.filter(
             models.Q(template__name__icontains=value) |
             models.Q(department__name__icontains=value) |
             models.Q(submitted_by__username__icontains=value) |
-            models.Q(template__code__icontains=value)
+            models.Q(template__code__icontains=value) |
+            models.Q(board__icontains=value) 
         )
 
     class Meta:
@@ -49,6 +53,7 @@ class DataSubmissionFilter(filters.FilterSet):
             'department': ['exact'],
             'template': ['exact'],
             'status': ['exact'],
+            'board': ['exact'],
             'created_at': ['exact', 'lt', 'gt', 'lte', 'gte'],
             'submitted_at': ['exact', 'lt', 'gt', 'lte', 'gte'],
             'verified_at': ['exact', 'lt', 'gt', 'lte', 'gte'],
