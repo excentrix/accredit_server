@@ -18,7 +18,7 @@ router.register(r'departments', DepartmentViewSet)
 router.register(r'academic-years', AcademicYearViewSet, basename='academic-year')
 router.register(r'submissions', DataSubmissionViewSet, basename='submission')
 router.register(r'criteria/list', CriteriaViewSet, basename='criteria')
-# router.register(r'templates', TemplateViewSet, basename='template')
+# router.register(r'auth', TemplateViewSet, basename='template')
 
 urlpatterns = [
     path('', include(router.urls)),
@@ -26,9 +26,21 @@ urlpatterns = [
     path('auth/login/', AuthViewSet.as_view({'post': 'login'})),
     path('auth/logout/', AuthViewSet.as_view({'post': 'logout'})),
     path('auth/me/', AuthViewSet.as_view({'get': 'me'})),
+    path('auth/token/refresh/', AuthViewSet.as_view({'post':'refresh'}), name='token_refresh'),
     path('submissions/stats/', DataSubmissionViewSet.as_view({'get': 'stats'}), name='submission-stats'),
     path('submissions/department-breakdown/', DataSubmissionViewSet.as_view({'get': 'department_breakdown'}), name='department_breakdown'),
     
+    path('boards/', BoardViewSet.as_view(), name='board-list'),
+    path(
+        'boards/<str:code>/criteria/',
+        CriteriaViewSet.as_view({'get': 'list'}),
+        name='board-criteria'
+    ),
+    path(
+        'boards/<str:code>/templates/',
+        TemplateViewSet.as_view({'get': 'list'}),
+        name='board-templates'
+    ),
     path('templates/', TemplateViewSet.as_view({'get': 'list', 'post': 'create'}), name='template-list'),
     path('templates/export/', ExportTemplateView.as_view(), name='template-export'),
     path('templates/import-excel/', TemplateViewSet.as_view({
@@ -108,17 +120,6 @@ urlpatterns = [
     ),
     
 
-    path('boards/', BoardViewSet.as_view(), name='board-list'),
-    path(
-        'boards/<str:code>/criteria/',
-        CriteriaViewSet.as_view({'get': 'list'}),
-        name='board-criteria'
-    ),
-    path(
-        'boards/<str:code>/templates/',
-        TemplateViewSet.as_view({'get': 'list'}),
-        name='board-templates'
-    ),
     path('autocomplete/', NameAutocompleteView.as_view(), name='name-autocomplete'),
 ]
 

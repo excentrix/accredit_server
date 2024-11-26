@@ -153,7 +153,7 @@ class Template(models.Model):
         
     @property
     def board(self):
-        return self.criteria.board
+        return self.criteria.board if self.criteria else None
     
     def __str__(self):
         return f"{self.code} - {self.name}"

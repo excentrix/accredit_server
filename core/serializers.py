@@ -31,22 +31,44 @@ class AcademicYearSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'start_date', 'end_date', 'is_current']
 
 class TemplateSerializer(serializers.ModelSerializer):
+    board = serializers.SerializerMethodField()
+    criteria = serializers.PrimaryKeyRelatedField(queryset=Criteria.objects.all())
 
-    board = serializers.PrimaryKeyRelatedField(
-        queryset=Board.objects.all()
-    )
     class Meta:
         model = Template
-        fields = ['id', 'code', 'name', 'metadata', 'board']
+        fields = ['id', 'code', 'name', 'metadata', 'board', 'criteria']
 
-    def to_representation(self, instance):
-        representation = super().to_representation(instance)
-        representation['board'] = {
-            'id': instance.board.id,
-            'name': instance.board.name,
-            'code': instance.board.code
-        }
-        return representation
+    def get_board(self, obj):
+        if obj.criteria and obj.criteria.board:
+            return {
+                'id': obj.criteria.board.id,
+                'name': obj.criteria.board.name,
+                'code': obj.criteria.board.code
+            }
+        return None
+
+    def validate(self, data):
+        request = self.context.get('request')
+        if not request:
+            return data
+
+        board_id = request.data.get('board')
+        criteria = data.get('criteria')
+
+        if board_id and criteria:
+            # Compare board IDs
+            if criteria.board.id != int(board_id):
+                raise serializers.ValidationError({
+                    'board': f'Criteria {criteria.number} belongs to board {criteria.board.id}, not {board_id}'
+                })
+
+        return data
+
+    def create(self, validated_data):
+        return super().create(validated_data)
+
+    def update(self, instance, validated_data):
+        return super().update(instance, validated_data)
 
     # def validate_columns(self, value):
     #     required_keys = {'name', 'display_name', 'type'}

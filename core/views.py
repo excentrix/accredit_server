@@ -1,3 +1,4 @@
+from tokenize import TokenError
 from wsgiref.util import FileWrapper
 from django.conf import settings
 from rest_framework import viewsets, status, permissions
@@ -98,13 +99,63 @@ class AuthViewSet(viewsets.ViewSet):
     @action(detail=False, methods=['post'])
     def logout(self, request):
         try:
-            refresh_token = request.data.get('refresh_token')
+            # Get refresh token from request data
+            refresh_token = request.data.get('refresh')
+            
+            if not refresh_token:
+                return Response({
+                    'status': 'error',
+                    'message': 'Refresh token is required'
+                }, status=status.HTTP_400_BAD_REQUEST)
+
+            # Blacklist the refresh token
             token = RefreshToken(refresh_token)
             token.blacklist()
-            return Response({'status': 'success'})
-        except Exception:
-            return Response({'status': 'error'}, status=status.HTTP_400_BAD_REQUEST)
 
+            return Response({
+                'status': 'success',
+                'message': 'Successfully logged out'
+            })
+        except TokenError:
+            return Response({
+                'status': 'error',
+                'message': 'Invalid or expired token'
+            }, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response({
+                'status': 'error',
+                'message': str(e)
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+    @action(detail=False, methods=['post'])
+    def refresh(self, request):
+        try:
+            refresh_token = request.data.get('refresh')
+            if not refresh_token:
+                return Response({
+                    'status': 'error',
+                    'message': 'Refresh token is required'
+                }, status=status.HTTP_400_BAD_REQUEST)
+
+            refresh = RefreshToken(refresh_token)
+            
+            return Response({
+                'status': 'success',
+                'data': {
+                    'access': str(refresh.access_token)
+                }
+            })
+        except TokenError:
+            return Response({
+                'status': 'error',
+                'message': 'Invalid or expired refresh token'
+            }, status=status.HTTP_401_UNAUTHORIZED)
+        except Exception as e:
+            return Response({
+                'status': 'error',
+                'message': str(e)
+            }, status=status.HTTP_400_BAD_REQUEST)
+            
     @action(detail=False, methods=['get'])
     def me(self, request):
         if not request.user.is_authenticated:
@@ -118,6 +169,8 @@ class AuthViewSet(viewsets.ViewSet):
             'status': 'success',
             'data': serializer.data
         })
+        
+        
 
 class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
@@ -196,30 +249,37 @@ class TemplateViewSet(viewsets.ModelViewSet):
         queryset = Template.objects.all()
         
         # Get query parameters
-        board_code = self.request.query_params.get('board')
-        academic_year_id = self.request.query_params.get('academic_year')
+        board_code = self.request.query_params.get('board')  # We're receiving board code
+        academic_year = self.request.query_params.get('academic_year')
+        
+        board = Board.objects.filter(id=board_code).first()
+        ac = AcademicYear.objects.filter(id=academic_year).first()
+        print(f"Board: {board}")
+        print(f"Academic Year: {ac}")
 
         # Add debug logging
-        print(f"Filtering templates - Board: {board_code}, Academic Year: {academic_year_id}")
+        # print(f"Filtering templates - Board Code: {board_code}, Academic Year: {academic_year}")
 
         # Filter by board if provided
         if board_code:
             try:
-                queryset = queryset.filter(criteria__board__code__iexact=board_code)
+                # Filter by board code instead of id
+                queryset = queryset.filter(criteria__board__name=board)
+                print(f"Templates after board filter: {queryset.count()}")
             except Exception as e:
                 print(f"Error filtering by board: {str(e)}")
                 raise
 
-        # Filter by academic year if needed (if you want to show only templates 
-        # that have submissions in that year, for example)
-        if academic_year_id:
-            try:
-                queryset = queryset.filter(
-                    datasubmission__academic_year_id=academic_year_id
-                ).distinct()
-            except Exception as e:
-                print(f"Error filtering by academic year: {str(e)}")
-                raise
+        # Filter by academic year if needed
+        # if academic_year:
+        #     try:
+        #         queryset = queryset.filter(
+        #             datasubmission__academic_year_id=academic_year
+        #         ).distinct()
+        #         print(f"Templates after academic year filter: {queryset.count()}")
+        #     except Exception as e:
+        #         print(f"Error filtering by academic year: {str(e)}")
+        #         raise
 
         print(f"Final query: {queryset.query}")
         return queryset.order_by('code')
@@ -227,6 +287,7 @@ class TemplateViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         try:
             queryset = self.get_queryset()
+            print(f"Total templates found: {queryset.count()}")
             serializer = self.get_serializer(queryset, many=True)
             return Response(serializer.data)
         except Exception as e:
@@ -1859,23 +1920,33 @@ class ExportTemplateView(APIView):
 
         try:
             # Get parameters
-            academic_year = request.query_params.get('academic_year')
+            academic_year_id = request.query_params.get('academic_year')
             export_type = request.query_params.get('type', 'template')
             template_code = request.query_params.get('template_code')
             criterion = request.query_params.get('criterion')
             board_code = request.query_params.get('board')
 
+            print(f"Export parameters: year={academic_year_id}, type={export_type}, template={template_code}, criterion={criterion}, board={board_code}")
+
             if not board_code:
                 return Response(
-                    {'error': 'board is required'},
+                    {'error': 'Board is required'},
                     status=status.HTTP_400_BAD_REQUEST
                 )
 
-            try:
-                board = Board.objects.get(code=board_code)
-            except Board.DoesNotExist:
+            if not academic_year_id:
                 return Response(
-                    {'error': 'Invalid board'},
+                    {'error': 'Academic year is required'},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+            print('_________________________________________________________')
+            try:
+                board = Board.objects.filter(id=board_code).first()  # Change to filter by code
+                print(f"Found board: {board.name}")
+                academic_year = AcademicYear.objects.get(id=academic_year_id)
+            except (Board.DoesNotExist, AcademicYear.DoesNotExist) as e:
+                return Response(
+                    {'error': 'Invalid board or academic year'},
                     status=status.HTTP_404_NOT_FOUND
                 )
 
@@ -1941,12 +2012,12 @@ class ExportTemplateView(APIView):
             buffer.seek(0)
 
             # Generate filename
+            filename = f"{board.code}_{academic_year.name}"
             if export_type == 'criterion' and criterion:
-                filename = f"export_{export_type}_{criterion}_{academic_year.name}.xlsx"
+                filename = f"{filename}_criterion_{criterion}"
             elif export_type == 'template' and template_code:
-                filename = f"export_{export_type}_{template_code}_{academic_year.name}.xlsx"
-            else:
-                filename = f"export_{export_type}_{academic_year.name}.xlsx"
+                filename = f"{filename}_template_{template_code}"
+            filename = f"{filename}.xlsx"
 
             # Create response
             response = HttpResponse(
@@ -1960,6 +2031,8 @@ class ExportTemplateView(APIView):
 
         except Exception as e:
             print(f"Export error: {str(e)}")
+            import traceback
+            traceback.print_exc()
             return Response(
                 {'error': str(e)},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
@@ -1974,11 +2047,35 @@ class CriteriaViewSet(viewsets.ReadOnlyModelViewSet):
     def get_queryset(self):
         queryset = Criteria.objects.all()
         board = self.request.query_params.get('board')
-        if board:
-            queryset = queryset.filter(board__code=board)
+        if (board):
+            queryset = queryset.filter(board__id=board)
         return queryset.order_by('order', 'number')
 
 class BoardViewSet(APIView):
     def get(self, request):
         boards = Board.objects.all()
         return Response(BoardSerializer(boards, many=True).data)
+
+class SettingsViewSet(viewsets.ViewSet):
+    permission_classes = [permissions.IsAuthenticated]
+
+    @action(detail=False, methods=['get'])
+    def get_settings(self, request):
+        user = request.user
+        settings = {
+            'selectedBoard': user.profile.selected_board,
+            'selectedAcademicYear': user.profile.selected_academic_year
+        }
+        return Response(settings)
+
+    @action(detail=False, methods=['post'])
+    def save_settings(self, request):
+        user = request.user
+        selected_board = request.data.get('selectedBoard')
+        selected_academic_year = request.data.get('selectedAcademicYear')
+
+        user.profile.selected_board = selected_board
+        user.profile.selected_academic_year = selected_academic_year
+        user.profile.save()
+
+        return Response({'status': 'success'})
