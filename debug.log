@@ -1,0 +1,1047 @@
+INFO 2024-11-28 04:20:12,900 autoreload Watching for file changes with StatReloader
+DEBUG 2024-11-28 04:20:13,539 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+INFO 2024-11-28 04:21:31,940 autoreload Watching for file changes with StatReloader
+DEBUG 2024-11-28 04:21:32,601 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+INFO 2024-11-28 04:23:35,774 autoreload Watching for file changes with StatReloader
+INFO 2024-11-28 04:25:09,590 autoreload Watching for file changes with StatReloader
+INFO 2024-11-28 04:25:46,270 autoreload Watching for file changes with StatReloader
+INFO 2024-11-28 04:26:07,832 autoreload Watching for file changes with StatReloader
+DEBUG 2024-11-28 04:26:08,528 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+WARNING 2024-11-28 04:26:32,264 base view's DepartmentViewSet raised exception during schema generation; use `getattr(self, 'swagger_fake_view', False)` to detect and short-circuit this
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\drf_yasg\inspectors\base.py", line 42, in call_view_method
+    return view_method()
+           ^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\core\views.py", line 188, in get_queryset
+    if self.request.user.role == 'faculty':
+       ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'AnonymousUser' object has no attribute 'role'
+WARNING 2024-11-28 04:26:32,266 base view's DataSubmissionViewSet raised exception during schema generation; use `getattr(self, 'swagger_fake_view', False)` to detect and short-circuit this
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\drf_yasg\inspectors\base.py", line 42, in call_view_method
+    return view_method()
+           ^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\core\views.py", line 1248, in get_queryset
+    if user.role == 'faculty':
+       ^^^^^^^^^
+AttributeError: 'AnonymousUser' object has no attribute 'role'
+WARNING 2024-11-28 04:26:32,268 base view's DataSubmissionViewSet raised exception during schema generation; use `getattr(self, 'swagger_fake_view', False)` to detect and short-circuit this
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\drf_yasg\inspectors\base.py", line 42, in call_view_method
+    return view_method()
+           ^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\core\views.py", line 1248, in get_queryset
+    if user.role == 'faculty':
+       ^^^^^^^^^
+AttributeError: 'AnonymousUser' object has no attribute 'role'
+WARNING 2024-11-28 04:26:32,269 base view's DataSubmissionViewSet raised exception during schema generation; use `getattr(self, 'swagger_fake_view', False)` to detect and short-circuit this
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\drf_yasg\inspectors\base.py", line 42, in call_view_method
+    return view_method()
+           ^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\core\views.py", line 1248, in get_queryset
+    if user.role == 'faculty':
+       ^^^^^^^^^
+AttributeError: 'AnonymousUser' object has no attribute 'role'
+WARNING 2024-11-28 04:26:32,270 base view's DataSubmissionViewSet raised exception during schema generation; use `getattr(self, 'swagger_fake_view', False)` to detect and short-circuit this
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\drf_yasg\inspectors\base.py", line 42, in call_view_method
+    return view_method()
+           ^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\core\views.py", line 1248, in get_queryset
+    if user.role == 'faculty':
+       ^^^^^^^^^
+AttributeError: 'AnonymousUser' object has no attribute 'role'
+WARNING 2024-11-28 04:26:32,271 base view's DataSubmissionViewSet raised exception during schema generation; use `getattr(self, 'swagger_fake_view', False)` to detect and short-circuit this
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\drf_yasg\inspectors\base.py", line 42, in call_view_method
+    return view_method()
+           ^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\core\views.py", line 1248, in get_queryset
+    if user.role == 'faculty':
+       ^^^^^^^^^
+AttributeError: 'AnonymousUser' object has no attribute 'role'
+WARNING 2024-11-28 04:26:32,272 base view's DepartmentViewSet raised exception during schema generation; use `getattr(self, 'swagger_fake_view', False)` to detect and short-circuit this
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\drf_yasg\inspectors\base.py", line 42, in call_view_method
+    return view_method()
+           ^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\core\views.py", line 188, in get_queryset
+    if self.request.user.role == 'faculty':
+       ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'AnonymousUser' object has no attribute 'role'
+WARNING 2024-11-28 04:26:32,272 base view's DataSubmissionViewSet raised exception during schema generation; use `getattr(self, 'swagger_fake_view', False)` to detect and short-circuit this
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\drf_yasg\inspectors\base.py", line 42, in call_view_method
+    return view_method()
+           ^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\core\views.py", line 1248, in get_queryset
+    if user.role == 'faculty':
+       ^^^^^^^^^
+AttributeError: 'AnonymousUser' object has no attribute 'role'
+WARNING 2024-11-28 04:26:32,273 base view's DataSubmissionViewSet raised exception during schema generation; use `getattr(self, 'swagger_fake_view', False)` to detect and short-circuit this
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\drf_yasg\inspectors\base.py", line 42, in call_view_method
+    return view_method()
+           ^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\core\views.py", line 1248, in get_queryset
+    if user.role == 'faculty':
+       ^^^^^^^^^
+AttributeError: 'AnonymousUser' object has no attribute 'role'
+WARNING 2024-11-28 04:26:32,274 base view's DepartmentViewSet raised exception during schema generation; use `getattr(self, 'swagger_fake_view', False)` to detect and short-circuit this
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\drf_yasg\inspectors\base.py", line 42, in call_view_method
+    return view_method()
+           ^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\core\views.py", line 188, in get_queryset
+    if self.request.user.role == 'faculty':
+       ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'AnonymousUser' object has no attribute 'role'
+WARNING 2024-11-28 04:26:32,275 base view's DataSubmissionViewSet raised exception during schema generation; use `getattr(self, 'swagger_fake_view', False)` to detect and short-circuit this
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\drf_yasg\inspectors\base.py", line 42, in call_view_method
+    return view_method()
+           ^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\core\views.py", line 1248, in get_queryset
+    if user.role == 'faculty':
+       ^^^^^^^^^
+AttributeError: 'AnonymousUser' object has no attribute 'role'
+WARNING 2024-11-28 04:26:32,276 base view's DepartmentViewSet raised exception during schema generation; use `getattr(self, 'swagger_fake_view', False)` to detect and short-circuit this
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\drf_yasg\inspectors\base.py", line 42, in call_view_method
+    return view_method()
+           ^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\core\views.py", line 188, in get_queryset
+    if self.request.user.role == 'faculty':
+       ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'AnonymousUser' object has no attribute 'role'
+WARNING 2024-11-28 04:26:32,278 base view's DataSubmissionViewSet raised exception during schema generation; use `getattr(self, 'swagger_fake_view', False)` to detect and short-circuit this
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\drf_yasg\inspectors\base.py", line 42, in call_view_method
+    return view_method()
+           ^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\core\views.py", line 1248, in get_queryset
+    if user.role == 'faculty':
+       ^^^^^^^^^
+AttributeError: 'AnonymousUser' object has no attribute 'role'
+WARNING 2024-11-28 04:26:32,279 base view's DataSubmissionViewSet raised exception during schema generation; use `getattr(self, 'swagger_fake_view', False)` to detect and short-circuit this
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\drf_yasg\inspectors\base.py", line 42, in call_view_method
+    return view_method()
+           ^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\core\views.py", line 1248, in get_queryset
+    if user.role == 'faculty':
+       ^^^^^^^^^
+AttributeError: 'AnonymousUser' object has no attribute 'role'
+WARNING 2024-11-28 04:26:51,151 log Unauthorized: /api/academic-years/
+WARNING 2024-11-28 04:27:01,610 log Unauthorized: /api/academic-years/
+WARNING 2024-11-28 04:27:09,335 log Not Found: /accounts/login/
+WARNING 2024-11-28 04:27:29,358 log Unauthorized: /api/academic-years/
+WARNING 2024-11-28 04:27:48,571 log Unauthorized: /api/academic-years/
+WARNING 2024-11-28 04:27:51,906 log Unauthorized: /api/academic-years/
+WARNING 2024-11-28 04:28:07,457 base view's DepartmentViewSet raised exception during schema generation; use `getattr(self, 'swagger_fake_view', False)` to detect and short-circuit this
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\drf_yasg\inspectors\base.py", line 42, in call_view_method
+    return view_method()
+           ^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\core\views.py", line 188, in get_queryset
+    if self.request.user.role == 'faculty':
+       ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'AnonymousUser' object has no attribute 'role'
+WARNING 2024-11-28 04:28:07,458 base view's DataSubmissionViewSet raised exception during schema generation; use `getattr(self, 'swagger_fake_view', False)` to detect and short-circuit this
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\drf_yasg\inspectors\base.py", line 42, in call_view_method
+    return view_method()
+           ^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\core\views.py", line 1248, in get_queryset
+    if user.role == 'faculty':
+       ^^^^^^^^^
+AttributeError: 'AnonymousUser' object has no attribute 'role'
+WARNING 2024-11-28 04:28:07,459 base view's DataSubmissionViewSet raised exception during schema generation; use `getattr(self, 'swagger_fake_view', False)` to detect and short-circuit this
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\drf_yasg\inspectors\base.py", line 42, in call_view_method
+    return view_method()
+           ^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\core\views.py", line 1248, in get_queryset
+    if user.role == 'faculty':
+       ^^^^^^^^^
+AttributeError: 'AnonymousUser' object has no attribute 'role'
+WARNING 2024-11-28 04:28:07,461 base view's DataSubmissionViewSet raised exception during schema generation; use `getattr(self, 'swagger_fake_view', False)` to detect and short-circuit this
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\drf_yasg\inspectors\base.py", line 42, in call_view_method
+    return view_method()
+           ^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\core\views.py", line 1248, in get_queryset
+    if user.role == 'faculty':
+       ^^^^^^^^^
+AttributeError: 'AnonymousUser' object has no attribute 'role'
+WARNING 2024-11-28 04:28:07,462 base view's DataSubmissionViewSet raised exception during schema generation; use `getattr(self, 'swagger_fake_view', False)` to detect and short-circuit this
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\drf_yasg\inspectors\base.py", line 42, in call_view_method
+    return view_method()
+           ^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\core\views.py", line 1248, in get_queryset
+    if user.role == 'faculty':
+       ^^^^^^^^^
+AttributeError: 'AnonymousUser' object has no attribute 'role'
+WARNING 2024-11-28 04:28:07,463 base view's DataSubmissionViewSet raised exception during schema generation; use `getattr(self, 'swagger_fake_view', False)` to detect and short-circuit this
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\drf_yasg\inspectors\base.py", line 42, in call_view_method
+    return view_method()
+           ^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\core\views.py", line 1248, in get_queryset
+    if user.role == 'faculty':
+       ^^^^^^^^^
+AttributeError: 'AnonymousUser' object has no attribute 'role'
+WARNING 2024-11-28 04:28:07,464 base view's DepartmentViewSet raised exception during schema generation; use `getattr(self, 'swagger_fake_view', False)` to detect and short-circuit this
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\drf_yasg\inspectors\base.py", line 42, in call_view_method
+    return view_method()
+           ^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\core\views.py", line 188, in get_queryset
+    if self.request.user.role == 'faculty':
+       ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'AnonymousUser' object has no attribute 'role'
+WARNING 2024-11-28 04:28:07,464 base view's DataSubmissionViewSet raised exception during schema generation; use `getattr(self, 'swagger_fake_view', False)` to detect and short-circuit this
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\drf_yasg\inspectors\base.py", line 42, in call_view_method
+    return view_method()
+           ^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\core\views.py", line 1248, in get_queryset
+    if user.role == 'faculty':
+       ^^^^^^^^^
+AttributeError: 'AnonymousUser' object has no attribute 'role'
+WARNING 2024-11-28 04:28:07,465 base view's DataSubmissionViewSet raised exception during schema generation; use `getattr(self, 'swagger_fake_view', False)` to detect and short-circuit this
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\drf_yasg\inspectors\base.py", line 42, in call_view_method
+    return view_method()
+           ^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\core\views.py", line 1248, in get_queryset
+    if user.role == 'faculty':
+       ^^^^^^^^^
+AttributeError: 'AnonymousUser' object has no attribute 'role'
+WARNING 2024-11-28 04:28:07,466 base view's DepartmentViewSet raised exception during schema generation; use `getattr(self, 'swagger_fake_view', False)` to detect and short-circuit this
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\drf_yasg\inspectors\base.py", line 42, in call_view_method
+    return view_method()
+           ^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\core\views.py", line 188, in get_queryset
+    if self.request.user.role == 'faculty':
+       ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'AnonymousUser' object has no attribute 'role'
+WARNING 2024-11-28 04:28:07,467 base view's DataSubmissionViewSet raised exception during schema generation; use `getattr(self, 'swagger_fake_view', False)` to detect and short-circuit this
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\drf_yasg\inspectors\base.py", line 42, in call_view_method
+    return view_method()
+           ^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\core\views.py", line 1248, in get_queryset
+    if user.role == 'faculty':
+       ^^^^^^^^^
+AttributeError: 'AnonymousUser' object has no attribute 'role'
+WARNING 2024-11-28 04:28:07,468 base view's DepartmentViewSet raised exception during schema generation; use `getattr(self, 'swagger_fake_view', False)` to detect and short-circuit this
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\drf_yasg\inspectors\base.py", line 42, in call_view_method
+    return view_method()
+           ^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\core\views.py", line 188, in get_queryset
+    if self.request.user.role == 'faculty':
+       ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'AnonymousUser' object has no attribute 'role'
+WARNING 2024-11-28 04:28:07,469 base view's DataSubmissionViewSet raised exception during schema generation; use `getattr(self, 'swagger_fake_view', False)` to detect and short-circuit this
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\drf_yasg\inspectors\base.py", line 42, in call_view_method
+    return view_method()
+           ^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\core\views.py", line 1248, in get_queryset
+    if user.role == 'faculty':
+       ^^^^^^^^^
+AttributeError: 'AnonymousUser' object has no attribute 'role'
+WARNING 2024-11-28 04:28:07,470 base view's DataSubmissionViewSet raised exception during schema generation; use `getattr(self, 'swagger_fake_view', False)` to detect and short-circuit this
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\drf_yasg\inspectors\base.py", line 42, in call_view_method
+    return view_method()
+           ^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\core\views.py", line 1248, in get_queryset
+    if user.role == 'faculty':
+       ^^^^^^^^^
+AttributeError: 'AnonymousUser' object has no attribute 'role'
+INFO 2024-11-28 04:31:29,110 autoreload E:\eXcentriX\Projects\accredit\accredit_server\user_management\models.py changed, reloading.
+INFO 2024-11-28 04:31:29,648 autoreload Watching for file changes with StatReloader
+INFO 2024-11-28 04:31:36,104 autoreload E:\eXcentriX\Projects\accredit\accredit_server\user_management\models.py changed, reloading.
+INFO 2024-11-28 04:31:36,634 autoreload Watching for file changes with StatReloader
+DEBUG 2024-11-28 04:31:37,352 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+INFO 2024-11-28 04:33:57,484 autoreload Watching for file changes with StatReloader
+DEBUG 2024-11-28 04:33:58,164 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+DEBUG 2024-11-28 04:34:06,508 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+DEBUG 2024-11-28 04:34:13,223 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+DEBUG 2024-11-28 04:35:16,748 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+DEBUG 2024-11-28 04:36:40,718 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+DEBUG 2024-11-28 04:36:45,735 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+INFO 2024-11-28 04:37:43,148 autoreload Watching for file changes with StatReloader
+DEBUG 2024-11-28 04:37:43,830 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+DEBUG 2024-11-28 04:38:12,013 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+INFO 2024-11-28 04:38:43,891 autoreload Watching for file changes with StatReloader
+DEBUG 2024-11-28 04:38:44,522 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+WARNING 2024-11-28 04:39:02,942 base view's DepartmentViewSet raised exception during schema generation; use `getattr(self, 'swagger_fake_view', False)` to detect and short-circuit this
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\drf_yasg\inspectors\base.py", line 42, in call_view_method
+    return view_method()
+           ^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\core\views.py", line 188, in get_queryset
+    if self.request.user.role == 'faculty':
+       ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'AnonymousUser' object has no attribute 'role'
+WARNING 2024-11-28 04:39:02,944 base view's DataSubmissionViewSet raised exception during schema generation; use `getattr(self, 'swagger_fake_view', False)` to detect and short-circuit this
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\drf_yasg\inspectors\base.py", line 42, in call_view_method
+    return view_method()
+           ^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\core\views.py", line 1248, in get_queryset
+    if user.role == 'faculty':
+       ^^^^^^^^^
+AttributeError: 'AnonymousUser' object has no attribute 'role'
+WARNING 2024-11-28 04:39:02,946 base view's DataSubmissionViewSet raised exception during schema generation; use `getattr(self, 'swagger_fake_view', False)` to detect and short-circuit this
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\drf_yasg\inspectors\base.py", line 42, in call_view_method
+    return view_method()
+           ^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\core\views.py", line 1248, in get_queryset
+    if user.role == 'faculty':
+       ^^^^^^^^^
+AttributeError: 'AnonymousUser' object has no attribute 'role'
+WARNING 2024-11-28 04:39:02,947 base view's DataSubmissionViewSet raised exception during schema generation; use `getattr(self, 'swagger_fake_view', False)` to detect and short-circuit this
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\drf_yasg\inspectors\base.py", line 42, in call_view_method
+    return view_method()
+           ^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\core\views.py", line 1248, in get_queryset
+    if user.role == 'faculty':
+       ^^^^^^^^^
+AttributeError: 'AnonymousUser' object has no attribute 'role'
+WARNING 2024-11-28 04:39:02,948 base view's DataSubmissionViewSet raised exception during schema generation; use `getattr(self, 'swagger_fake_view', False)` to detect and short-circuit this
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\drf_yasg\inspectors\base.py", line 42, in call_view_method
+    return view_method()
+           ^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\core\views.py", line 1248, in get_queryset
+    if user.role == 'faculty':
+       ^^^^^^^^^
+AttributeError: 'AnonymousUser' object has no attribute 'role'
+WARNING 2024-11-28 04:39:02,949 base view's DataSubmissionViewSet raised exception during schema generation; use `getattr(self, 'swagger_fake_view', False)` to detect and short-circuit this
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\drf_yasg\inspectors\base.py", line 42, in call_view_method
+    return view_method()
+           ^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\core\views.py", line 1248, in get_queryset
+    if user.role == 'faculty':
+       ^^^^^^^^^
+AttributeError: 'AnonymousUser' object has no attribute 'role'
+WARNING 2024-11-28 04:39:02,951 base view's DepartmentViewSet raised exception during schema generation; use `getattr(self, 'swagger_fake_view', False)` to detect and short-circuit this
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\drf_yasg\inspectors\base.py", line 42, in call_view_method
+    return view_method()
+           ^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\core\views.py", line 188, in get_queryset
+    if self.request.user.role == 'faculty':
+       ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'AnonymousUser' object has no attribute 'role'
+WARNING 2024-11-28 04:39:02,952 base view's DataSubmissionViewSet raised exception during schema generation; use `getattr(self, 'swagger_fake_view', False)` to detect and short-circuit this
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\drf_yasg\inspectors\base.py", line 42, in call_view_method
+    return view_method()
+           ^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\core\views.py", line 1248, in get_queryset
+    if user.role == 'faculty':
+       ^^^^^^^^^
+AttributeError: 'AnonymousUser' object has no attribute 'role'
+WARNING 2024-11-28 04:39:02,953 base view's DataSubmissionViewSet raised exception during schema generation; use `getattr(self, 'swagger_fake_view', False)` to detect and short-circuit this
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\drf_yasg\inspectors\base.py", line 42, in call_view_method
+    return view_method()
+           ^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\core\views.py", line 1248, in get_queryset
+    if user.role == 'faculty':
+       ^^^^^^^^^
+AttributeError: 'AnonymousUser' object has no attribute 'role'
+WARNING 2024-11-28 04:39:02,954 base view's DepartmentViewSet raised exception during schema generation; use `getattr(self, 'swagger_fake_view', False)` to detect and short-circuit this
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\drf_yasg\inspectors\base.py", line 42, in call_view_method
+    return view_method()
+           ^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\core\views.py", line 188, in get_queryset
+    if self.request.user.role == 'faculty':
+       ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'AnonymousUser' object has no attribute 'role'
+WARNING 2024-11-28 04:39:02,956 base view's DataSubmissionViewSet raised exception during schema generation; use `getattr(self, 'swagger_fake_view', False)` to detect and short-circuit this
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\drf_yasg\inspectors\base.py", line 42, in call_view_method
+    return view_method()
+           ^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\core\views.py", line 1248, in get_queryset
+    if user.role == 'faculty':
+       ^^^^^^^^^
+AttributeError: 'AnonymousUser' object has no attribute 'role'
+WARNING 2024-11-28 04:39:02,957 base view's DepartmentViewSet raised exception during schema generation; use `getattr(self, 'swagger_fake_view', False)` to detect and short-circuit this
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\drf_yasg\inspectors\base.py", line 42, in call_view_method
+    return view_method()
+           ^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\core\views.py", line 188, in get_queryset
+    if self.request.user.role == 'faculty':
+       ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'AnonymousUser' object has no attribute 'role'
+WARNING 2024-11-28 04:39:02,958 base view's DataSubmissionViewSet raised exception during schema generation; use `getattr(self, 'swagger_fake_view', False)` to detect and short-circuit this
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\drf_yasg\inspectors\base.py", line 42, in call_view_method
+    return view_method()
+           ^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\core\views.py", line 1248, in get_queryset
+    if user.role == 'faculty':
+       ^^^^^^^^^
+AttributeError: 'AnonymousUser' object has no attribute 'role'
+WARNING 2024-11-28 04:39:02,959 base view's DataSubmissionViewSet raised exception during schema generation; use `getattr(self, 'swagger_fake_view', False)` to detect and short-circuit this
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\drf_yasg\inspectors\base.py", line 42, in call_view_method
+    return view_method()
+           ^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\core\views.py", line 1248, in get_queryset
+    if user.role == 'faculty':
+       ^^^^^^^^^
+AttributeError: 'AnonymousUser' object has no attribute 'role'
+WARNING 2024-11-28 04:39:16,207 log Unauthorized: /api/academic-years/
+ERROR 2024-11-28 04:39:40,452 log Internal Server Error: /admin/user_management/customuser/1/change/
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\contrib\admin\options.py", line 839, in get_form
+    return modelform_factory(self.model, **defaults)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\forms\models.py", line 654, in modelform_factory
+    return type(form)(class_name, (form,), form_class_attrs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\forms\models.py", line 312, in __new__
+    fields = fields_for_model(
+             ^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\forms\models.py", line 207, in fields_for_model
+    raise FieldError(
+django.core.exceptions.FieldError: 'date_joined' cannot be specified for CustomUser model form as it is a non-editable field
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\contrib\admin\options.py", line 718, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\decorators.py", line 188, in _view_wrapper
+    result = _process_exception(request, e)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\decorators.py", line 186, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\contrib\admin\sites.py", line 241, in inner
+    return view(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\contrib\admin\options.py", line 1964, in change_view
+    return self.changeform_view(request, object_id, form_url, extra_context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\decorators.py", line 188, in _view_wrapper
+    result = _process_exception(request, e)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\decorators.py", line 186, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\contrib\admin\options.py", line 1820, in changeform_view
+    return self._changeform_view(request, object_id, form_url, extra_context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\contrib\admin\options.py", line 1855, in _changeform_view
+    ModelForm = self.get_form(
+                ^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\contrib\auth\admin.py", line 98, in get_form
+    return super().get_form(request, obj, **defaults)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\contrib\admin\options.py", line 841, in get_form
+    raise FieldError(
+django.core.exceptions.FieldError: 'date_joined' cannot be specified for CustomUser model form as it is a non-editable field. Check fields/fieldsets/exclude attributes of class CustomUserAdmin.
+ERROR 2024-11-28 04:39:53,940 log Internal Server Error: /admin/user_management/customuser/1/change/
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\contrib\admin\options.py", line 839, in get_form
+    return modelform_factory(self.model, **defaults)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\forms\models.py", line 654, in modelform_factory
+    return type(form)(class_name, (form,), form_class_attrs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\forms\models.py", line 312, in __new__
+    fields = fields_for_model(
+             ^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\forms\models.py", line 207, in fields_for_model
+    raise FieldError(
+django.core.exceptions.FieldError: 'date_joined' cannot be specified for CustomUser model form as it is a non-editable field
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\contrib\admin\options.py", line 718, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\decorators.py", line 188, in _view_wrapper
+    result = _process_exception(request, e)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\decorators.py", line 186, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\contrib\admin\sites.py", line 241, in inner
+    return view(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\contrib\admin\options.py", line 1964, in change_view
+    return self.changeform_view(request, object_id, form_url, extra_context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\decorators.py", line 188, in _view_wrapper
+    result = _process_exception(request, e)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\decorators.py", line 186, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\contrib\admin\options.py", line 1820, in changeform_view
+    return self._changeform_view(request, object_id, form_url, extra_context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\contrib\admin\options.py", line 1855, in _changeform_view
+    ModelForm = self.get_form(
+                ^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\contrib\auth\admin.py", line 98, in get_form
+    return super().get_form(request, obj, **defaults)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\contrib\admin\options.py", line 841, in get_form
+    raise FieldError(
+django.core.exceptions.FieldError: 'date_joined' cannot be specified for CustomUser model form as it is a non-editable field. Check fields/fieldsets/exclude attributes of class CustomUserAdmin.
+INFO 2024-11-28 04:40:55,710 autoreload E:\eXcentriX\Projects\accredit\accredit_server\user_management\admin.py changed, reloading.
+INFO 2024-11-28 04:40:56,286 autoreload Watching for file changes with StatReloader
+DEBUG 2024-11-28 04:40:56,982 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+INFO 2024-11-28 04:41:24,639 autoreload E:\eXcentriX\Projects\accredit\accredit_server\user_management\admin.py changed, reloading.
+INFO 2024-11-28 04:41:25,161 autoreload Watching for file changes with StatReloader
+INFO 2024-11-28 04:41:56,921 autoreload Watching for file changes with StatReloader
+DEBUG 2024-11-28 04:41:57,618 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+ERROR 2024-11-28 04:42:01,693 log Internal Server Error: /admin/user_management/permission/
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 354, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such column: user_management_permission.resource
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\contrib\admin\options.py", line 718, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\decorators.py", line 188, in _view_wrapper
+    result = _process_exception(request, e)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\decorators.py", line 186, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\contrib\admin\sites.py", line 241, in inner
+    return view(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\decorators.py", line 188, in _view_wrapper
+    result = _process_exception(request, e)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\decorators.py", line 186, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\contrib\admin\options.py", line 2140, in changelist_view
+    "selection_note": _("0 of %(cnt)s selected") % {"cnt": len(cl.result_list)},
+                                                           ^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\db\models\query.py", line 382, in __len__
+    self._fetch_all()
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\db\models\query.py", line 1928, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1574, in execute_sql
+    cursor.execute(sql, params)
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 354, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such column: user_management_permission.resource
+ERROR 2024-11-28 04:42:13,258 log Internal Server Error: /admin/user_management/role/add/
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 354, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such column: user_management_permission.resource
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\base.py", line 220, in _get_response
+    response = response.render()
+               ^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\template\response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\template\response.py", line 92, in rendered_content
+    return template.render(context, self._request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\template\base.py", line 1008, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\template\base.py", line 969, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\template\base.py", line 1008, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\template\base.py", line 969, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\template\base.py", line 1008, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\template\base.py", line 969, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\template\base.py", line 1008, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\template\base.py", line 969, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\template\base.py", line 1008, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\template\base.py", line 969, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\template\defaulttags.py", line 243, in render
+    nodelist.append(node.render_annotated(context))
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\template\base.py", line 969, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\template\loader_tags.py", line 210, in render
+    return template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\template\base.py", line 173, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\template\base.py", line 1008, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\template\base.py", line 969, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\template\defaulttags.py", line 550, in render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\template\base.py", line 1008, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\template\base.py", line 969, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\template\defaulttags.py", line 243, in render
+    nodelist.append(node.render_annotated(context))
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\template\base.py", line 969, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\template\defaulttags.py", line 243, in render
+    nodelist.append(node.render_annotated(context))
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\template\base.py", line 969, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\template\defaulttags.py", line 327, in render
+    return nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\template\base.py", line 1008, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\template\base.py", line 969, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\template\defaulttags.py", line 327, in render
+    return nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\template\base.py", line 1008, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\template\base.py", line 969, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\template\base.py", line 1073, in render
+    return render_value_in_context(output, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\template\base.py", line 1050, in render_value_in_context
+    value = str(value)
+            ^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\forms\utils.py", line 79, in __str__
+    return self.as_widget()
+           ^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\forms\boundfield.py", line 108, in as_widget
+    return widget.render(
+           ^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\forms\widgets.py", line 278, in render
+    context = self.get_context(name, value, attrs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\contrib\admin\widgets.py", line 329, in get_context
+    "rendered_widget": self.widget.render(name, value, attrs),
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\forms\widgets.py", line 278, in render
+    context = self.get_context(name, value, attrs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\forms\widgets.py", line 764, in get_context
+    context = super().get_context(name, value, attrs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\forms\widgets.py", line 715, in get_context
+    context["widget"]["optgroups"] = self.optgroups(
+                                     ^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\forms\widgets.py", line 655, in optgroups
+    for index, (option_value, option_label) in enumerate(self.choices):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\forms\models.py", line 1424, in __iter__
+    for obj in queryset:
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\db\models\query.py", line 518, in _iterator
+    yield from iterable
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1574, in execute_sql
+    cursor.execute(sql, params)
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 354, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such column: user_management_permission.resource
+DEBUG 2024-11-28 04:42:36,827 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+DEBUG 2024-11-28 04:42:46,888 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+DEBUG 2024-11-28 04:43:00,999 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+DEBUG 2024-11-28 04:43:19,422 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+DEBUG 2024-11-28 04:43:33,092 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+DEBUG 2024-11-28 04:43:36,833 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+INFO 2024-11-28 04:43:39,886 autoreload Watching for file changes with StatReloader
+DEBUG 2024-11-28 04:43:40,553 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+INFO 2024-11-28 04:50:43,232 autoreload E:\eXcentriX\Projects\accredit\accredit_server\user_management\models.py changed, reloading.
+INFO 2024-11-28 04:50:43,914 autoreload Watching for file changes with StatReloader
+DEBUG 2024-11-28 04:50:44,611 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+INFO 2024-11-28 04:50:47,390 autoreload E:\eXcentriX\Projects\accredit\accredit_server\user_management\models.py changed, reloading.
+INFO 2024-11-28 04:50:48,050 autoreload Watching for file changes with StatReloader
+DEBUG 2024-11-28 04:50:48,763 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+INFO 2024-11-28 04:51:06,237 autoreload E:\eXcentriX\Projects\accredit\accredit_server\user_management\models.py changed, reloading.
+INFO 2024-11-28 04:51:06,833 autoreload Watching for file changes with StatReloader
+DEBUG 2024-11-28 04:51:07,499 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+INFO 2024-11-28 04:51:09,164 autoreload E:\eXcentriX\Projects\accredit\accredit_server\user_management\models.py changed, reloading.
+INFO 2024-11-28 04:51:09,731 autoreload Watching for file changes with StatReloader
+DEBUG 2024-11-28 04:51:10,497 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+INFO 2024-11-28 04:51:17,438 autoreload E:\eXcentriX\Projects\accredit\accredit_server\user_management\models.py changed, reloading.
+INFO 2024-11-28 04:51:17,988 autoreload Watching for file changes with StatReloader
+DEBUG 2024-11-28 04:51:18,653 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+INFO 2024-11-28 04:51:22,451 autoreload E:\eXcentriX\Projects\accredit\accredit_server\user_management\models.py changed, reloading.
+INFO 2024-11-28 04:51:22,963 autoreload Watching for file changes with StatReloader
+DEBUG 2024-11-28 04:51:23,610 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+INFO 2024-11-28 04:51:33,688 autoreload E:\eXcentriX\Projects\accredit\accredit_server\user_management\models.py changed, reloading.
+INFO 2024-11-28 04:51:34,279 autoreload Watching for file changes with StatReloader
+DEBUG 2024-11-28 04:51:34,988 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+INFO 2024-11-28 04:51:55,669 autoreload E:\eXcentriX\Projects\accredit\accredit_server\user_management\models.py changed, reloading.
+INFO 2024-11-28 04:51:56,332 autoreload Watching for file changes with StatReloader
+INFO 2024-11-28 04:51:57,699 autoreload E:\eXcentriX\Projects\accredit\accredit_server\user_management\models.py changed, reloading.
+INFO 2024-11-28 04:51:58,099 autoreload Watching for file changes with StatReloader
+INFO 2024-11-28 04:51:59,449 autoreload E:\eXcentriX\Projects\accredit\accredit_server\user_management\models.py changed, reloading.
+INFO 2024-11-28 04:51:59,951 autoreload Watching for file changes with StatReloader
+DEBUG 2024-11-28 04:52:00,635 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+INFO 2024-11-28 04:52:03,380 autoreload E:\eXcentriX\Projects\accredit\accredit_server\user_management\models.py changed, reloading.
+INFO 2024-11-28 04:52:03,961 autoreload Watching for file changes with StatReloader
+INFO 2024-11-28 04:52:05,311 autoreload E:\eXcentriX\Projects\accredit\accredit_server\user_management\models.py changed, reloading.
+INFO 2024-11-28 04:52:05,764 autoreload Watching for file changes with StatReloader
+DEBUG 2024-11-28 04:52:06,441 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+INFO 2024-11-28 04:52:08,180 autoreload E:\eXcentriX\Projects\accredit\accredit_server\user_management\models.py changed, reloading.
+INFO 2024-11-28 04:52:08,681 autoreload Watching for file changes with StatReloader
+INFO 2024-11-28 04:52:10,061 autoreload E:\eXcentriX\Projects\accredit\accredit_server\user_management\models.py changed, reloading.
+INFO 2024-11-28 04:52:10,534 autoreload Watching for file changes with StatReloader
+DEBUG 2024-11-28 04:52:11,212 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+DEBUG 2024-11-28 04:55:35,627 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+DEBUG 2024-11-28 04:56:32,587 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+DEBUG 2024-11-28 04:56:57,624 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+DEBUG 2024-11-28 04:57:05,482 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+DEBUG 2024-11-28 04:57:31,264 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+INFO 2024-11-28 04:57:35,561 autoreload Watching for file changes with StatReloader
+DEBUG 2024-11-28 04:57:36,245 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+INFO 2024-11-28 05:00:58,218 autoreload E:\eXcentriX\Projects\accredit\accredit_server\user_management\apps.py changed, reloading.
+INFO 2024-11-28 05:00:58,801 autoreload Watching for file changes with StatReloader
+DEBUG 2024-11-28 05:00:59,448 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+INFO 2024-11-28 05:01:09,624 autoreload E:\eXcentriX\Projects\accredit\accredit_server\user_management\apps.py changed, reloading.
+INFO 2024-11-28 05:01:10,140 autoreload Watching for file changes with StatReloader
+INFO 2024-11-28 05:01:11,965 autoreload E:\eXcentriX\Projects\accredit\accredit_server\user_management\apps.py changed, reloading.
+INFO 2024-11-28 05:01:12,517 autoreload Watching for file changes with StatReloader
+INFO 2024-11-28 05:01:34,856 autoreload Watching for file changes with StatReloader
+DEBUG 2024-11-28 05:01:35,513 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+DEBUG 2024-11-28 05:01:40,699 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+DEBUG 2024-11-28 05:01:52,432 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+INFO 2024-11-28 05:01:57,426 autoreload Watching for file changes with StatReloader
+DEBUG 2024-11-28 05:01:58,146 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+DEBUG 2024-11-28 05:02:03,254 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+INFO 2024-11-28 05:02:07,578 autoreload Watching for file changes with StatReloader
+DEBUG 2024-11-28 05:02:08,237 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+ERROR 2024-11-28 05:02:41,733 log Internal Server Error: /admin/user_management/customuser/1/change/
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\contrib\admin\options.py", line 839, in get_form
+    return modelform_factory(self.model, **defaults)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\forms\models.py", line 654, in modelform_factory
+    return type(form)(class_name, (form,), form_class_attrs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\forms\models.py", line 334, in __new__
+    raise FieldError(message)
+django.core.exceptions.FieldError: Unknown field(s) (last_name, first_name) specified for CustomUser
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\contrib\admin\options.py", line 718, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\decorators.py", line 188, in _view_wrapper
+    result = _process_exception(request, e)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\decorators.py", line 186, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\contrib\admin\sites.py", line 241, in inner
+    return view(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\contrib\admin\options.py", line 1964, in change_view
+    return self.changeform_view(request, object_id, form_url, extra_context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\decorators.py", line 188, in _view_wrapper
+    result = _process_exception(request, e)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\decorators.py", line 186, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\contrib\admin\options.py", line 1820, in changeform_view
+    return self._changeform_view(request, object_id, form_url, extra_context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\contrib\admin\options.py", line 1855, in _changeform_view
+    ModelForm = self.get_form(
+                ^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\contrib\auth\admin.py", line 98, in get_form
+    return super().get_form(request, obj, **defaults)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\contrib\admin\options.py", line 841, in get_form
+    raise FieldError(
+django.core.exceptions.FieldError: Unknown field(s) (last_name, first_name) specified for CustomUser. Check fields/fieldsets/exclude attributes of class CustomUserAdmin.
+INFO 2024-11-28 05:03:10,643 autoreload E:\eXcentriX\Projects\accredit\accredit_server\user_management\models.py changed, reloading.
+INFO 2024-11-28 05:03:11,284 autoreload Watching for file changes with StatReloader
+INFO 2024-11-28 05:03:14,665 autoreload E:\eXcentriX\Projects\accredit\accredit_server\user_management\models.py changed, reloading.
+INFO 2024-11-28 05:03:15,067 autoreload Watching for file changes with StatReloader
+INFO 2024-11-28 05:03:16,401 autoreload E:\eXcentriX\Projects\accredit\accredit_server\user_management\models.py changed, reloading.
+INFO 2024-11-28 05:03:16,876 autoreload Watching for file changes with StatReloader
+INFO 2024-11-28 05:03:19,229 autoreload E:\eXcentriX\Projects\accredit\accredit_server\user_management\models.py changed, reloading.
+INFO 2024-11-28 05:03:19,676 autoreload Watching for file changes with StatReloader
+INFO 2024-11-28 05:03:22,096 autoreload E:\eXcentriX\Projects\accredit\accredit_server\user_management\models.py changed, reloading.
+INFO 2024-11-28 05:03:22,568 autoreload Watching for file changes with StatReloader
+INFO 2024-11-28 05:03:23,898 autoreload E:\eXcentriX\Projects\accredit\accredit_server\user_management\models.py changed, reloading.
+INFO 2024-11-28 05:03:24,400 autoreload Watching for file changes with StatReloader
+INFO 2024-11-28 05:03:27,816 autoreload E:\eXcentriX\Projects\accredit\accredit_server\user_management\models.py changed, reloading.
+INFO 2024-11-28 05:03:28,250 autoreload Watching for file changes with StatReloader
+INFO 2024-11-28 05:03:29,597 autoreload E:\eXcentriX\Projects\accredit\accredit_server\user_management\models.py changed, reloading.
+INFO 2024-11-28 05:03:30,068 autoreload Watching for file changes with StatReloader
+INFO 2024-11-28 05:03:31,414 autoreload E:\eXcentriX\Projects\accredit\accredit_server\user_management\models.py changed, reloading.
+INFO 2024-11-28 05:03:31,860 autoreload Watching for file changes with StatReloader
+INFO 2024-11-28 05:03:33,203 autoreload E:\eXcentriX\Projects\accredit\accredit_server\user_management\models.py changed, reloading.
+INFO 2024-11-28 05:03:33,684 autoreload Watching for file changes with StatReloader
+DEBUG 2024-11-28 05:03:34,383 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+ERROR 2024-11-28 05:03:35,875 log Internal Server Error: /admin/user_management/customuser/1/change/
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\contrib\admin\options.py", line 839, in get_form
+    return modelform_factory(self.model, **defaults)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\forms\models.py", line 654, in modelform_factory
+    return type(form)(class_name, (form,), form_class_attrs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\forms\models.py", line 334, in __new__
+    raise FieldError(message)
+django.core.exceptions.FieldError: Unknown field(s) (first_name, last_name) specified for CustomUser
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\contrib\admin\options.py", line 718, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\decorators.py", line 188, in _view_wrapper
+    result = _process_exception(request, e)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\decorators.py", line 186, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\contrib\admin\sites.py", line 241, in inner
+    return view(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\contrib\admin\options.py", line 1964, in change_view
+    return self.changeform_view(request, object_id, form_url, extra_context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\decorators.py", line 188, in _view_wrapper
+    result = _process_exception(request, e)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\decorators.py", line 186, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\contrib\admin\options.py", line 1820, in changeform_view
+    return self._changeform_view(request, object_id, form_url, extra_context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\contrib\admin\options.py", line 1855, in _changeform_view
+    ModelForm = self.get_form(
+                ^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\contrib\auth\admin.py", line 98, in get_form
+    return super().get_form(request, obj, **defaults)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\contrib\admin\options.py", line 841, in get_form
+    raise FieldError(
+django.core.exceptions.FieldError: Unknown field(s) (first_name, last_name) specified for CustomUser. Check fields/fieldsets/exclude attributes of class CustomUserAdmin.
+INFO 2024-11-28 05:04:00,789 autoreload E:\eXcentriX\Projects\accredit\accredit_server\user_management\admin.py changed, reloading.
+INFO 2024-11-28 05:04:01,365 autoreload Watching for file changes with StatReloader
+DEBUG 2024-11-28 05:04:02,024 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+DEBUG 2024-11-28 05:26:42,782 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+DEBUG 2024-11-28 05:28:36,612 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+DEBUG 2024-11-28 05:29:41,658 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+DEBUG 2024-11-28 05:30:45,875 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+INFO 2024-11-28 05:30:48,915 autoreload Watching for file changes with StatReloader
+DEBUG 2024-11-28 05:30:49,662 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+INFO 2024-11-28 05:42:16,559 autoreload E:\eXcentriX\Projects\accredit\accredit_server\user_management\models.py changed, reloading.
+INFO 2024-11-28 05:42:17,201 autoreload Watching for file changes with StatReloader
+INFO 2024-11-28 05:42:28,729 autoreload E:\eXcentriX\Projects\accredit\accredit_server\user_management\models.py changed, reloading.
+INFO 2024-11-28 05:42:29,152 autoreload Watching for file changes with StatReloader
+DEBUG 2024-11-28 05:42:29,764 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]
+INFO 2024-11-28 05:43:45,404 autoreload E:\eXcentriX\Projects\accredit\accredit_server\user_management\models.py changed, reloading.
+INFO 2024-11-28 05:43:45,998 autoreload Watching for file changes with StatReloader
+DEBUG 2024-11-28 05:43:46,646 urls Core URL patterns: [<URLResolver <URLPattern list> (None:None) ''>, <URLPattern 'auth/login/'>, <URLPattern 'auth/logout/'>, <URLPattern 'auth/me/'>, <URLPattern 'auth/token/refresh/' [name='token_refresh']>, <URLPattern 'submissions/stats/' [name='submission-stats']>, <URLPattern 'submissions/department-breakdown/' [name='department_breakdown']>, <URLPattern 'boards/' [name='board-list']>, <URLPattern 'boards/<str:code>/criteria/' [name='board-criteria']>, <URLPattern 'boards/<str:code>/templates/' [name='board-templates']>, <URLPattern 'templates/' [name='template-list']>, <URLPattern 'templates/export/' [name='template-export']>, <URLPattern 'templates/import-excel/' [name='template-import-excel']>, <URLPattern 'templates/<str:code>/' [name='template-detail']>, <URLPattern 'templates/<str:code>/data/' [name='template-data']>, <URLPattern 'templates/<str:code>/submission/' [name='template-submission']>, <URLPattern 'templates/<str:code>/submit/' [name='template-submit']>, <URLPattern 'templates/<str:code>/withdraw/' [name='template-withdraw']>, <URLPattern 'templates/<str:code>/approve/' [name='template-approve']>, <URLPattern 'templates/<str:code>/reject/' [name='template-reject']>, <URLPattern 'templates/<str:code>/data/row/' [name='template-data-row']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/' [name='template-section-data']>, <URLPattern 'templates/<str:code>/sections/<int:section_index>/data/<int:row_id>/' [name='template-section-data-row']>, <URLPattern 'autocomplete/' [name='name-autocomplete']>]

@@ -4,29 +4,31 @@ from django.contrib.auth.models import AbstractUser
 from django.utils.dateparse import parse_date
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email, URLValidator
+from user_management.models import CustomUser as User
+
 # from django.contrib.postgres.fields import JSONField
 
-class User(AbstractUser):
-    ROLE_CHOICES = [
-        ('faculty', 'Faculty'),
-        ('iqac_director', 'IQAC Director'),
-        ('admin', 'Admin'),
-    ]
+# class User(AbstractUser):
+#     ROLE_CHOICES = [
+#         ('faculty', 'Faculty'),
+#         ('iqac_director', 'IQAC Director'),
+#         ('admin', 'Admin'),
+#     ]
     
-    role = models.CharField(max_length=20, choices=ROLE_CHOICES)
-    department = models.ForeignKey(
-        'Department',
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name='users'
-    )
+#     role = models.CharField(max_length=20, choices=ROLE_CHOICES)
+#     department = models.ForeignKey(
+#         'Department',
+#         on_delete=models.SET_NULL,
+#         null=True,
+#         blank=True,
+#         related_name='users'
+#     )
 
-    class Meta:
-        ordering = ['username']
+#     class Meta:
+#         ordering = ['username']
 
-    def __str__(self):
-        return f"{self.username} ({self.get_role_display()})"
+#     def __str__(self):
+#         return f"{self.username} ({self.get_role_display()})"
     
 
 class Criteria(models.Model):
@@ -513,7 +515,7 @@ class SubmissionData(models.Model):
 class SubmissionHistory(models.Model):
     submission = models.ForeignKey('DataSubmission', on_delete=models.CASCADE, related_name='history')
     action = models.CharField(max_length=50)
-    performed_by = models.ForeignKey('User', on_delete=models.SET_NULL, null=True)
+    performed_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     performed_at = models.DateTimeField(auto_now_add=True)
     details = models.JSONField(null=True, blank=True)
     previous_data = models.JSONField(null=True, blank=True)  # Store previous state
