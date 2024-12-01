@@ -1,35 +1,10 @@
 # core/models.py
 from django.db import models
-from django.contrib.auth.models import AbstractUser
 from django.utils.dateparse import parse_date
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email, URLValidator
 from user_management.models import CustomUser as User
 
-# from django.contrib.postgres.fields import JSONField
-
-# class User(AbstractUser):
-#     ROLE_CHOICES = [
-#         ('faculty', 'Faculty'),
-#         ('iqac_director', 'IQAC Director'),
-#         ('admin', 'Admin'),
-#     ]
-    
-#     role = models.CharField(max_length=20, choices=ROLE_CHOICES)
-#     department = models.ForeignKey(
-#         'Department',
-#         on_delete=models.SET_NULL,
-#         null=True,
-#         blank=True,
-#         related_name='users'
-#     )
-
-#     class Meta:
-#         ordering = ['username']
-
-#     def __str__(self):
-#         return f"{self.username} ({self.get_role_display()})"
-    
 
 class Criteria(models.Model):
     board = models.ForeignKey(
@@ -368,6 +343,12 @@ class Template(models.Model):
             if not re.match(validation['pattern'], value):
                 raise ValidationError("Value does not match required pattern")
 
+from django.core.exceptions import ValidationError
+from django.db import models
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
+
 class DataSubmission(models.Model):
     STATUS_CHOICES = (
         ('draft', 'Draft'),
@@ -377,11 +358,11 @@ class DataSubmission(models.Model):
     )
 
     template = models.ForeignKey('Template', on_delete=models.PROTECT)
-    department = models.ForeignKey('Department', on_delete=models.PROTECT)
+    department = models.ForeignKey('user_management.Department', on_delete=models.PROTECT)
     academic_year = models.ForeignKey('AcademicYear', on_delete=models.PROTECT)
     submitted_by = models.ForeignKey(User, on_delete=models.PROTECT, related_name='submissions')
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='draft')
-    
+
     submitted_at = models.DateTimeField(null=True, blank=True)
     verified_by = models.ForeignKey(
         User, 
@@ -392,56 +373,59 @@ class DataSubmission(models.Model):
     )
     verified_at = models.DateTimeField(null=True, blank=True)
     rejection_reason = models.TextField(null=True, blank=True)
-    
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    
+
     class Meta:
         unique_together = ['template', 'department', 'academic_year']
         ordering = ['-academic_year__start_date', '-updated_at']
+        permissions = [
+            ("can_verify_submission", "Can verify submission"),
+            ("can_view_all_submissions", "Can view all submissions"),
+        ]
 
     @property
     def board(self):
+        """Retrieve the board associated with this submission's template."""
         return self.template.criteria.board
 
     def __str__(self):
         return f"{self.template.code} - {self.department.name} ({self.academic_year})"
 
     def clean(self):
-        # Ensure only IQAC directors can verify submissions
-        if self.verified_by and self.verified_by.role != 'iqac_director':
-            raise ValidationError("Only IQAC directors can verify submissions")
+        """
+        Validation logic for DataSubmission:
+        - Ensure only IQAC directors can verify submissions.
+        - Ensure submissions can only be verified if they are in the 'submitted' state.
+        """
+        if self.verified_by and not self.verified_by.has_role('IQAC Director'):
+            raise ValidationError("Only IQAC directors can verify submissions.")
         
-        # Ensure submission can only be verified if it's in submitted state
         if self.verified_by and self.status == 'draft':
-            raise ValidationError("Cannot verify a draft submission")
-        
+            raise ValidationError("Cannot verify a draft submission.")
+
     def get_status_display_class(self):
+        """Generate a CSS class based on the status."""
         return f'status-{self.status.lower()}'
 
     def can_be_verified(self):
+        """Check if the submission can be verified."""
         return self.status == 'submitted'
 
     def can_be_edited(self):
+        """Check if the submission can be edited."""
         return self.status in ['draft', 'rejected']
 
     def get_data_summary(self):
-        """Returns a summary of the submission data"""
+        """Returns a summary of the submission data."""
         total_rows = self.data_rows.count()
         sections = self.data_rows.values('section_index').distinct().count()
         return f"{total_rows} rows across {sections} sections"
 
     def get_latest_history(self):
-        """Returns the latest history entry"""
+        """Returns the latest history entry."""
         return self.history.first()
-
-    class Meta:
-        ordering = ['-academic_year__start_date', '-updated_at']
-        unique_together = ['template', 'department', 'academic_year']
-        permissions = [
-            ("can_verify_submission", "Can verify submission"),
-            ("can_view_all_submissions", "Can view all submissions"),
-        ]
 
 class SubmissionData(models.Model):
     submission = models.ForeignKey(

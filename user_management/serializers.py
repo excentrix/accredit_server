@@ -93,6 +93,7 @@ class RoleSerializer(serializers.ModelSerializer):
 class UserRegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, style={'input_type': 'password'})
     confirm_password = serializers.CharField(write_only=True, style={'input_type': 'password'})
+    department = DepartmentSerializer(read_only=True)
 
     class Meta:
         model = CustomUser
@@ -129,14 +130,15 @@ class UserSerializer(serializers.ModelSerializer):
         source='roles'
     )
     full_name = serializers.SerializerMethodField()
-    permissions = serializers.SerializerMethodField()
+    # permissions = serializers.SerializerMethodField()
 
     class Meta:
         model = CustomUser
         fields = [
             'id', 'email', 'username', 'usn', 'department', 'department_id',
             'roles', 'role_ids', 'is_active', 'date_joined', 'last_login',
-            'full_name', 'permissions'
+            'full_name', 
+            # 'permissions'
         ]
         read_only_fields = ['id', 'date_joined', 'last_login']
 

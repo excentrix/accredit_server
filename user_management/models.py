@@ -11,12 +11,14 @@ class AuditModelMixin(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
         null=True,
+        blank=True,  # Allow blank values
         related_name='%(class)s_created'
     )
     updated_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
         null=True,
+        blank=True,  # Allow blank values
         related_name='%(class)s_updated'
     )
     created_at = models.DateTimeField(auto_now_add=True)
@@ -34,6 +36,12 @@ class AuditModelMixin(models.Model):
         if user:
             self.updated_by = user
         self.save()
+
+    def save(self, *args, **kwargs):
+        if not self.created_by:
+            self.created_by = kwargs.pop('user', None)
+        self.updated_by = kwargs.pop('user', None)
+        super().save(*args, **kwargs)
 
 class Department(AuditModelMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -131,8 +139,8 @@ class Permission(AuditModelMixin):
         super().save(*args, **kwargs)
         
         # Clear related caches
-        cache.delete_pattern('permission_*')
-        cache.delete_pattern('user_permissions_*')
+        cache.delete_many('permission_*')
+        cache.delete_many('user_permissions_*')
 
     def __str__(self):
         return f"{self.module.name}: {self.resource}:{self.action}"
@@ -164,6 +172,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     username = models.CharField(max_length=50)
     usn = models.CharField(max_length=20, unique=True)
+    first_name = models.CharField(max_length=30, blank=True)
+    last_name = models.CharField(max_length=30, blank=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(auto_now_add=True)
@@ -182,6 +192,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def has_role(self, role_name):
         return self.roles.filter(name=role_name).exists()
+    
+    def get_full_name(self):
+        return f"{self.first_name} {self.last_name}".strip() or self.username
     
     def get_roles_display(self):
         return ', '.join([role.name for role in self.roles.all()])

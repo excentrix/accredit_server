@@ -1,29 +1,11 @@
 from rest_framework import serializers
-from .models import Criteria, User, Department, AcademicYear, Template, DataSubmission, SubmissionData, SubmissionHistory
+from .models import Criteria,  AcademicYear, Template, DataSubmission, SubmissionData, SubmissionHistory, Template, Board
 
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from .models import Department, Template, DataSubmission, Board
 
 User = get_user_model()
 
-class DepartmentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Department
-        fields = ['id', 'name', 'code']
-
-class UserSerializer(serializers.ModelSerializer):
-    department = DepartmentSerializer(read_only=True)
-    
-    class Meta:
-        model = User
-        fields = ['id', 'username', 'email', 'first_name', 'last_name', 
-                 'role', 'department']
-        read_only_fields = ['id']
-
-class LoginSerializer(serializers.Serializer):
-    username = serializers.CharField()
-    password = serializers.CharField(write_only=True)
 
 class AcademicYearSerializer(serializers.ModelSerializer):
     class Meta:
@@ -114,7 +96,7 @@ class DataSubmissionSerializer(serializers.ModelSerializer):
     def validate(self, data):
         # Ensure user can only submit for their department
         user = self.context['request'].user
-        if user.role == 'faculty' and data['department'] != user.department:
+        if user.roles.filter('Faculty').exists and data['department'] != user.department:
             raise serializers.ValidationError(
                 "You can only submit data for your own department"
             )

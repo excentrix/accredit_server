@@ -9,6 +9,9 @@ from rest_framework.exceptions import NotFound, ValidationError
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenObtainPairView
+from django.core.mail import send_mail
+from rest_framework.views import APIView
+
 
 from .models import CustomUser, Role, Permission, Department
 from .serializers import (
@@ -16,16 +19,20 @@ from .serializers import (
     UserSerializer, 
     RoleSerializer, 
     PermissionSerializer,
-    CustomTokenObtainPairSerializer
+    CustomTokenObtainPairSerializer,
+    DepartmentSerializer
 )
 from .permissions import HasDynamicPermission, IsAdmin, HasPermission, IsFaculty, IsStudent
 
 logger = logging.getLogger(__name__)
 
-class StandardResultsSetPagination:
+from rest_framework.pagination import PageNumberPagination
+
+class StandardResultsSetPagination(PageNumberPagination):
     page_size = 10
     page_size_query_param = 'page_size'
     max_page_size = 100
+
 
 class StandardResponse:
     @staticmethod
@@ -42,6 +49,20 @@ class StandardResponse:
             'status': 'error',
             'message': str(message)
         }, status=status_code)
+        
+
+class UserDetailView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        try:
+            user = request.user
+            data = UserSerializer(user).data
+            return StandardResponse.success(data=data, message="User details retrieved successfully")
+        except Exception as e:
+            logger.error(f"Error retrieving user details: {str(e)}")
+            return StandardResponse.error(str(e))
+
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
@@ -52,6 +73,7 @@ class UserViewSet(viewsets.ModelViewSet):
     filterset_fields = ['department', 'is_active', 'roles']
     search_fields = ['email', 'username', 'usn']
     ordering_fields = ['date_joined', 'username', 'email']
+    resource = 'user'
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -77,6 +99,15 @@ class UserViewSet(viewsets.ModelViewSet):
             logger.error(f"Error creating user: {str(e)}")
             raise ValidationError(str(e))
 
+    @action(detail=False, methods=['get'], permission_classes=[permissions.IsAuthenticated])
+    def me(self, request):
+        """
+        Endpoint to get the current authenticated user's details.
+        """
+        user = request.user
+        serializer = self.get_serializer(user)
+        return Response(serializer.data)
+
     @action(detail=True, methods=['post'], permission_classes=[IsAdmin])
     def assign_role(self, request, pk=None):
         try:
@@ -88,11 +119,11 @@ class UserViewSet(viewsets.ModelViewSet):
 
                 role = Role.objects.get(name=role_name)
                 user.roles.add(role)
-                
+
                 # Clear user's permission cache
                 cache_key = f"user_permissions_{user.id}"
                 cache.delete(cache_key)
-                
+
                 logger.info(f"Role {role_name} assigned to user {user.username}")
                 return StandardResponse.success(
                     UserSerializer(user).data,
@@ -116,11 +147,11 @@ class UserViewSet(viewsets.ModelViewSet):
 
                 role = Role.objects.get(name=role_name)
                 user.roles.remove(role)
-                
+
                 # Clear user's permission cache
                 cache_key = f"user_permissions_{user.id}"
                 cache.delete(cache_key)
-                
+
                 logger.info(f"Role {role_name} revoked from user {user.username}")
                 return StandardResponse.success(
                     UserSerializer(user).data,
@@ -132,7 +163,6 @@ class UserViewSet(viewsets.ModelViewSet):
         except Exception as e:
             logger.error(f"Error revoking role: {str(e)}")
             return StandardResponse.error(str(e))
-
 class RoleViewSet(viewsets.ModelViewSet):
     queryset = Role.objects.all()
     serializer_class = RoleSerializer
@@ -241,3 +271,69 @@ class ModuleResourceView(APIView):
         except Exception as e:
             logger.error(f"Error in ModuleResourceView: {str(e)}")
             return StandardResponse.error(str(e))
+        
+
+class PasswordResetRequestView(APIView):
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request):
+        email = request.data.get("email")
+        try:
+            user = CustomUser.objects.get(email=email)
+            reset_token = user.generate_reset_token()  # Assume this method generates a unique token
+            reset_url = f"{request.build_absolute_uri('/user/reset-password/')}{reset_token}"
+
+            send_mail(
+                "Password Reset Request",
+                f"Use this link to reset your password: {reset_url}",
+                "noreply@yourdomain.com",
+                [email],
+            )
+            logger.info(f"Password reset email sent to {email}.")
+            return StandardResponse.success(message="Password reset email sent")
+        except CustomUser.DoesNotExist:
+            logger.warning(f"Password reset requested for non-existent email: {email}")
+            return StandardResponse.error("User with this email does not exist", status.HTTP_404_NOT_FOUND)
+        
+        
+class PasswordResetConfirmView(APIView):
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request):
+        token = request.data.get("token")
+        new_password = request.data.get("new_password")
+        try:
+            user = CustomUser.verify_reset_token(token)  # Assume this method validates the token and returns the user
+            user.set_password(new_password)
+            user.save()
+
+            logger.info(f"Password reset successfully for {user.email}.")
+            return StandardResponse.success(message="Password reset successfully")
+        except ValidationError as e:
+            logger.error(f"Password reset failed: {str(e)}")
+            return StandardResponse.error(str(e), status.HTTP_400_BAD_REQUEST)
+
+class ChangePasswordView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        current_password = request.data.get("current_password")
+        new_password = request.data.get("new_password")
+        user = request.user
+
+        if not user.check_password(current_password):
+            return StandardResponse.error("Current password is incorrect", status.HTTP_400_BAD_REQUEST)
+
+        user.set_password(new_password)
+        user.save()
+        logger.info(f"Password changed successfully for {user.username}.")
+        return StandardResponse.success(message="Password changed successfully")
+
+class DepartmentViewSet(viewsets.ModelViewSet):
+    queryset = Department.objects.all()
+    serializer_class = DepartmentSerializer
+    permission_classes = [HasPermission]
+    pagination_class = StandardResultsSetPagination
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['name']
+    ordering_fields = ['name']

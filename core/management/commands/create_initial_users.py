@@ -16,6 +16,7 @@ class Command(BaseCommand):
         # Create admin user
         admin_user = User.objects.create_user(
             username='admin',
+            usn='0',
             email='admin@example.com',
             password='admin123',
             role='admin',
@@ -27,6 +28,7 @@ class Command(BaseCommand):
         # Create IQAC director
         iqac_director = User.objects.create_user(
             username='iqac',
+            usn='1',
             email='iqac@example.com',
             password='iqac123',
             role='iqac_director'
@@ -36,6 +38,7 @@ class Command(BaseCommand):
         # Create faculty users
         faculty1 = User.objects.create_user(
             username='faculty_cs',
+             usn='2',
             email='faculty_cs@example.com',
             password='faculty123',
             role='faculty',
@@ -45,6 +48,7 @@ class Command(BaseCommand):
 
         faculty2 = User.objects.create_user(
             username='faculty_ec',
+             usn='3',
             email='faculty_ec@example.com',
             password='faculty123',
             role='faculty',

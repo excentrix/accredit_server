@@ -2,19 +2,18 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import (
-    CriteriaViewSet, DepartmentViewSet, AcademicYearViewSet, NameAutocompleteView,
-    TemplateViewSet, DataSubmissionViewSet,
-    ExportTemplateView, Board
+    CriteriaViewSet, AcademicYearViewSet, NameAutocompleteView,
+    TemplateViewSet,
+    ExportTemplateView, TemplateViewSet, DataSubmissionViewSet, BoardViewSet
 )
 
-from .views import AuthViewSet, UserViewSet, TemplateViewSet, DataSubmissionViewSet, BoardViewSet
 
 import logging
 
 logger = logging.getLogger(__name__)
 
 router = DefaultRouter()
-router.register(r'departments', DepartmentViewSet)
+# router.register(r'departments', DepartmentViewSet)
 router.register(r'academic-years', AcademicYearViewSet, basename='academic-year')
 router.register(r'submissions', DataSubmissionViewSet, basename='submission')
 router.register(r'criteria/list', CriteriaViewSet, basename='criteria')
@@ -23,10 +22,10 @@ router.register(r'criteria/list', CriteriaViewSet, basename='criteria')
 urlpatterns = [
     path('', include(router.urls)),
     # path('export/', ExportTemplateView.as_view(), name='export-template'),
-    path('auth/login/', AuthViewSet.as_view({'post': 'login'})),
-    path('auth/logout/', AuthViewSet.as_view({'post': 'logout'})),
-    path('auth/me/', AuthViewSet.as_view({'get': 'me'})),
-    path('auth/token/refresh/', AuthViewSet.as_view({'post':'refresh'}), name='token_refresh'),
+    # path('auth/login/', AuthViewSet.as_view({'post': 'login'})),
+    # path('auth/logout/', AuthViewSet.as_view({'post': 'logout'})),
+    # path('auth/me/', AuthViewSet.as_view({'get': 'me'})),
+    # path('auth/token/refresh/', AuthViewSet.as_view({'post':'refresh'}), name='token_refresh'),
     path('submissions/stats/', DataSubmissionViewSet.as_view({'get': 'stats'}), name='submission-stats'),
     path('submissions/department-breakdown/', DataSubmissionViewSet.as_view({'get': 'department_breakdown'}), name='department_breakdown'),
     
