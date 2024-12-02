@@ -74,5 +74,5 @@ jobs:
           echo "Setting startup command..."
           az webapp config set \
             --name accredit-server \
-            --resource-group <Your-Resource-Group> \
+            --resource-group accredit \
             --startup-file "python manage.py runserver 0.0.0.0:8000"
