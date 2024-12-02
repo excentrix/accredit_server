@@ -68,10 +68,4 @@ jobs:
           app-name: 'accredit-server'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_B9DB335913264CD283AC052CBA6D683D }}
-
-      - name: Set Azure startup command
-        run: |
-          az webapp config set \
-            --name accredit-server \
-            --resource-group accredit \
-            --startup-file "gunicorn naac.wsgi --bind=0.0.0.0:8000"
+          startup-command: "gunicorn naac.wsgi --bind=0.0.0.0:8000"
