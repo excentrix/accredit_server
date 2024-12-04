@@ -1,6 +1,7 @@
 from django_filters import rest_framework as filters
 from rest_framework.filters import OrderingFilter
-from .models import DataSubmission, Department, Template, AcademicYear
+from .models import DataSubmission, Template, AcademicYear
+from user_management.models import Department
 from django.db import models
 
 class DataSubmissionFilter(filters.FilterSet):

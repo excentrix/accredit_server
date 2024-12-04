@@ -3,22 +3,22 @@ from django.core.management.base import BaseCommand
 from core.models import Criteria, Board
 
 class Command(BaseCommand):
-    help = 'Populate the database with NAAC criteria'
+    help = 'Populate the database with accredit criteria'
 
     def handle(self, *args, **kwargs):
-        # First ensure NAAC board exists
+        # First ensure accredit board exists
         naac_board, created = Board.objects.get_or_create(
-            code='naac',
-            defaults={'name': 'NAAC'}
+            code='accredit',
+            defaults={'name': 'accredit'}
         )
         
         if created:
             self.stdout.write(
-                self.style.SUCCESS('Created NAAC board')
+                self.style.SUCCESS('Created accredit board')
             )
         else:
             self.stdout.write(
-                self.style.SUCCESS('Using existing NAAC board')
+                self.style.SUCCESS('Using existing accredit board')
             )
 
         criteria_data = [
@@ -128,12 +128,12 @@ class Command(BaseCommand):
 
             self.stdout.write(
                 self.style.SUCCESS(
-                    f'Successfully {"created" if created else "updated"} NAAC criterion {criteria.number}'
+                    f'Successfully {"created" if created else "updated"} accredit criterion {criteria.number}'
                 )
             )
 
         summary = f'''
-        NAAC Criteria population completed:
+        accredit Criteria population completed:
         - Created: {created_count}
         - Updated: {updated_count}
         - Total: {created_count + updated_count}

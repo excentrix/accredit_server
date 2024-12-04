@@ -1,25 +1,14 @@
 # core/admin.py
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import Criteria, User, Department, AcademicYear, Template, DataSubmission, SubmissionData, Board
+from .models import Criteria,  AcademicYear, Template, DataSubmission, SubmissionData, Board
 from django.utils.safestring import mark_safe
 import json
 from django.utils import timezone
 from django.urls import reverse
 from django.utils.html import format_html
 
-@admin.register(User)
-class CustomUserAdmin(UserAdmin):
-    list_display = ('username', 'email', 'role', 'department', 'is_staff')
-    list_filter = ('role', 'department', 'is_staff', 'is_superuser')
-    fieldsets = UserAdmin.fieldsets + (
-        ('Additional Info', {'fields': ('role', 'department')}),
-    )
 
-@admin.register(Department)
-class DepartmentAdmin(admin.ModelAdmin):
-    list_display = ('name', 'code')
-    search_fields = ('name', 'code')
 @admin.register(Criteria)
 class CriteriaAdmin(admin.ModelAdmin):
     list_display = ('board', 'number', 'name', 'description')
@@ -113,7 +102,7 @@ class DataSubmissionAdmin(admin.ModelAdmin):
 
     def submitted_by_user(self, obj):
         if obj.submitted_by:
-            return f"{obj.submitted_by.get_full_name()} ({obj.submitted_by.username})"
+            return f"{obj.submitted_by} ({obj.submitted_by.username})"
         return '-'
     submitted_by_user.short_description = 'Submitted By'
     submitted_by_user.admin_order_field = 'submitted_by__username'

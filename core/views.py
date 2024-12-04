@@ -1,203 +1,60 @@
-from tokenize import TokenError
-from wsgiref.util import FileWrapper
-from django.conf import settings
-from rest_framework import viewsets, status, permissions
+from rest_framework import viewsets, status
 from rest_framework.filters import OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.exceptions import PermissionDenied, NotFound
+from rest_framework.exceptions import NotFound
 from django.shortcuts import get_object_or_404
 from django.db import transaction
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse
 
-from .utils.excel_styles import ExcelStyles
 
 from .services import AcademicYearTransitionService
 from .tasks import process_academic_year_transition
 
 from .filters import DataSubmissionFilter
 from .utils.excel_export import ExcelExporter
-from datetime import datetime
+
 from django.utils import timezone
 import io
 import re
 from rest_framework.views import APIView
-import json
+
 from django.db import models
 
+from user_management.serializers import UserSerializer, DepartmentSerializer
+from user_management.models import CustomUser as User, Department
+
 from .models import (
-    AcademicYearTransition, Criteria, SubmissionHistory, User, Department, AcademicYear, Template, 
-    DataSubmission, SubmissionData, Board
+    AcademicYearTransition, Criteria, SubmissionHistory, AcademicYear, Template, 
+    DataSubmission, SubmissionData, Board, Template, DataSubmission
 )
+
+
 from .serializers import (
-    CriteriaSerializer, UserSerializer, DepartmentSerializer, AcademicYearSerializer,
+    CriteriaSerializer, AcademicYearSerializer,
     TemplateSerializer, DataSubmissionSerializer, SubmissionDataSerializer, BoardSerializer
 )
 
 import openpyxl
-from openpyxl import load_workbook, Workbook
+from openpyxl import Workbook
 from django.core.exceptions import ValidationError
 
-from rest_framework import viewsets, status, permissions
-from rest_framework.decorators import action
-from rest_framework.response import Response
-from rest_framework_simplejwt.views import TokenObtainPairView
-from rest_framework_simplejwt.tokens import RefreshToken
-from django.contrib.auth import authenticate
-from .serializers import (
-    UserSerializer, LoginSerializer, DepartmentSerializer,
-    TemplateSerializer, DataSubmissionSerializer
-)
-from .models import User, Department, Template, DataSubmission
-from .permissions import IsFaculty, IsIQACDirector, IsAdmin
 
-from openpyxl.styles import Alignment, Font, PatternFill, Border, Side
-from openpyxl.utils import get_column_letter
+from .permissions import IsFaculty, IsIQACDirector, IsAdmin
+from user_management.permissions import HasPermission
+
 
 import logging
 from deepdiff import DeepDiff
 
 logger = logging.getLogger(__name__)
 
-class AuthViewSet(viewsets.ViewSet):
-    permission_classes = [permissions.AllowAny]
-
-    @action(detail=False, methods=['post'])
-    def login(self, request):
-        serializer = LoginSerializer(data=request.data)
-        if serializer.is_valid():
-            username = serializer.validated_data['username']
-            password = serializer.validated_data['password']
-            user = authenticate(username=username, password=password)
-            
-            if user:
-                refresh = RefreshToken.for_user(user)
-                user_serializer = UserSerializer(user)
-                
-                return Response({
-                    'status': 'success',
-                    'data': {
-                        'user': user_serializer.data,
-                        'tokens': {
-                            'access': str(refresh.access_token),
-                            'refresh': str(refresh)
-                        }
-                    }
-                })
-            
-            return Response({
-                'status': 'error',
-                'message': 'Invalid credentials'
-            }, status=status.HTTP_401_UNAUTHORIZED)
-        
-        return Response({
-            'status': 'error',
-            'errors': serializer.errors
-        }, status=status.HTTP_400_BAD_REQUEST)
-
-    @action(detail=False, methods=['post'])
-    def logout(self, request):
-        try:
-            # Get refresh token from request data
-            refresh_token = request.data.get('refresh')
-            
-            if not refresh_token:
-                return Response({
-                    'status': 'error',
-                    'message': 'Refresh token is required'
-                }, status=status.HTTP_400_BAD_REQUEST)
-
-            # Blacklist the refresh token
-            token = RefreshToken(refresh_token)
-            token.blacklist()
-
-            return Response({
-                'status': 'success',
-                'message': 'Successfully logged out'
-            })
-        except TokenError:
-            return Response({
-                'status': 'error',
-                'message': 'Invalid or expired token'
-            }, status=status.HTTP_400_BAD_REQUEST)
-        except Exception as e:
-            return Response({
-                'status': 'error',
-                'message': str(e)
-            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        
-    @action(detail=False, methods=['post'])
-    def refresh(self, request):
-        try:
-            refresh_token = request.data.get('refresh')
-            if not refresh_token:
-                return Response({
-                    'status': 'error',
-                    'message': 'Refresh token is required'
-                }, status=status.HTTP_400_BAD_REQUEST)
-
-            refresh = RefreshToken(refresh_token)
-            
-            return Response({
-                'status': 'success',
-                'data': {
-                    'access': str(refresh.access_token)
-                }
-            })
-        except TokenError:
-            return Response({
-                'status': 'error',
-                'message': 'Invalid or expired refresh token'
-            }, status=status.HTTP_401_UNAUTHORIZED)
-        except Exception as e:
-            return Response({
-                'status': 'error',
-                'message': str(e)
-            }, status=status.HTTP_400_BAD_REQUEST)
-            
-    @action(detail=False, methods=['get'])
-    def me(self, request):
-        if not request.user.is_authenticated:
-            return Response({
-                'status': 'error',
-                'message': 'Not authenticated'
-            }, status=status.HTTP_401_UNAUTHORIZED)
-        
-        serializer = UserSerializer(request.user)
-        return Response({
-            'status': 'success',
-            'data': serializer.data
-        })
-        
-        
-
-class UserViewSet(viewsets.ModelViewSet):
-    serializer_class = UserSerializer
-    permission_classes = [IsAdmin]
-
-    def get_queryset(self):
-        return User.objects.all()
-
-class DepartmentViewSet(viewsets.ModelViewSet):
-    queryset = Department.objects.all()
-    serializer_class = DepartmentSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-    def get_queryset(self):
-        if self.request.user.role == 'faculty':
-            return Department.objects.filter(id=self.request.user.department.id)
-        return Department.objects.all()
-    
-    def get_permissions(self):
-        if self.action in ['create', 'update', 'partial_update', 'destroy']:
-            self.permission_classes = [IsIQACDirector|IsAdmin]
-        return super().get_permissions()
 
 class AcademicYearViewSet(viewsets.ModelViewSet):
     queryset = AcademicYear.objects.all()
     serializer_class = AcademicYearSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [HasPermission]
 
     def list(self, request, *args, **kwargs):
         queryset = self.get_queryset().order_by('-start_date')  # Order by start_date instead of year
@@ -229,10 +86,11 @@ class AcademicYearViewSet(viewsets.ModelViewSet):
         academic_year.is_current = True
         academic_year.save()
         return Response({'status': 'academic year set as current'})
+
 class TemplateViewSet(viewsets.ModelViewSet):
     queryset = Template.objects.all()
     serializer_class = TemplateSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [HasPermission]
     lookup_field='code'
     
     def get_permissions(self):
@@ -240,9 +98,9 @@ class TemplateViewSet(viewsets.ModelViewSet):
         Instantiates and returns the list of permissions that this view requires.
         """
         if self.action in ['approve_submission', 'reject_submission']:
-            permission_classes = [permissions.IsAuthenticated, IsIQACDirector]
+            permission_classes = [HasPermission, IsIQACDirector]
         else:
-            permission_classes = [permissions.IsAuthenticated]
+            permission_classes = [HasPermission]
         return [permission() for permission in permission_classes]
     
     def get_queryset(self):
@@ -257,10 +115,7 @@ class TemplateViewSet(viewsets.ModelViewSet):
         print(f"Board: {board}")
         print(f"Academic Year: {ac}")
 
-        # Add debug logging
-        # print(f"Filtering templates - Board Code: {board_code}, Academic Year: {academic_year}")
 
-        # Filter by board if provided
         if board_code:
             try:
                 # Filter by board code instead of id
@@ -568,6 +423,9 @@ class TemplateViewSet(viewsets.ModelViewSet):
         try:
             template = self.get_object()
             current_year = AcademicYear.objects.filter(is_current=True).first()
+            department = Department.objects.get(id=request.user.department_id)
+            print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+            print(f"Department: {department}")
             section_index = int(section_index)
 
             if not current_year:
@@ -593,7 +451,7 @@ class TemplateViewSet(viewsets.ModelViewSet):
                 try:
                     submission = DataSubmission.objects.get(
                         template=template,
-                        department=request.user.department,
+                        department=department,
                         academic_year=current_year
                     )
                     data_rows = SubmissionData.objects.filter(
@@ -631,7 +489,7 @@ class TemplateViewSet(viewsets.ModelViewSet):
                         # Get or create submission without creating data rows
                         submission, _ = DataSubmission.objects.get_or_create(
                             template=template,
-                            department=request.user.department,
+                            department=department,
                             academic_year=current_year,
                             defaults={
                                 'submitted_by': request.user,
@@ -642,6 +500,7 @@ class TemplateViewSet(viewsets.ModelViewSet):
                         # Validate incoming data against template structure
                         section = template.metadata[section_index]
                         data = request.data
+                        print(f"Data: {data}")
                         
                         # Validate required fields
                         required_fields = []
@@ -1004,8 +863,18 @@ class TemplateViewSet(viewsets.ModelViewSet):
         """Get or create submission state for template"""
         template = self.get_object()
         current_year = AcademicYear.objects.filter(is_current=True).first()
-        # board = Board.objects.get(id=request.data.get('board'))
+        print()
+        # Attempt to retrieve the Department instance
+        try:
+            department_name = request.user.department
+            department = Department.objects.get(id=request.user.department_id)
+        except Department.DoesNotExist:
+            return Response({
+                'status': 'error',
+                'message': f'Department "{request.user.department}" not found.'
+            }, status=status.HTTP_400_BAD_REQUEST)
 
+        # Check for current academic year
         if not current_year:
             return Response({
                 'status': 'error',
@@ -1013,9 +882,10 @@ class TemplateViewSet(viewsets.ModelViewSet):
             }, status=status.HTTP_400_BAD_REQUEST)
 
         try:
+            # Check if a submission already exists
             submission = DataSubmission.objects.get(
                 template=template,
-                department=request.user.department,
+                department=department,
                 academic_year=current_year,
                 # board=board
             )
@@ -1025,10 +895,11 @@ class TemplateViewSet(viewsets.ModelViewSet):
                 'data': serializer.data
             })
         except DataSubmission.DoesNotExist:
+            # Create a new submission if the request is POST
             if request.method == 'POST':
                 submission = DataSubmission.objects.create(
                     template=template,
-                    department=request.user.department,
+                    department=department,
                     academic_year=current_year,
                     submitted_by=request.user,
                     # board=Board.objects.get(id=request.data.get('board')),
@@ -1039,6 +910,8 @@ class TemplateViewSet(viewsets.ModelViewSet):
                     'status': 'success',
                     'data': serializer.data
                 })
+
+            # Return None if no submission exists and the request is GET
             return Response({
                 'status': 'success',
                 'data': None
@@ -1110,7 +983,7 @@ class TemplateViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['post'], url_path='approve')
     def approve_submission(self, request, code=None):
         """Approve a submission (IQAC Director only)"""
-        if request.user.role != 'iqac_director':
+        if not request.user.roles.filter(name='IQAC Director').exists():
             return Response({
                 'status': 'error',
                 'message': 'Only IQAC Director can approve submissions'
@@ -1149,7 +1022,7 @@ class TemplateViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['post'], url_path='reject')
     def reject_submission(self, request, code=None):
         """Reject a submission with comments (IQAC Director only)"""
-        if request.user.role != 'iqac_director':
+        if not request.user.roles.filter(name='IQAC Director').exists():
             return Response({
                 'status': 'error',
                 'message': 'Only IQAC Director can reject submissions'
@@ -1192,12 +1065,9 @@ class TemplateViewSet(viewsets.ModelViewSet):
                 'status': 'error',
                 'message': 'No submission found'
             }, status=status.HTTP_404_NOT_FOUND)
-    
-    
-
-    
+      
 class NameAutocompleteView(APIView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [HasPermission]
 
     def get(self, request, *args, **kwargs):
         query = request.GET.get('q', '')
@@ -1217,7 +1087,7 @@ class NameAutocompleteView(APIView):
     
 class DataSubmissionViewSet(viewsets.ModelViewSet):
     serializer_class = DataSubmissionSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [HasPermission]
     filterset_class = DataSubmissionFilter
     filter_backends = [DjangoFilterBackend, OrderingFilter]
     ordering_fields = [
@@ -1235,23 +1105,24 @@ class DataSubmissionViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
+
         queryset = DataSubmission.objects.select_related(
             'template',
             'department',
             'academic_year',
-            # 'board'
             'submitted_by',
             'verified_by'
         ).prefetch_related('data_rows')
 
         # Filter based on user role
-        if user.role == 'faculty':
+        if user.roles.filter(name='Faculty').exists():
+            # If the user is a faculty member, filter by department
             queryset = queryset.filter(department=user.department)
-        elif user.role == 'iqac_director':
-            # IQAC Director can see all submissions
+        elif user.roles.filter(name='IQAC Director').exists():
+            # IQAC Director can see all submissions (no additional filter applied)
             pass
         else:
-            # Other roles might have different restrictions
+            # For other roles, return an empty queryset
             queryset = queryset.none()
 
         return queryset
@@ -1851,11 +1722,9 @@ class DataSubmissionViewSet(viewsets.ModelViewSet):
                 'status': 'error',
                 'message': str(e)
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-            
-    
-        
+             
 class AcademicYearTransitionViewSet(viewsets.ViewSet):
-    permission_classes = [permissions.IsAuthenticated, IsIQACDirector]
+    permission_classes = [HasPermission, IsIQACDirector]
 
     @action(detail=True, methods=['post'])
     def start_transition(self, request, pk=None):
@@ -1901,18 +1770,16 @@ class AcademicYearTransitionViewSet(viewsets.ViewSet):
             'completed_at': transition.completed_at,
             'error_log': transition.error_log,
             'processed_by': transition.processed_by.get_full_name()
-        })
-        
-
-# from rest_framework.permissions import IsAuthenticated
-# from .permissions import IsIQACDirector
-import os
+        })      
 
 class ExportTemplateView(APIView):
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [HasPermission]
 
     def get(self, request, *args, **kwargs):
-        if request.user.role != 'iqac_director':
+        
+        # print(request.user.roles.filter(name='IQAC Director').first())
+        
+        if not request.user.roles.filter(name='IQAC Director').exists():
             return Response(
                 {"error": "Only IQAC Director can export data"},
                 status=status.HTTP_403_FORBIDDEN
@@ -2037,18 +1904,19 @@ class ExportTemplateView(APIView):
                 {'error': str(e)},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
-            
-            
+                        
 class CriteriaViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Criteria.objects.all()
     serializer_class = CriteriaSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [HasPermission]
     
     def get_queryset(self):
         queryset = Criteria.objects.all()
         board = self.request.query_params.get('board')
+        
         if (board):
             queryset = queryset.filter(board__id=board)
+            
         return queryset.order_by('order', 'number')
 
 class BoardViewSet(APIView):
@@ -2057,7 +1925,7 @@ class BoardViewSet(APIView):
         return Response(BoardSerializer(boards, many=True).data)
 
 class SettingsViewSet(viewsets.ViewSet):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [HasPermission]
 
     @action(detail=False, methods=['get'])
     def get_settings(self, request):
