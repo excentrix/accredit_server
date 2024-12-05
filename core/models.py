@@ -124,7 +124,6 @@ class Template(models.Model):
     id = models.AutoField(primary_key=True)
     code = models.CharField(
         max_length=20,
-        unique=True,
         help_text="Template code (e.g., '2.1.1')"
     )
     name = models.CharField(
