@@ -29,9 +29,9 @@ logger = logging.getLogger(__name__)
 from rest_framework.pagination import PageNumberPagination
 
 class StandardResultsSetPagination(PageNumberPagination):
-    page_size = 10
+    page_size = 100
     page_size_query_param = 'page_size'
-    max_page_size = 100
+    max_page_size = 1000
 
 
 class StandardResponse:
@@ -163,6 +163,77 @@ class UserViewSet(viewsets.ModelViewSet):
         except Exception as e:
             logger.error(f"Error revoking role: {str(e)}")
             return StandardResponse.error(str(e))
+        
+    @action(detail=True, methods=['get'])
+    def permissions(self, request, pk=None):
+        """Get all permissions for a specific user (both direct and from roles)."""
+        user = self.get_object()
+        
+        # Get all permission IDs (from both direct permissions and roles)
+        permission_ids = set()
+        
+        # Add direct permission IDs
+        permission_ids.update(user.user_permissions.values_list('id', flat=True))
+        
+        # Add role permission IDs
+        role_permission_ids = Permission.objects.filter(
+            roles__in=user.roles.all()
+        ).values_list('id', flat=True)
+        permission_ids.update(role_permission_ids)
+        
+        # Fetch all permissions at once
+        all_permissions = Permission.objects.filter(id__in=permission_ids)
+        
+        serializer = PermissionSerializer(all_permissions, many=True)
+        return Response(serializer.data)
+
+    @action(detail=True, methods=['post'])
+    def assign_permission(self, request, pk=None):
+        """Assign a direct permission to a user."""
+        user = self.get_object()
+        permission_id = request.data.get('permission_id')
+        
+        try:
+            permission = Permission.objects.get(id=permission_id)
+            user.user_permissions.add(permission)
+            return Response({'message': 'Permission assigned successfully'})
+        except Permission.DoesNotExist:
+            return Response(
+                {'error': 'Permission not found'}, 
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+    @action(detail=True, methods=['delete'], url_path='permissions/(?P<permission_id>\d+)')
+    def revoke_permission(self, request, pk=None, permission_id=None):
+        """Revoke a direct permission from a user."""
+        user = self.get_object()
+        
+        try:
+            permission = Permission.objects.get(id=permission_id)
+            user.user_permissions.remove(permission)
+            return Response({'message': 'Permission revoked successfully'})
+        except Permission.DoesNotExist:
+            return Response(
+                {'error': 'Permission not found'}, 
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+    @action(detail=True, methods=['get'])
+    def direct_permissions(self, request, pk=None):
+        """Get only direct permissions for a user (excluding role permissions)."""
+        user = self.get_object()
+        permissions = user.user_permissions.all()
+        serializer = PermissionSerializer(permissions, many=True)
+        return Response(serializer.data)
+
+    @action(detail=True, methods=['get'])
+    def role_permissions(self, request, pk=None):
+        """Get only permissions from user's roles."""
+        user = self.get_object()
+        permissions = Permission.objects.filter(roles__in=user.roles.all()).distinct()
+        serializer = PermissionSerializer(permissions, many=True)
+        return Response(serializer.data)
+        
 class RoleViewSet(viewsets.ModelViewSet):
     queryset = Role.objects.all()
     serializer_class = RoleSerializer

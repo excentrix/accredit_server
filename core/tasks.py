@@ -2,6 +2,8 @@ from .services import AcademicYearTransitionService
 from .models import AcademicYearTransition
 from celery import shared_task
 
+from django.core.management import call_command
+
 import logging
 
 logger = logging.getLogger(__name__)
@@ -23,3 +25,8 @@ def process_academic_year_transition(transition_id):
         # Log error and send notification
         logger.error(f"Academic year transition failed: {str(e)}")
         # Notify relevant personnel
+
+
+@shared_task
+def backup_system():
+    call_command('backup_data', upload_to_azure=True)
