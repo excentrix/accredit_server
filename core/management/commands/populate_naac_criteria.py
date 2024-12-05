@@ -8,8 +8,8 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         # First ensure accredit board exists
         naac_board, created = Board.objects.get_or_create(
-            code='accredit',
-            defaults={'name': 'accredit'}
+            code='naac',
+            defaults={'name': 'NAAC'}
         )
         
         if created:

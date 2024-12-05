@@ -5,7 +5,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("core", "0003_alter_criteria_number"),
+        ("core", "0003_alter_datasubmission_department"),
     ]
 
     operations = [
