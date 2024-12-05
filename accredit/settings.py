@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 from datetime import timedelta
+from celery.schedules import crontab
 
 # Load environment variables
 load_dotenv()
@@ -37,10 +38,12 @@ INSTALLED_APPS = [
     
     # Local apps
     'core.apps.CoreConfig',
-    'user_management'
+    'user_management',
+    'monitoring.apps.MonitoringConfig',
 ]
 
 MIDDLEWARE = [
+    'monitoring.middleware.GlobalErrorHandler',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -156,7 +159,7 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 20,
+    # 'PAGE_SIZE': 20,
     'DEFAULT_THROTTLE_CLASSES': [
         'rest_framework.throttling.UserRateThrottle',
     ],
@@ -165,13 +168,16 @@ REST_FRAMEWORK = {
     }
 }
 
-# Logging Configuration
+LOGS_DIR = os.path.join(BASE_DIR, 'logs')
+os.makedirs(LOGS_DIR, exist_ok=True)
+
+# Logging configuration
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'formatters': {
         'verbose': {
-            'format': '{levelname} {asctime} {module} {message}',
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
             'style': '{',
         },
         'simple': {
@@ -179,28 +185,62 @@ LOGGING = {
             'style': '{',
         },
     },
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+    },
     'handlers': {
         'console': {
-            'level': 'DEBUG',
+            'level': 'INFO',
+            'filters': ['require_debug_true'],
             'class': 'logging.StreamHandler',
-            'formatter': 'simple',
+            'formatter': 'simple'
         },
         'file': {
-            'level': 'DEBUG',
+            'level': 'ERROR',
             'class': 'logging.FileHandler',
-            'filename': BASE_DIR / 'debug.log',
+            'filename': os.path.join(LOGS_DIR, 'error.log'),
             'formatter': 'verbose',
         },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+        }
     },
-    'root': {
-        'handlers': ['console', 'file'],
-        'level': 'DEBUG',
-    },
-    'django': {
-        'handlers': ['console', 'file'],
-        'level': 'ERROR',
-        'propagate': False,
-    },
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'file'],
+            'propagate': True,
+        },
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        'core': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+        },
+        'user_management': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+        }
+    }
+}
+
+HEALTH_CHECK_URL = '/health/'
+
+# Add monitoring configuration
+MONITORING_CONFIG = {
+    'MEMORY_THRESHOLD': 90,  # Percentage
+    'CPU_THRESHOLD': 90,     # Percentage
+    'STORAGE_THRESHOLD': 90, # Percentage
+    'ENABLE_SYSTEM_CHECKS': True,
+    'CHECK_INTERVALS': {
+        'QUICK': 30,    # 30 seconds
+        'DETAILED': 300 # 5 minutes
+    }
 }
 
 # Security Settings
@@ -216,3 +256,11 @@ if not DEBUG:
 EXPORTS_DIR = BASE_DIR / 'exports'
 if not os.path.exists(EXPORTS_DIR):
     os.makedirs(EXPORTS_DIR)
+
+# In settings.py
+CELERY_BEAT_SCHEDULE = {
+    'backup-system': {
+        'task': 'core.tasks.backup_system',
+        'schedule': crontab(hour=0, minute=0),  # Run at midnight
+    },
+}

@@ -1,0 +1,4 @@
+ERROR 2024-12-06 02:12:52,274 basehttp 32108 32044 "GET /user/users/1/permissions/ HTTP/1.1" 500 116782
+ERROR 2024-12-06 02:12:53,458 basehttp 32108 32044 "GET /user/users/1/permissions/ HTTP/1.1" 500 116782
+ERROR 2024-12-06 02:12:55,754 basehttp 32108 32044 "GET /user/users/1/permissions/ HTTP/1.1" 500 116782
+ERROR 2024-12-06 02:13:00,077 basehttp 32108 32044 "GET /user/users/1/permissions/ HTTP/1.1" 500 116782
