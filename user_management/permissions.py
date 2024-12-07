@@ -37,6 +37,9 @@ class HasPermission(BasePermission):
             resource = view.queryset.model.__name__.lower()
         else:
             resource = view.__class__.__name__.lower()
+            
+        print(request.user.has_permission(resource, action))
+
 
         return request.user.has_permission(resource, action)
 

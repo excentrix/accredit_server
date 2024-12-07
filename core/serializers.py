@@ -21,7 +21,7 @@ class TemplateSerializer(serializers.ModelSerializer):
         fields = ['id', 'code', 'name', 'metadata', 'board', 'criteria']
 
     def get_board(self, obj):
-        if obj.criteria and obj.criteria.board:
+        if (obj.criteria and obj.criteria.board):
             return {
                 'id': obj.criteria.board.id,
                 'name': obj.criteria.board.name,
@@ -82,6 +82,7 @@ class DataSubmissionSerializer(serializers.ModelSerializer):
     submitted_by_name = serializers.CharField(source='submitted_by.get_full_name', read_only=True)
     academic_year_name = serializers.CharField(source='academic_year.name', read_only=True)
     history = SubmissionHistorySerializer(many=True, read_only=True)
+    verified_by_name = serializers.CharField(source='verified_by.get_full_name', read_only=True)
     
     class Meta:
         model = DataSubmission
@@ -89,7 +90,7 @@ class DataSubmissionSerializer(serializers.ModelSerializer):
             'id', 'template', 'department', 'academic_year', 'academic_year_name',
             'status', 'submitted_at', 'verified_by', 'verified_at', 
             'rejection_reason', 'data_rows', 'department_name', 
-            'template_name', 'template_code','submitted_by_name', 'history'
+            'template_name', 'template_code','submitted_by_name', 'history', 'verified_by_name'
         ]
         read_only_fields = ['submitted_by', 'verified_by', 'verified_at']
 

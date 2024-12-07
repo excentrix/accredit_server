@@ -136,7 +136,7 @@ class TemplateViewSet(viewsets.ModelViewSet):
         #         print(f"Error filtering by academic year: {str(e)}")
         #         raise
 
-        print(f"Final query: {queryset.query}")
+        # print(f"Final query: {queryset.query}")
         return queryset.order_by('code')
 
     def list(self, request, *args, **kwargs):
@@ -933,43 +933,75 @@ class TemplateViewSet(viewsets.ModelViewSet):
                 'message': str(e)
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
-    @action(detail=True, methods=['get', 'post'], url_path='submission')
+    @action(detail=True, methods=['get'], url_path='submission')
     def submission_state(self, request, code=None):
-        """Get or create submission state for template"""
+        """Get submission state for template based on board and academic year"""
         try:
             # Get query parameters
-            board_code = request.query_params.get('board')
+            board_id = request.query_params.get('board')
             academic_year_id = request.query_params.get('academic_year')
 
-            # Get board and academic year instances
-            board = Board.objects.filter(id=board_code).first()
-            academic_year = AcademicYear.objects.filter(id=academic_year_id).first()
+            if not board_id or not academic_year_id:
+                return Response({
+                    'status': 'error',
+                    'message': 'Board ID and Academic Year ID are required'
+                }, status=status.HTTP_400_BAD_REQUEST)
 
-            print(f"Board: {board}")
-            print(f"Academic Year: {academic_year}")
+            # Get template for the specific board
+            template = Template.objects.filter(
+                code=code,
+                criteria__board_id=board_id
+            ).first()
 
-            # Get template and filter by board criteria
-            queryset = Template.objects.all()
-            if board_code:
-                try:
-                    queryset = queryset.filter(criteria__board__name=board)
-                    print(f"Templates after board filter: {queryset.count()}")
-                except Exception as e:
-                    print(f"Error filtering by board: {str(e)}")
-                    raise
-
-            try:
-                template = queryset.get(code=code)
-            except Template.DoesNotExist:
+            if not template:
                 return Response({
                     'status': 'error',
                     'message': f"Template with code '{code}' not found for the specified board"
                 }, status=status.HTTP_404_NOT_FOUND)
 
+            # Get department from user
+            department = getattr(request.user, 'department', None)
+            if not department:
+                return Response({
+                    'status': 'error',
+                    'message': 'User must be associated with a department'
+                }, status=status.HTTP_400_BAD_REQUEST)
+
+            # Get submission if it exists
+            submission = DataSubmission.objects.filter(
+                template=template,
+                academic_year_id=academic_year_id,
+                department=department
+            ).first()
+
+            if submission:
+                return Response({
+                    'status': 'success',
+                    'data': {
+                        'id': submission.id,
+                        'status': submission.status,
+                        'submitted_at': submission.submitted_at,
+                        'rejection_reason': submission.rejection_reason,
+                        'can_edit': submission.can_be_edited()
+                    }
+                })
+            else:
+                return Response({
+                    'status': 'success',
+                    'data': {
+                        'id': None,
+                        'status': 'not_started',
+                        'submitted_at': None,
+                        'rejection_reason': None,
+                        'can_edit': True
+                    }
+                })
+
         except Exception as e:
+            print(f"Error in submission_state: {str(e)}")
             return Response({
                 'status': 'error',
-                'message': str(e)
+                'message': 'An unexpected error occurred'
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def _process_column_row(self, row):
@@ -1062,99 +1094,99 @@ class TemplateViewSet(viewsets.ModelViewSet):
         
         return columns
     
-    @action(detail=True, methods=['get', 'post'], url_path='submission')
-    def submission_state(self, request, code=None):
-        """Get or create submission state for template"""
-        template = self.get_object()
-        current_year = AcademicYear.objects.filter(is_current=True).first()
-        print()
-        # Attempt to retrieve the Department instance
-        try:
-            department_name = request.user.department
-            department = Department.objects.get(id=request.user.department_id)
-        except Department.DoesNotExist:
-            return Response({
-                'status': 'error',
-                'message': f'Department "{request.user.department}" not found.'
-            }, status=status.HTTP_400_BAD_REQUEST)
+    # @action(detail=True, methods=['get', 'post'], url_path='submission')
+    # def submission_state(self, request, code=None):
+    #     """Get or create submission state for template"""
+    #     template = self.get_object()
+    #     current_year = AcademicYear.objects.filter(is_current=True).first()
+    #     print()
+    #     # Attempt to retrieve the Department instance
+    #     try:
+    #         department_name = request.user.department
+    #         department = Department.objects.get(id=request.user.department_id)
+    #     except Department.DoesNotExist:
+    #         return Response({
+    #             'status': 'error',
+    #             'message': f'Department "{request.user.department}" not found.'
+    #         }, status=status.HTTP_400_BAD_REQUEST)
 
-        # Check for current academic year
-        if not current_year:
-            return Response({
-                'status': 'error',
-                'message': 'No active academic year found'
-            }, status=status.HTTP_400_BAD_REQUEST)
+    #     # Check for current academic year
+    #     if not current_year:
+    #         return Response({
+    #             'status': 'error',
+    #             'message': 'No active academic year found'
+    #         }, status=status.HTTP_400_BAD_REQUEST)
 
-        try:
-            # Check if a submission already exists
-            submission = DataSubmission.objects.get(
-                template=template,
-                department=department,
-                academic_year=current_year,
-                # board=board
-            )
-            serializer = DataSubmissionSerializer(submission)
-            return Response({
-                'status': 'success',
-                'data': serializer.data
-            })
-        except DataSubmission.DoesNotExist:
-            # Create a new submission if the request is POST
-            if request.method == 'POST':
-                submission = DataSubmission.objects.create(
-                    template=template,
-                    department=department,
-                    academic_year=current_year,
-                    submitted_by=request.user,
-                    # board=Board.objects.get(id=request.data.get('board')),
-                    status='draft'
-                )
-                serializer = DataSubmissionSerializer(submission)
-                return Response({
-                    'status': 'success',
-                    'data': serializer.data
-                })
+    #     try:
+    #         # Check if a submission already exists
+    #         submission = DataSubmission.objects.get(
+    #             template=template,
+    #             department=department,
+    #             academic_year=current_year,
+    #             # board=board
+    #         )
+    #         serializer = DataSubmissionSerializer(submission)
+    #         return Response({
+    #             'status': 'success',
+    #             'data': serializer.data
+    #         })
+    #     except DataSubmission.DoesNotExist:
+    #         # Create a new submission if the request is POST
+    #         if request.method == 'POST':
+    #             submission = DataSubmission.objects.create(
+    #                 template=template,
+    #                 department=department,
+    #                 academic_year=current_year,
+    #                 submitted_by=request.user,
+    #                 # board=Board.objects.get(id=request.data.get('board')),
+    #                 status='draft'
+    #             )
+    #             serializer = DataSubmissionSerializer(submission)
+    #             return Response({
+    #                 'status': 'success',
+    #                 'data': serializer.data
+    #             })
 
-            # Return None if no submission exists and the request is GET
-            return Response({
-                'status': 'success',
-                'data': None
-            })
-            try:
-                submission = DataSubmission.objects.get(
-                    template=template,
-                    department=request.user.department,
-                    academic_year=academic_year,
-                )
-                serializer = DataSubmissionSerializer(submission)
-                return Response({
-                    'status': 'success',
-                    'data': serializer.data
-                })
-            except DataSubmission.DoesNotExist:
-                if request.method == 'POST':
-                    submission = DataSubmission.objects.create(
-                        template=template,
-                        department=request.user.department,
-                        academic_year=academic_year,
-                        submitted_by=request.user,
-                        status='draft'
-                    )
-                    serializer = DataSubmissionSerializer(submission)
-                    return Response({
-                        'status': 'success',
-                        'data': serializer.data
-                    })
-                return Response({
-                    'status': 'success',
-                    'data': None
-                })
+    #         # Return None if no submission exists and the request is GET
+    #         return Response({
+    #             'status': 'success',
+    #             'data': None
+    #         })
+    #         try:
+    #             submission = DataSubmission.objects.get(
+    #                 template=template,
+    #                 department=request.user.department,
+    #                 academic_year=academic_year,
+    #             )
+    #             serializer = DataSubmissionSerializer(submission)
+    #             return Response({
+    #                 'status': 'success',
+    #                 'data': serializer.data
+    #             })
+    #         except DataSubmission.DoesNotExist:
+    #             if request.method == 'POST':
+    #                 submission = DataSubmission.objects.create(
+    #                     template=template,
+    #                     department=request.user.department,
+    #                     academic_year=academic_year,
+    #                     submitted_by=request.user,
+    #                     status='draft'
+    #                 )
+    #                 serializer = DataSubmissionSerializer(submission)
+    #                 return Response({
+    #                     'status': 'success',
+    #                     'data': serializer.data
+    #                 })
+    #             return Response({
+    #                 'status': 'success',
+    #                 'data': None
+    #             })
 
-        except Exception as e:
-            return Response({
-                'status': 'error',
-                'message': str(e)
-            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    #     except Exception as e:
+    #         return Response({
+    #             'status': 'error',
+    #             'message': str(e)
+    #         }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     @action(detail=True, methods=['post'], url_path='submit')
     def submit_template(self, request, code=None):
@@ -1771,12 +1803,13 @@ class DataSubmissionViewSet(viewsets.ModelViewSet):
             'submitted_by',
             'verified_by'
         ).prefetch_related('data_rows')
-
         # Filter based on user role
-        if user.roles.filter(name='Faculty').exists():
+        if user.roles.filter(name='faculty').exists():
             # If the user is a faculty member, filter by department
             queryset = queryset.filter(department=user.department)
-        elif user.roles.filter(name='IQAC Director').exists():
+        elif user.roles.filter(name='iqac_director').exists():
+            # print(user.roles.get())
+            # print(user.roles.get().name)
             # IQAC Director can see all submissions (no additional filter applied)
             pass
         else:
@@ -1818,17 +1851,29 @@ class DataSubmissionViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['get'], url_path='current_academic_year')
     def current_academic_year(self, request):
         """Get submissions for current academic year"""
+        
+        board = Board.objects.filter(id=request.query_params.get('board')).first()
+
+        if not board:
+            return Response({
+                'status': 'error',
+                'message': 'Board ID is required'
+            }, status=status.HTTP_400_BAD_REQUEST)
+            
+        
         current_year = AcademicYear.objects.filter(is_current=True).first()
         if not current_year:
             return Response({
                 'status': 'error',
                 'message': 'No current academic year set'
             }, status=status.HTTP_404_NOT_FOUND)
-        # print(current_year)
+        print(current_year)
         queryset = self.filter_queryset(self.get_queryset().filter(
-            academic_year=current_year
+            academic_year=current_year,
+            template__criteria__board=board
         ))
-        # print(queryset)
+        # queryset = self.get_queryset()
+        # print(current_year)
         page = self.paginate_queryset(queryset)
         
         if page is not None:
@@ -1836,6 +1881,7 @@ class DataSubmissionViewSet(viewsets.ModelViewSet):
             return self.get_paginated_response(serializer.data)
 
         serializer = self.get_serializer(queryset, many=True)
+        print('submissions: ', serializer.data)
         return Response(serializer.data)
 
     @action(detail=False)
@@ -2294,6 +2340,7 @@ class DataSubmissionViewSet(viewsets.ModelViewSet):
         logger.debug(f"Department breakdown called with academic_year: {request.query_params.get('academic_year')}")
         try:
             academic_year_id = request.query_params.get('academic_year')
+            board = request.query_params.get('board')
             
             if academic_year_id:
                 academic_year = AcademicYear.objects.get(id=academic_year_id)
@@ -2437,7 +2484,7 @@ class ExportTemplateView(APIView):
         
         # print(request.user.roles.filter(name='IQAC Director').first())
         
-        if not request.user.roles.filter(name='IQAC Director').exists():
+        if not request.user.roles.filter(name='iqac_director').exists():
             return Response(
                 {"error": "Only IQAC Director can export data"},
                 status=status.HTTP_403_FORBIDDEN
