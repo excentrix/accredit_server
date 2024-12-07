@@ -1,4 +1,4 @@
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, permissions
 from rest_framework.filters import OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.decorators import action
@@ -30,10 +30,16 @@ from .models import (
     DataSubmission, SubmissionData, Board, Template, DataSubmission
 )
 
+from rest_framework.viewsets import ViewSet
+from .services import DashboardService
+
 
 from .serializers import (
     CriteriaSerializer, AcademicYearSerializer,
-    TemplateSerializer, DataSubmissionSerializer, SubmissionDataSerializer, BoardSerializer
+    TemplateSerializer, DataSubmissionSerializer, SubmissionDataSerializer, BoardSerializer,DashboardStatsSerializer,
+    ActivityTimelineSerializer,
+    CriteriaCompletionSerializer,
+    FacultyStatsSerializer
 )
 
 import openpyxl
@@ -2340,8 +2346,15 @@ class DataSubmissionViewSet(viewsets.ModelViewSet):
         logger.debug(f"Department breakdown called with academic_year: {request.query_params.get('academic_year')}")
         try:
             academic_year_id = request.query_params.get('academic_year')
-            board = request.query_params.get('board')
-            
+            board_id = request.query_params.get('board')  # Changed to board_id for consistency
+
+            if not board_id:
+                return Response({
+                    'status': 'error',
+                    'message': 'Board ID is required'
+                }, status=status.HTTP_400_BAD_REQUEST)
+
+            # Get academic year
             if academic_year_id:
                 academic_year = AcademicYear.objects.get(id=academic_year_id)
             else:
@@ -2353,21 +2366,40 @@ class DataSubmissionViewSet(viewsets.ModelViewSet):
                     'message': 'No academic year found'
                 }, status=status.HTTP_404_NOT_FOUND)
 
-            # Get all departments and templates
-            departments = Department.objects.all()
-            templates = Template.objects.all()
+            # Get board
+            try:
+                board = Board.objects.get(id=board_id)
+            except Board.DoesNotExist:
+                return Response({
+                    'status': 'error',
+                    'message': 'Board not found'
+                }, status=status.HTTP_404_NOT_FOUND)
+
+            # Get templates for this board only
+            templates = Template.objects.filter(
+                criteria__board=board
+            ).select_related('criteria')
+            
             total_templates = templates.count()
 
+            if total_templates == 0:
+                return Response({
+                    'status': 'error',
+                    'message': f'No templates found for board {board.name}'
+                }, status=status.HTTP_404_NOT_FOUND)
+
+            departments = Department.objects.all()
             department_data = []
             total_submissions = 0
             completed_submissions = 0
 
             for dept in departments:
-                # Get submissions for this department
+                # Get submissions for this department, board and academic year
                 submissions = DataSubmission.objects.filter(
                     department=dept,
-                    academic_year=academic_year
-                ).select_related('template')
+                    academic_year=academic_year,
+                    template__criteria__board=board
+                ).select_related('template', 'verified_by')
 
                 # Calculate department stats
                 dept_completed = submissions.filter(status='approved').count()
@@ -2376,11 +2408,16 @@ class DataSubmissionViewSet(viewsets.ModelViewSet):
 
                 # Get template details
                 template_details = []
-                for template in templates:
+                for template in templates:  # Iterate over board-specific templates
                     submission = submissions.filter(template=template).first()
                     template_details.append({
                         'code': template.code,
                         'name': template.name,
+                        'criteria': {
+                            'id': template.criteria.id,
+                            'number': template.criteria.number,
+                            'name': template.criteria.name
+                        },
                         'status': submission.status if submission else 'pending',
                         'last_updated': submission.updated_at if submission else None,
                         'verified_by': submission.verified_by.get_full_name() if submission and submission.verified_by else None,
@@ -2391,6 +2428,7 @@ class DataSubmissionViewSet(viewsets.ModelViewSet):
                 department_data.append({
                     'id': dept.id,
                     'name': dept.name,
+                    'code': dept.code,
                     'completion_rate': round(completion_rate, 1),
                     'completed_submissions': dept_completed,
                     'total_required': dept_total,
@@ -2407,8 +2445,13 @@ class DataSubmissionViewSet(viewsets.ModelViewSet):
                 'data': {
                     'academic_year': {
                         'id': academic_year.id,
-                        'name': academic_year.name,  # Changed from year to name
+                        'name': academic_year.name,
                         'is_current': academic_year.is_current
+                    },
+                    'board': {
+                        'id': board.id,
+                        'name': board.name,
+                        'code': board.code
                     },
                     'overall_completion_rate': round(overall_completion_rate, 1),
                     'completed_submissions': completed_submissions,
@@ -2423,6 +2466,7 @@ class DataSubmissionViewSet(viewsets.ModelViewSet):
                 'message': 'Academic year not found'
             }, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
+            logger.error(f"Error in department_breakdown: {str(e)}")
             return Response({
                 'status': 'error',
                 'message': str(e)
@@ -2652,3 +2696,57 @@ class SettingsViewSet(viewsets.ViewSet):
         user.profile.save()
 
         return Response({'status': 'success'})
+    
+    
+
+class DashboardViewSet(ViewSet):
+    permission_classes = [permissions.IsAuthenticated]
+
+    @action(detail=False, methods=['get'], url_path='stats')
+    def stats(self, request):
+        academic_year_id = request.query_params.get('academic_year')
+        board_id = request.query_params.get('board_id')
+        
+        stats = DashboardService.get_overall_stats(academic_year_id, board_id)
+        serializer = DashboardStatsSerializer(stats)
+        return Response(serializer.data)
+
+    @action(detail=False, methods=['get'], url_path='activity-timeline')
+    def activity_timeline(self, request):
+        academic_year_id = request.query_params.get('academic_year')
+        board_id = request.query_params.get('board_id')
+        department_id = request.query_params.get('department_id')
+        days = int(request.query_params.get('days', 30))
+
+        timeline = DashboardService.get_activity_timeline(
+            academic_year_id, board_id, days, department_id
+        )
+        serializer = ActivityTimelineSerializer(timeline, many=True)
+        return Response(serializer.data)
+
+    @action(detail=False, methods=['get'], url_path='criteria-completion')
+    def criteria_completion(self, request):
+        academic_year_id = request.query_params.get('academic_year')
+        board_id = request.query_params.get('board_id')
+
+        completion = DashboardService.get_criteria_completion(academic_year_id, board_id)
+        serializer = CriteriaCompletionSerializer(completion, many=True)
+        return Response(serializer.data)
+
+    @action(detail=False, methods=['get'], url_path='faculty-stats')
+    def faculty_stats(self, request):
+        academic_year_id = request.query_params.get('academic_year')
+        board_id = request.query_params.get('board_id')
+        department_id = request.query_params.get('department_id')
+
+        if not department_id:
+            return Response(
+                {'error': 'Department ID is required'}, 
+                status=400
+            )
+
+        stats = DashboardService.get_faculty_stats(
+            academic_year_id, board_id, department_id
+        )
+        serializer = FacultyStatsSerializer(stats)
+        return Response(serializer.data)

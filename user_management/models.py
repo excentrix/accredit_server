@@ -255,3 +255,51 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
             raise ValidationError("Password must contain at least one uppercase letter.")
         if not any(char.islower() for char in password):
             raise ValidationError("Password must contain at least one lowercase letter.")
+        
+class AuditLog(AuditModelMixin):
+    ACTION_CHOICES = [
+        ('create', 'Create'),
+        ('update', 'Update'),
+        ('delete', 'Delete'),
+        ('view', 'View'),
+        ('login', 'Login'),
+        ('logout', 'Logout'),
+        ('permission_change', 'Permission Change'),
+        ('role_change', 'Role Change'),
+        ('password_change', 'Password Change'),
+        ('password_reset', 'Password Reset'),
+    ]
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user = models.ForeignKey(
+        'CustomUser',
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name='audit_logs'
+    )
+    action = models.CharField(max_length=50, choices=ACTION_CHOICES)
+    module = models.CharField(max_length=100)
+    details = models.JSONField(null=True, blank=True)
+    ip_address = models.GenericIPAddressField(null=True, blank=True)
+    user_agent = models.TextField(null=True, blank=True)
+    status = models.CharField(
+        max_length=20,
+        choices=[
+            ('success', 'Success'),
+            ('failure', 'Failure'),
+        ],
+        default='success'
+    )
+
+    class Meta:
+        ordering = ['-created_at']
+        indexes = [
+            models.Index(fields=['-created_at']),
+            models.Index(fields=['action']),
+            models.Index(fields=['module']),
+            models.Index(fields=['user']),
+            models.Index(fields=['status']),
+        ]
+
+    def __str__(self):
+        return f"{self.user} - {self.action} - {self.created_at}"

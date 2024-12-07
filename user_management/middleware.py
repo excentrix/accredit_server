@@ -127,3 +127,69 @@ class RBACMiddleware(MiddlewareMixin):
 
     def is_token_blacklisted(self, token):
         return cache.get(f'blacklist_token_{token}')
+
+class AuditLogMiddleware(MiddlewareMixin):
+    def process_request(self, request):
+        # Skip certain paths
+        if (request.path.startswith('/admin/') or 
+            request.path.startswith('/static/') or 
+            request.method == 'OPTIONS'):
+            return None
+
+        # Store request info for later use
+        request.audit_data = {
+            'ip_address': self.get_client_ip(request),
+            'user_agent': request.META.get('HTTP_USER_AGENT'),
+        }
+
+    def process_response(self, request, response):
+        if not hasattr(request, 'audit_data'):
+            return response
+
+        # Skip auditing for certain status codes and paths
+        if (response.status_code in [304, 404, 403] or 
+            request.path.startswith(('/static/', '/media/'))):
+            return response
+
+        try:
+            # Get the module from the path
+            path_parts = request.path.strip('/').split('/')
+            module = path_parts[1] if len(path_parts) > 1 else 'unknown'
+
+            # Create audit log entry
+            if hasattr(request, 'user') and request.user.is_authenticated:
+                from .models import AuditLog
+                AuditLog.objects.create(
+                    user=request.user,
+                    action=self._get_action(request.method),
+                    module=module,
+                    details={
+                        'path': request.path,
+                        'method': request.method,
+                        'status_code': response.status_code,
+                    },
+                    ip_address=request.audit_data.get('ip_address'),
+                    user_agent=request.audit_data.get('user_agent'),
+                    status='success' if response.status_code < 400 else 'failure'
+                )
+        except Exception as e:
+            logger.error(f"Error creating audit log: {str(e)}")
+
+        return response
+
+    def _get_action(self, method):
+        """Map HTTP method to audit action"""
+        method_map = {
+            'GET': 'view',
+            'POST': 'create',
+            'PUT': 'update',
+            'PATCH': 'update',
+            'DELETE': 'delete'
+        }
+        return method_map.get(method, 'other')
+
+    def get_client_ip(self, request):
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            return x_forwarded_for.split(',')[0]
+        return request.META.get('REMOTE_ADDR')

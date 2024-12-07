@@ -2,7 +2,10 @@ from django.db import transaction
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 from .models import AcademicYearTransition, Template, DataSubmission, SubmissionData  # Add this import
-
+from django.db.models import Count, Q
+from datetime import timedelta
+from django.db.models.functions import TruncDate
+from user_management.models import Department
 class AcademicYearTransitionService:
     def __init__(self, from_year, to_year, user):
         self.from_year = from_year
@@ -139,3 +142,92 @@ class AcademicYearTransitionService:
 
         self.to_year.transition_status = 'pending'
         self.to_year.save()
+        
+        
+class DashboardService:
+    @staticmethod
+    def get_overall_stats(academic_year_id, board_id):
+        submissions = DataSubmission.objects.filter(
+            academic_year_id=academic_year_id,
+            template__criteria__board_id=board_id
+        )
+
+        total_submissions = submissions.count()
+        pending_review = submissions.filter(status='submitted').count()
+        approved_submissions = submissions.filter(status='approved').count()
+        rejected_submissions = submissions.filter(status='rejected').count()
+
+        # Calculate completion rate
+        total_required = Template.objects.filter(
+            criteria__board_id=board_id
+        ).count() * Department.objects.count()
+        
+        completion_rate = (approved_submissions / total_required * 100) if total_required > 0 else 0
+
+        return {
+            'total_submissions': total_submissions,
+            'pending_review': pending_review,
+            'approved_submissions': approved_submissions,
+            'rejected_submissions': rejected_submissions,
+            'completion_rate': round(completion_rate, 2),
+        }
+
+    @staticmethod
+    def get_activity_timeline(academic_year_id, board_id, days=30, department_id=None):
+        start_date = timezone.now() - timedelta(days=days)
+        
+        queryset = DataSubmission.objects.filter(
+            academic_year_id=academic_year_id,
+            template__criteria__board_id=board_id,
+            updated_at__gte=start_date
+        )
+
+        if department_id:
+            queryset = queryset.filter(department_id=department_id)
+
+        return queryset.annotate(
+            date=TruncDate('updated_at')
+        ).values('date').annotate(
+            submissions=Count('id', filter=Q(status='submitted')),
+            approvals=Count('id', filter=Q(status='approved')),
+            rejections=Count('id', filter=Q(status='rejected'))
+        ).order_by('date')
+
+    @staticmethod
+    def get_criteria_completion(academic_year_id, board_id):
+        from django.db.models import F
+        return DataSubmission.objects.filter(
+            academic_year_id=academic_year_id,
+            template__criteria__board_id=board_id,
+            status='approved'
+        ).values(
+            criterion_number=F('template__criteria__number'),
+            criterion_name=F('template__criteria__name')
+        ).annotate(
+            completed=Count('id'),
+            total=Count('template__criteria__templates')
+        ).order_by('criterion_number')
+
+    @staticmethod
+    def get_faculty_stats(academic_year_id, board_id, department_id):
+        submissions = DataSubmission.objects.filter(
+            academic_year_id=academic_year_id,
+            template__criteria__board_id=board_id,
+            department_id=department_id
+        )
+
+        total_templates = Template.objects.filter(
+            criteria__board_id=board_id
+        ).count()
+
+        return {
+            'total_submissions': submissions.count(),
+            'pending_templates': total_templates - submissions.count(),
+            'approved_submissions': submissions.filter(status='approved').count(),
+            'rejected_submissions': submissions.filter(status='rejected').count(),
+            'department_progress': round(
+                (submissions.filter(status='approved').count() / total_templates * 100) 
+                if total_templates > 0 else 0, 
+                2
+            )
+        }

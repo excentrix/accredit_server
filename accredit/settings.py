@@ -264,3 +264,13 @@ CELERY_BEAT_SCHEDULE = {
         'schedule': crontab(hour=0, minute=0),  # Run at midnight
     },
 }
+
+AUDIT_LOG_SETTINGS = {
+    'EXCLUDED_PATHS': [
+        '/static/',
+        '/media/',
+        '/admin/jsi18n/',
+    ],
+    'RETENTION_DAYS': 90,  # Keep logs for 90 days
+    'MAX_DETAILS_LENGTH': 1000,  # Maximum length for details field
+}

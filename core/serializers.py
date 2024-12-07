@@ -115,3 +115,33 @@ class BoardSerializer(serializers.ModelSerializer):
     class Meta:
         model = Board
         fields = ['id', 'name', 'code']
+        
+class DashboardStatsSerializer(serializers.Serializer):
+    total_submissions = serializers.IntegerField()
+    pending_review = serializers.IntegerField()
+    approved_submissions = serializers.IntegerField()
+    rejected_submissions = serializers.IntegerField()
+    completion_rate = serializers.FloatField()
+
+class ActivityTimelineSerializer(serializers.Serializer):
+    date = serializers.DateField()
+    submissions = serializers.IntegerField()
+    approvals = serializers.IntegerField()
+    rejections = serializers.IntegerField()
+
+class CriteriaCompletionSerializer(serializers.Serializer):
+    criterion_number = serializers.IntegerField()
+    criterion_name = serializers.CharField()
+    completed = serializers.IntegerField()
+    total = serializers.IntegerField()
+    percentage = serializers.SerializerMethodField()
+
+    def get_percentage(self, obj):
+        return round((obj['completed'] / obj['total'] * 100) if obj['total'] > 0 else 0, 2)
+
+class FacultyStatsSerializer(serializers.Serializer):
+    total_submissions = serializers.IntegerField()
+    pending_templates = serializers.IntegerField()
+    approved_submissions = serializers.IntegerField()
+    rejected_submissions = serializers.IntegerField()
+    department_progress = serializers.FloatField()

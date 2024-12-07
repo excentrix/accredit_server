@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
-from .models import CustomUser, Role, Permission, Department, Module
+from .models import CustomUser, Role, Permission, Department, Module, AuditLog
 
 class DepartmentSerializer(serializers.ModelSerializer):
     users_count = serializers.SerializerMethodField()
@@ -198,3 +198,59 @@ class CustomTokenObtainPairSerializer(serializers.Serializer):
                 'email': 'No account found with this email address.'
             })
         return attrs
+    
+
+class AuditLogSerializer(serializers.ModelSerializer):
+    user = serializers.SerializerMethodField()
+    action_display = serializers.CharField(source='get_action_display', read_only=True)
+    timestamp = serializers.DateTimeField(source='created_at', read_only=True)
+
+    class Meta:
+        model = AuditLog
+        fields = [
+            'id',
+            'user',
+            'action',
+            'action_display',
+            'module',
+            'details',
+            'ip_address',
+            'user_agent',
+            'status',
+            'timestamp',
+        ]
+        read_only_fields = fields
+
+    def get_user(self, obj):
+        if obj.user:
+            return {
+                'id': obj.user.id,
+                'email': obj.user.email,
+                'username': obj.user.username,
+                'full_name': obj.user.get_full_name()
+            }
+        return None
+
+class AuditLogSummarySerializer(serializers.Serializer):
+    total_actions = serializers.IntegerField()
+    actions_by_type = serializers.ListField(
+        child=serializers.DictField()
+    )
+    actions_by_module = serializers.ListField(
+        child=serializers.DictField()
+    )
+    actions_by_status = serializers.ListField(
+        child=serializers.DictField()
+    )
+    top_users = serializers.ListField(
+        child=serializers.DictField()
+    )
+
+    class Meta:
+        fields = [
+            'total_actions',
+            'actions_by_type',
+            'actions_by_module',
+            'actions_by_status',
+            'top_users'
+        ]

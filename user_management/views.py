@@ -1,7 +1,11 @@
 # user_management/views.py
+import csv
+from datetime import timedelta
+from django.utils import timezone
 import logging
 from django.db import transaction
 from django.core.cache import cache
+from django.http import HttpResponse
 from rest_framework import viewsets, generics, permissions, status, filters
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -11,16 +15,19 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.core.mail import send_mail
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
+from django.db.models import Count
 
 
-from .models import CustomUser, Role, Permission, Department
+from .models import AuditLog, CustomUser, Role, Permission, Department
 from .serializers import (
     UserRegistrationSerializer, 
     UserSerializer, 
     RoleSerializer, 
     PermissionSerializer,
     CustomTokenObtainPairSerializer,
-    DepartmentSerializer
+    DepartmentSerializer, 
+    AuditLogSerializer
 )
 from .permissions import HasDynamicPermission, IsAdmin, HasPermission, IsFaculty, IsStudent
 
@@ -408,3 +415,110 @@ class DepartmentViewSet(viewsets.ModelViewSet):
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['name']
     ordering_fields = ['name']
+    
+
+
+
+class AuditLogViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = AuditLogSerializer
+    permission_classes = [IsAuthenticated, IsAdmin]
+    pagination_class = StandardResultsSetPagination
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    filterset_fields = ['action', 'module', 'status']
+    search_fields = ['user__email', 'user__username', 'details']
+    ordering_fields = ['created_at', 'action', 'module']
+
+    def get_queryset(self):
+        queryset = AuditLog.objects.all()
+        
+        # Apply filters
+        days = self.request.query_params.get('days', 7)
+        activity_type = self.request.query_params.get('type', 'all')
+        start_date = timezone.now() - timedelta(days=int(days))
+        
+        queryset = queryset.filter(created_at__gte=start_date)
+        
+        if activity_type != 'all':
+            queryset = queryset.filter(module=activity_type)
+            
+        return queryset.select_related('user')
+    
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response({
+            'status': 'success',
+            'data': serializer.data
+        })
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return Response({
+            'status': 'success',
+            'data': serializer.data
+        })
+    
+
+    @action(detail=False, methods=['get'])
+    def export(self, request):
+        queryset = self.get_queryset()
+        
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="audit_logs.csv"'
+        
+        writer = csv.writer(response)
+        writer.writerow([
+            'Timestamp',
+            'User',
+            'Action',
+            'Module',
+            'Details',
+            'IP Address',
+            'Status'
+        ])
+        
+        for log in queryset:
+            writer.writerow([
+                log.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+                str(log.user) if log.user else 'System',
+                log.get_action_display(),
+                log.module,
+                str(log.details) if log.details else '',
+                log.ip_address or '',
+                log.status
+            ])
+        
+        return response
+
+    @action(detail=False, methods=['get'])
+    def summary(self, request):
+        days = int(request.query_params.get('days', 7))
+        start_date = timezone.now() - timedelta(days=days)
+        
+        queryset = self.get_queryset().filter(created_at__gte=start_date)
+        
+        summary = {
+            'total_actions': queryset.count(),
+            'actions_by_type': queryset.values('action').annotate(
+                count=Count('id')
+            ),
+            'actions_by_module': queryset.values('module').annotate(
+                count=Count('id')
+            ),
+            'actions_by_status': queryset.values('status').annotate(
+                count=Count('id')
+            ),
+            'top_users': queryset.values(
+                'user__email'
+            ).annotate(
+                count=Count('id')
+            ).order_by('-count')[:5]
+        }
+        
+        return Response(summary)
