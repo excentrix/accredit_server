@@ -996,7 +996,7 @@ class TemplateViewSet(viewsets.ModelViewSet):
                     'status': 'success',
                     'data': {
                         'id': None,
-                        'status': 'not_started',
+                        'status': 'draft',
                         'submitted_at': None,
                         'rejection_reason': None,
                         'can_edit': True
