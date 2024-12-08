@@ -11,12 +11,12 @@ from monitoring.views import HealthCheckView
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="Your Project API",
+        title="Accredit API",
         default_version='v1',
         description="API documentation for your project",
-        terms_of_service="https://www.yourcompany.com/terms/",
-        contact=openapi.Contact(email="contact@yourcompany.com"),
-        license=openapi.License(name="Your License"),
+        terms_of_service="https://www.excentrix.tech/terms/",
+        contact=openapi.Contact(email="hello@excentrix.tech"),
+        license=openapi.License(name="BSD License"),
     ),
     public=True,
     permission_classes=(permissions.AllowAny,),
