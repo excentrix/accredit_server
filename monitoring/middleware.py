@@ -6,7 +6,7 @@ from rest_framework import status
 from django.core.exceptions import ValidationError
 from rest_framework.exceptions import APIException
 from django.db import DatabaseError
-from redis.exceptions import RedisError
+# from redis.exceptions import RedisError
 from django.conf import settings
 
 logger = logging.getLogger(__name__)
@@ -59,10 +59,10 @@ class GlobalErrorHandler:
             error_response['message'] = "A database error occurred"
             return JsonResponse(error_response, status=status.HTTP_503_SERVICE_UNAVAILABLE)
 
-        elif isinstance(exc, RedisError):
-            error_response['type'] = 'cache_error'
-            error_response['message'] = "A caching error occurred"
-            return JsonResponse(error_response, status=status.HTTP_503_SERVICE_UNAVAILABLE)
+        # elif isinstance(exc, RedisError):
+        #     error_response['type'] = 'cache_error'
+        #     error_response['message'] = "A caching error occurred"
+        #     return JsonResponse(error_response, status=status.HTTP_503_SERVICE_UNAVAILABLE)
 
         elif isinstance(exc, PermissionError):
             error_response['type'] = 'permission_error'
