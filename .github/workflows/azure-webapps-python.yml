@@ -6,8 +6,8 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_WEBAPP_NAME: app-accredit-backend-dev-centralindia
-  PYTHON_VERSION: "3.12.3"
+  AZURE_WEBAPP_NAME: app-accredit-backend-dev-centralindia # Azure app name
+  PYTHON_VERSION: "3.12.3" # Python version
 
 permissions:
   contents: read
@@ -25,67 +25,27 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: "pip"
 
-      - name: Create virtual environment
+      - name: Create and start virtual environment
         run: |
-          python -m venv venv
-          source venv/bin/activate
-          python -m pip install --upgrade pip
+          pip install --upgrade pip
 
       - name: Install dependencies
         run: |
-          source venv/bin/activate
           pip install -r requirements.txt
-          pip freeze > requirements.txt
 
-      - name: Generate deployment files
-        run: |
-          # Create startup.txt
-          echo "gunicorn accredit.wsgi:application --bind=0.0.0.0:8000" > startup.txt
-          
-          # Create web.config
-          cat > web.config << 'EOL'
-          <?xml version="1.0" encoding="UTF-8"?>
-          <configuration>
-            <system.webServer>
-              <handlers>
-                <add name="httpPlatformHandler" path="*" verb="*" modules="httpPlatformHandler" resourceType="Unspecified" />
-              </handlers>
-              <httpPlatform processPath="%home%\Python\3.12\python.exe"
-                          arguments="-m gunicorn accredit.wsgi:application --bind=0.0.0.0:8000"
-                          stdoutLogEnabled="true"
-                          stdoutLogFile="%home%\LogFiles\python.log"
-                          startupTimeLimit="60">
-                <environmentVariables>
-                  <environmentVariable name="PYTHONPATH" value="%home%\site\wwwroot" />
-                </environmentVariables>
-              </httpPlatform>
-            </system.webServer>
-          </configuration>
-          EOL
+      - name: Verify requirements.txt exists
+        run: ls -l requirements.txt
 
-      - name: Verify files
-        run: |
-          echo "Directory contents:"
-          ls -la
-          echo "Requirements.txt contents:"
-          cat requirements.txt
-          echo "Startup.txt contents:"
-          cat startup.txt
-          echo "Web.config contents:"
-          cat web.config
+      - name: Verify package installation
+        run: pip list
 
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v3
         with:
           name: python-app
           path: |
-            .
+            . 
             !venv/
-            !*.pyc
-            !__pycache__
-            !.git*
-            !.env*
-            !*.log
 
   deploy:
     permissions:
