@@ -36,10 +36,7 @@ from .services import DashboardService
 
 from .serializers import (
     CriteriaSerializer, AcademicYearSerializer,
-    TemplateSerializer, DataSubmissionSerializer, SubmissionDataSerializer, BoardSerializer,DashboardStatsSerializer,
-    ActivityTimelineSerializer,
-    CriteriaCompletionSerializer,
-    FacultyStatsSerializer
+    TemplateSerializer, DataSubmissionSerializer, SubmissionDataSerializer, BoardSerializer,
 )
 
 import openpyxl

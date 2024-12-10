@@ -145,3 +145,801 @@ ERROR 2024-12-08 01:44:12,254 basehttp 49700 47248 "GET /api/templates/1.1/secti
 ERROR 2024-12-08 01:44:12,268 basehttp 49700 47248 "GET /api/templates/1.1/sections/0/data/?board=2&academic_year=1 HTTP/1.1" 500 72
 ERROR 2024-12-08 02:25:37,556 basehttp 54228 50588 "GET /user/audit-logs/?type=all&days=7&board=3&academic_year=1 HTTP/1.1" 500 110835
 ERROR 2024-12-08 02:26:01,284 basehttp 54228 50588 "GET /user/audit-logs/?type=all&days=7&board=3&academic_year=1 HTTP/1.1" 500 110835
+ERROR 2024-12-11 00:42:25,233 exception 30260 6068 Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:42:25,465 exception 30260 29560 Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:46:53,816 exception 30260 10808 Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:46:54,082 exception 30260 15244 Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:46:59,294 exception 30260 33240 Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:46:59,662 exception 30260 28812 Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:47:02,931 exception 30260 23372 Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:47:03,290 exception 30260 12272 Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:48:13,183 exception 30260 36860 Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:48:13,328 exception 30260 34984 Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:48:17,498 exception 30260 10400 Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:48:17,810 exception 30260 32916 Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:50:35,071 exception 29572 11592 Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:50:35,409 exception 29572 36044 Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:50:37,106 exception 29572 10400 Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:50:37,425 exception 29572 15928 Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:51:05,385 exception 6244 33200 Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:51:05,715 exception 6244 16068 Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:51:06,567 exception 6244 37356 Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:51:06,880 exception 6244 30672 Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:51:07,042 exception 6244 20828 Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:51:07,377 exception 6244 12484 Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:51:10,966 exception 6244 11532 Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:51:11,274 exception 6244 7096 Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:51:28,125 exception 17860 12780 Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:51:28,457 exception 17860 1484 Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:51:29,203 exception 17860 35760 Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:51:29,486 exception 17860 3704 Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:51:29,528 exception 17860 27024 Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:51:29,834 exception 17860 32896 Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:51:35,177 exception 17860 36588 Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:51:35,443 exception 17860 28856 Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:51:50,519 exception 17860 9320 Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:51:56,099 exception 17860 11432 Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:53:23,066 exception 17860 19636 Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:53:55,717 exception 29432 4680 Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:53:55,982 exception 29432 34476 Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:53:56,268 exception 29432 16024 Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:53:56,620 exception 29432 17836 Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:53:56,792 exception 29432 37024 Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:53:56,885 exception 29432 5320 Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:53:56,978 exception 29432 32892 Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:53:57,149 exception 29432 16892 Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:53:57,243 exception 29432 31568 Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:53:57,332 exception 29432 15124 Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:53:57,507 exception 29432 23192 Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:54:00,395 exception 29432 37732 Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:54:00,679 exception 29432 20944 Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:54:01,549 exception 29432 5712 Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:54:01,843 exception 29432 18912 Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:55:34,763 exception 29492 12784 Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:56:13,869 exception 32088 3212 Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+ERROR 2024-12-11 00:56:14,132 exception 32088 7856 Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\middleware\common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "E:\eXcentriX\Projects\accredit\accredit_server\.venv\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+ERROR 2024-12-11 01:03:29,787 basehttp 10488 33072 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:03:30,051 basehttp 10488 31324 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:03:30,098 basehttp 10488 20720 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:03:30,364 basehttp 10488 21120 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:03:32,085 basehttp 10488 21024 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:03:32,353 basehttp 10488 34452 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:03:32,393 basehttp 10488 11920 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:03:32,668 basehttp 10488 1872 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:03:34,681 basehttp 10488 32784 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:03:34,943 basehttp 10488 1048 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:03:34,989 basehttp 10488 18560 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:03:35,253 basehttp 10488 29156 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:03:43,962 basehttp 10488 33412 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:03:44,223 basehttp 10488 18952 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:03:44,270 basehttp 10488 10844 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:03:44,535 basehttp 10488 37492 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:04:03,090 basehttp 10488 15200 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:04:03,351 basehttp 10488 32780 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:04:03,399 basehttp 10488 37152 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:04:03,666 basehttp 10488 37020 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:04:05,291 basehttp 10488 29964 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:04:05,555 basehttp 10488 6880 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:04:05,602 basehttp 10488 31944 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:04:05,870 basehttp 10488 29436 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:04:06,756 basehttp 10488 26840 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:04:07,018 basehttp 10488 7768 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:04:07,064 basehttp 10488 29060 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:04:07,330 basehttp 10488 32136 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:04:14,574 basehttp 12840 36760 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:04:14,575 basehttp 12840 16616 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:04:18,264 basehttp 12840 36076 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:04:18,265 basehttp 12840 7128 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:04:20,468 basehttp 12840 23960 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:04:20,469 basehttp 12840 22172 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:04:27,307 basehttp 12840 20888 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:04:27,557 basehttp 12840 2908 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:04:27,620 basehttp 12840 30612 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:04:27,870 basehttp 12840 32048 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:04:29,542 basehttp 12840 17856 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:04:29,806 basehttp 12840 36116 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:04:29,852 basehttp 12840 34044 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:04:30,118 basehttp 12840 16888 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:04:32,997 basehttp 12840 37752 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:04:33,260 basehttp 12840 23828 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:04:33,306 basehttp 12840 34452 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:04:33,572 basehttp 12840 5268 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:04:40,505 basehttp 12840 36272 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:04:40,753 basehttp 12840 13500 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:04:40,814 basehttp 12840 36076 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:04:41,065 basehttp 12840 7128 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:04:47,648 basehttp 12840 35136 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:04:47,897 basehttp 12840 11296 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:04:47,960 basehttp 12840 18584 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:04:48,209 basehttp 12840 3208 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:04:52,161 basehttp 12840 28664 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 01:05:13,821 basehttp 12840 4408 You're accessing the development server over HTTPS, but it only supports HTTP.

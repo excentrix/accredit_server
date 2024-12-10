@@ -21,7 +21,7 @@ class TemplateSerializer(serializers.ModelSerializer):
         fields = ['id', 'code', 'name', 'metadata', 'board', 'criteria']
 
     def get_board(self, obj):
-        if (obj.criteria and obj.criteria.board):
+        if obj.criteria and obj.criteria.board:
             return {
                 'id': obj.criteria.board.id,
                 'name': obj.criteria.board.name,
@@ -82,7 +82,6 @@ class DataSubmissionSerializer(serializers.ModelSerializer):
     submitted_by_name = serializers.CharField(source='submitted_by.get_full_name', read_only=True)
     academic_year_name = serializers.CharField(source='academic_year.name', read_only=True)
     history = SubmissionHistorySerializer(many=True, read_only=True)
-    verified_by_name = serializers.CharField(source='verified_by.get_full_name', read_only=True)
     
     class Meta:
         model = DataSubmission
@@ -90,7 +89,7 @@ class DataSubmissionSerializer(serializers.ModelSerializer):
             'id', 'template', 'department', 'academic_year', 'academic_year_name',
             'status', 'submitted_at', 'verified_by', 'verified_at', 
             'rejection_reason', 'data_rows', 'department_name', 
-            'template_name', 'template_code','submitted_by_name', 'history', 'verified_by_name'
+            'template_name', 'template_code','submitted_by_name', 'history'
         ]
         read_only_fields = ['submitted_by', 'verified_by', 'verified_at']
 
@@ -115,33 +114,3 @@ class BoardSerializer(serializers.ModelSerializer):
     class Meta:
         model = Board
         fields = ['id', 'name', 'code']
-        
-class DashboardStatsSerializer(serializers.Serializer):
-    total_submissions = serializers.IntegerField()
-    pending_review = serializers.IntegerField()
-    approved_submissions = serializers.IntegerField()
-    rejected_submissions = serializers.IntegerField()
-    completion_rate = serializers.FloatField()
-
-class ActivityTimelineSerializer(serializers.Serializer):
-    date = serializers.DateField()
-    submissions = serializers.IntegerField()
-    approvals = serializers.IntegerField()
-    rejections = serializers.IntegerField()
-
-class CriteriaCompletionSerializer(serializers.Serializer):
-    criterion_number = serializers.IntegerField()
-    criterion_name = serializers.CharField()
-    completed = serializers.IntegerField()
-    total = serializers.IntegerField()
-    percentage = serializers.SerializerMethodField()
-
-    def get_percentage(self, obj):
-        return round((obj['completed'] / obj['total'] * 100) if obj['total'] > 0 else 0, 2)
-
-class FacultyStatsSerializer(serializers.Serializer):
-    total_submissions = serializers.IntegerField()
-    pending_templates = serializers.IntegerField()
-    approved_submissions = serializers.IntegerField()
-    rejected_submissions = serializers.IntegerField()
-    department_progress = serializers.FloatField()

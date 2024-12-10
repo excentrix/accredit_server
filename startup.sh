@@ -1,15 +1,10 @@
-#!/bin/bash
+#!/bin/sh
 
-python -m pip list
+# Make migrations
+python manage.py makemigrations
+python manage.py migrate --no-input
+# python manage.py runserver 0.0.0.0:8000
+# python manage.py create_groups
+python manage.py collectstatic --no-input
 
-echo "---------------------------------------------------"
-
-python -c "import django; print(django.get_version())"
-# Apply database migrations
-python manage.py migrate
-
-# Collect static files
-python manage.py collectstatic --noinput
-
-# Start Gunicorn
-gunicorn accredit.wsgi:application --bind=0.0.0.0:8000
+gunicorn --workers=3 --bind 0.0.0.0:8000 accredit.wsgi:application --timeout 300

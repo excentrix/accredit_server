@@ -26,12 +26,6 @@ class Criteria(models.Model):
     def __str__(self):
         return f"{self.board.name} Criterion {self.number}: {self.name}"
 
-class Department(models.Model):
-    name = models.CharField(max_length=100)
-    code = models.CharField(max_length=20, unique=True)
-    
-    def __str__(self):
-        return self.name
 
 class AcademicYear(models.Model):
     name = models.CharField(max_length=9)  # e.g., "2023-2024"
