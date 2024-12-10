@@ -39,6 +39,9 @@ jobs:
       - name: Verify requirements.txt exists
         run: ls -l requirements.txt
 
+      - name: Verify package installation
+        run: pip list
+
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v3
         with:
