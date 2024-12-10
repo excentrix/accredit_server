@@ -66,11 +66,6 @@ jobs:
       - name: List directory contents
         run: ls -R
 
-      - name: Pip List
-        run: |
-          source venv/bin/activate
-          pip list
-
       - name: "Deploy to Azure Web App"
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
