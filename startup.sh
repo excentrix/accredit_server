@@ -1,5 +1,7 @@
 #!/bin/bash
 
+python -m pip list
+python -c "import django; print(django.get_version())"
 # Apply database migrations
 python manage.py migrate
 
