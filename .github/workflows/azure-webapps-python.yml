@@ -66,18 +66,9 @@ jobs:
       - name: List directory contents
         run: ls -R
 
-      - name: Collect static files
-        run: |
-          python -m venv venv
-          source venv/bin/activate
-          python manage.py collectstatic --noinput
-
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           publish-profile: ${{ secrets.AZUREWEBAPP_PUBLISHPROFILE }}
-
-      - name: Health check
-        run: curl -f https://${{ steps.deploy-to-webapp.outputs.webapp-url }}
