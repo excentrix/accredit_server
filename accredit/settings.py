@@ -20,7 +20,7 @@ DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost').split(',')
 
-print(ALLOWED_HOSTS)
+print(os.getenv('DEBUG'))
 
 # Application definition
 INSTALLED_APPS = [
@@ -78,15 +78,15 @@ TEMPLATES = [
 WSGI_APPLICATION = 'accredit.wsgi.application'
 
 # Database Configuration
-if DEBUG:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
-else:
-    DATABASES = {
+# if DEBUG:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.sqlite3',
+#             'NAME': BASE_DIR / 'db.sqlite3',
+#         }
+#     }
+# else:
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.getenv('DB_NAME', 'accreditdb'),
@@ -125,7 +125,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = BASE_DIR
+STATICFILES_DIRS = [BASE_DIR / 'staticfiles']
 
 # Media files
 MEDIA_URL = '/media/'
@@ -152,6 +153,7 @@ SIMPLE_JWT = {
 # CORS Settings
 CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', '').split(',')
 CORS_ALLOW_CREDENTIALS = True
+CSRF_TRUSTED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', '').split(',')
 
 # REST Framework Settings
 REST_FRAMEWORK = {
@@ -247,7 +249,7 @@ MONITORING_CONFIG = {
 }
 
 # Security Settings
-if not DEBUG:
+if DEBUG == False:
     SECURE_SSL_REDIRECT = True
     SECURE_HSTS_SECONDS = 3600
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True

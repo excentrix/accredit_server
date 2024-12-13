@@ -6,3 +6,4 @@ test_exports
 debug.log
 .env
 .env.local
+staticfiles

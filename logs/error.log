@@ -943,3 +943,316 @@ ERROR 2024-12-11 01:04:47,960 basehttp 12840 18584 You're accessing the developm
 ERROR 2024-12-11 01:04:48,209 basehttp 12840 3208 You're accessing the development server over HTTPS, but it only supports HTTP.
 ERROR 2024-12-11 01:04:52,161 basehttp 12840 28664 You're accessing the development server over HTTPS, but it only supports HTTP.
 ERROR 2024-12-11 01:05:13,821 basehttp 12840 4408 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 20:37:15,210 basehttp 40268 57256 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 20:37:15,212 basehttp 40268 45580 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 20:37:23,270 basehttp 40268 58736 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 20:37:23,271 basehttp 40268 41976 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 20:37:32,093 basehttp 40268 42408 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 20:37:32,094 basehttp 40268 39848 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 20:37:39,798 basehttp 40268 49812 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 20:37:39,799 basehttp 40268 2888 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 20:41:55,238 basehttp 40268 62184 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 20:42:29,573 basehttp 28844 53916 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 20:42:29,575 basehttp 28844 45852 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 20:42:30,311 basehttp 28844 37476 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 20:42:30,389 basehttp 28844 60524 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 20:42:30,490 basehttp 28844 32268 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 20:42:30,491 basehttp 28844 54484 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 20:42:30,661 basehttp 28844 62592 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 20:42:30,662 basehttp 28844 1640 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 20:43:11,642 basehttp 28844 57820 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 20:43:11,644 basehttp 28844 36552 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 20:43:12,382 basehttp 28844 51800 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-11 20:43:12,384 basehttp 28844 54496 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:08:36,611 basehttp 51452 17012 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-12 12:08:36,631 basehttp 51452 47344 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-12 12:08:39,973 basehttp 51452 47344 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-12 12:08:39,973 basehttp 51452 17012 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-12 12:08:49,934 basehttp 51452 50096 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-12 12:08:49,943 basehttp 51452 52328 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-12 12:08:50,960 basehttp 51452 50096 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-12 12:08:51,528 basehttp 51452 50096 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-12 12:08:52,434 basehttp 51452 24512 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-12 12:08:52,447 basehttp 51452 50096 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-12 12:08:52,477 basehttp 51452 50096 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-12 12:08:52,478 basehttp 51452 50836 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-12 12:08:53,488 basehttp 51452 50096 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-12 12:08:53,488 basehttp 51452 50836 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-12 12:08:55,509 basehttp 51452 52328 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-12 12:08:55,509 basehttp 51452 50096 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-12 12:08:59,522 basehttp 51452 52328 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-12 12:08:59,522 basehttp 51452 50836 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-12 12:09:34,210 basehttp 51452 17012 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-12 12:09:34,210 basehttp 51452 47344 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-12 12:10:01,929 basehttp 51452 47344 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-12 12:10:01,929 basehttp 51452 17012 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-12 12:10:47,925 basehttp 51452 64200 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30 HTTP/1.1" 500 123
+ERROR 2024-12-12 12:10:47,925 basehttp 51452 64324 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1 HTTP/1.1" 500 127
+ERROR 2024-12-12 12:10:48,990 basehttp 51452 64200 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1 HTTP/1.1" 500 127
+ERROR 2024-12-12 12:10:48,990 basehttp 51452 64324 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30 HTTP/1.1" 500 123
+ERROR 2024-12-12 12:10:51,008 basehttp 51452 37832 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30 HTTP/1.1" 500 123
+ERROR 2024-12-12 12:10:51,010 basehttp 51452 59720 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1 HTTP/1.1" 500 127
+ERROR 2024-12-12 12:10:51,869 basehttp 51452 64324 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1 HTTP/1.1" 500 127
+ERROR 2024-12-12 12:10:51,870 basehttp 51452 37832 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30 HTTP/1.1" 500 123
+ERROR 2024-12-12 12:10:51,893 basehttp 51452 64200 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30 HTTP/1.1" 500 123
+ERROR 2024-12-12 12:10:51,895 basehttp 51452 37832 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1 HTTP/1.1" 500 127
+ERROR 2024-12-12 12:11:03,542 basehttp 51452 64324 "GET /api/templates/1.1/?academic_year=1 HTTP/1.1" 500 137
+ERROR 2024-12-12 12:11:03,554 basehttp 51452 64324 "GET /api/templates/1.1/?academic_year=1 HTTP/1.1" 500 137
+ERROR 2024-12-12 12:33:35,375 basehttp 51452 9056 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:33:35,612 basehttp 51452 61068 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:33:35,690 basehttp 51452 45180 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:33:35,923 basehttp 51452 49372 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:48:54,956 basehttp 9380 17452 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-12 12:48:54,956 basehttp 9380 28884 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-12 12:48:55,968 basehttp 9380 17452 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-12 12:48:55,968 basehttp 9380 28884 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-12 12:48:57,099 basehttp 9380 58784 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-12 12:48:57,100 basehttp 9380 28884 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-12 12:48:57,141 basehttp 9380 28884 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-12 12:48:57,149 basehttp 9380 17452 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-12 12:49:49,599 basehttp 9380 62396 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:49:49,865 basehttp 9380 59416 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:49:49,912 basehttp 9380 56764 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:49:50,177 basehttp 9380 53780 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:49:59,054 basehttp 9380 49112 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:49:59,056 basehttp 9380 60968 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:50:11,615 basehttp 9380 64524 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:50:11,616 basehttp 9380 41836 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:50:15,949 basehttp 9380 37276 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:50:15,951 basehttp 9380 55812 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:50:27,061 basehttp 9380 17064 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:50:27,062 basehttp 9380 43508 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:50:29,858 basehttp 9380 44312 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:50:29,859 basehttp 9380 8256 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:50:46,593 basehttp 26784 56168 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:50:46,595 basehttp 26784 47084 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:50:52,425 basehttp 26784 61568 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:50:52,427 basehttp 26784 47968 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:52:11,134 basehttp 32664 27992 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:52:11,136 basehttp 32664 45856 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:52:11,287 basehttp 32664 37556 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:52:11,290 basehttp 32664 59680 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:52:11,449 basehttp 32664 32592 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:52:11,450 basehttp 32664 52828 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:52:11,615 basehttp 32664 39272 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:52:11,617 basehttp 32664 42440 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:52:11,738 basehttp 32664 50276 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:52:11,740 basehttp 32664 55456 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:52:11,885 basehttp 32664 46172 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:52:11,887 basehttp 32664 49364 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:52:15,362 basehttp 32664 65372 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:52:15,364 basehttp 32664 2604 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:52:49,618 basehttp 13904 49096 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:52:49,619 basehttp 13904 45492 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:52:50,340 basehttp 13904 63052 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:52:50,342 basehttp 13904 52096 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:52:50,486 basehttp 13904 42012 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:52:50,487 basehttp 13904 58544 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:52:53,172 basehttp 13904 40236 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:52:53,174 basehttp 13904 34168 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:52:56,071 basehttp 13904 23088 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:52:56,072 basehttp 13904 22552 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:53:04,602 basehttp 18524 50952 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:53:04,605 basehttp 18524 51768 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:53:30,618 basehttp 59172 53228 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:53:30,620 basehttp 59172 55740 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:53:31,310 basehttp 59172 39504 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:53:31,312 basehttp 59172 23508 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:53:31,459 basehttp 59172 36436 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:53:31,461 basehttp 59172 64324 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:53:31,618 basehttp 59172 54592 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:53:31,620 basehttp 59172 22756 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:54:14,156 basehttp 35220 65416 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:54:14,158 basehttp 35220 40060 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:54:14,842 basehttp 35220 43392 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:54:14,844 basehttp 35220 45220 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:54:15,002 basehttp 35220 44620 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:54:15,004 basehttp 35220 6040 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:54:15,151 basehttp 35220 48676 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:54:15,153 basehttp 35220 37328 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:54:17,715 basehttp 35220 26960 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:54:17,716 basehttp 35220 58824 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:56:13,265 basehttp 39420 19044 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-12 12:56:13,265 basehttp 39420 51252 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-12 12:56:14,275 basehttp 39420 51252 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-12 12:56:14,275 basehttp 39420 19044 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-12 12:56:16,419 basehttp 39420 51252 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-12 12:56:16,442 basehttp 39420 51252 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-12 12:56:18,383 basehttp 39420 51252 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-12 12:56:18,393 basehttp 39420 47764 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-12 12:56:18,410 basehttp 39420 42676 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-12 12:56:18,414 basehttp 39420 47764 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-12 12:56:19,456 basehttp 39420 47764 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-12 12:56:19,456 basehttp 39420 19044 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-12 12:56:34,252 basehttp 39420 32120 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:56:34,254 basehttp 39420 45252 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:56:34,764 basehttp 39420 65220 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:56:34,766 basehttp 39420 35744 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:56:34,907 basehttp 39420 58968 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:56:34,909 basehttp 39420 3868 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:56:35,061 basehttp 39420 38144 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:56:35,063 basehttp 39420 39244 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:56:37,200 basehttp 39420 55172 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:56:37,201 basehttp 39420 50064 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:56:44,140 basehttp 39420 49596 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:56:44,408 basehttp 39420 45016 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:56:44,455 basehttp 39420 61204 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:56:44,721 basehttp 39420 5620 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:57:53,237 basehttp 21796 55948 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:57:53,503 basehttp 21796 42272 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:57:53,549 basehttp 21796 44012 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:57:53,815 basehttp 21796 49300 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:57:54,482 basehttp 21796 7784 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:57:54,747 basehttp 21796 35224 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:57:54,844 basehttp 21796 36852 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:57:55,061 basehttp 21796 40320 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:57:55,232 basehttp 21796 7108 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:57:55,546 basehttp 21796 32056 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:58:27,665 basehttp 21796 37684 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:58:27,929 basehttp 21796 39552 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:58:27,975 basehttp 21796 35308 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:58:28,239 basehttp 21796 49364 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:58:29,300 basehttp 21796 48576 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:58:29,565 basehttp 21796 60612 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:58:29,611 basehttp 21796 56208 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 12:58:29,877 basehttp 21796 61084 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 13:03:42,713 basehttp 21796 64088 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 13:03:42,714 basehttp 21796 53784 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 13:03:47,604 basehttp 21796 2872 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 13:03:47,867 basehttp 21796 23152 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 13:03:47,914 basehttp 21796 60096 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 13:03:48,178 basehttp 21796 44424 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-12 13:33:49,609 basehttp 21796 35744 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-12 13:33:49,612 basehttp 21796 11316 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-12 13:33:50,623 basehttp 21796 39056 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-12 13:33:50,623 basehttp 21796 37800 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-12 13:33:52,949 basehttp 21796 28832 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-12 13:33:52,954 basehttp 21796 54380 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-12 13:33:53,975 basehttp 21796 28832 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-12 13:33:53,975 basehttp 21796 54380 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-12 13:33:54,632 basehttp 21796 37800 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-12 13:33:54,639 basehttp 21796 39056 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-12 13:33:58,653 basehttp 21796 11316 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-12 13:33:58,653 basehttp 21796 37800 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-12 13:34:52,331 basehttp 21796 28832 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-12 13:34:52,331 basehttp 21796 54380 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-12 13:37:13,591 basehttp 21796 52112 "GET /api/templates/1.1/?academic_year=1 HTTP/1.1" 500 137
+ERROR 2024-12-12 13:37:13,623 basehttp 21796 52112 "GET /api/templates/1.1/?academic_year=1 HTTP/1.1" 500 137
+ERROR 2024-12-12 13:37:13,671 basehttp 21796 52112 "GET /api/templates/1.1/?academic_year=1 HTTP/1.1" 500 137
+ERROR 2024-12-12 13:37:13,690 basehttp 21796 52112 "GET /api/templates/1.1/?academic_year=1 HTTP/1.1" 500 137
+ERROR 2024-12-12 13:40:05,948 basehttp 21796 50640 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-12 13:40:05,948 basehttp 21796 41080 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-12 13:42:10,680 basehttp 21796 40924 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-12 13:42:10,680 basehttp 21796 41080 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-12 13:42:10,719 basehttp 21796 41080 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-12 13:42:10,726 basehttp 21796 40924 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-12 13:42:11,726 basehttp 21796 50640 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-12 13:42:11,795 basehttp 21796 50640 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-12 13:42:13,736 basehttp 21796 50640 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-12 13:42:13,844 basehttp 21796 41080 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-12 13:43:39,803 basehttp 21796 50640 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-12 13:43:39,803 basehttp 21796 40924 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-12 13:43:40,818 basehttp 21796 50640 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-12 13:43:40,818 basehttp 21796 41080 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-12 13:43:42,829 basehttp 21796 41080 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-12 13:43:42,829 basehttp 21796 50640 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-12 13:43:46,849 basehttp 21796 50640 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-12 13:43:46,849 basehttp 21796 41080 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-12 14:31:03,873 basehttp 21796 62512 "GET /api/dashboard/activity-timeline/?board_id=2&academic_year=1&days=30&board=2 HTTP/1.1" 500 123
+ERROR 2024-12-12 14:31:03,873 basehttp 21796 41060 "GET /api/dashboard/criteria-completion/?board_id=2&academic_year=1&board=2 HTTP/1.1" 500 127
+ERROR 2024-12-12 14:31:04,898 basehttp 21796 62512 "GET /api/dashboard/activity-timeline/?board_id=2&academic_year=1&days=30&board=2 HTTP/1.1" 500 123
+ERROR 2024-12-12 14:31:04,898 basehttp 21796 41060 "GET /api/dashboard/criteria-completion/?board_id=2&academic_year=1&board=2 HTTP/1.1" 500 127
+ERROR 2024-12-12 14:31:06,919 basehttp 21796 62512 "GET /api/dashboard/activity-timeline/?board_id=2&academic_year=1&days=30&board=2 HTTP/1.1" 500 123
+ERROR 2024-12-12 14:31:06,920 basehttp 21796 41060 "GET /api/dashboard/criteria-completion/?board_id=2&academic_year=1&board=2 HTTP/1.1" 500 127
+ERROR 2024-12-12 14:31:08,815 basehttp 21796 59368 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=2 HTTP/1.1" 500 127
+ERROR 2024-12-12 14:31:08,816 basehttp 21796 62512 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=2 HTTP/1.1" 500 123
+ERROR 2024-12-12 14:31:08,832 basehttp 21796 63996 "GET /api/dashboard/criteria-completion/?board_id=2&academic_year=1&board=2 HTTP/1.1" 500 127
+ERROR 2024-12-12 14:31:08,832 basehttp 21796 59368 "GET /api/dashboard/activity-timeline/?board_id=2&academic_year=1&days=30&board=2 HTTP/1.1" 500 123
+ERROR 2024-12-12 14:31:09,856 basehttp 21796 62512 "GET /api/dashboard/criteria-completion/?board_id=2&academic_year=1&board=2 HTTP/1.1" 500 127
+ERROR 2024-12-12 14:31:09,857 basehttp 21796 41060 "GET /api/dashboard/activity-timeline/?board_id=2&academic_year=1&days=30&board=2 HTTP/1.1" 500 123
+ERROR 2024-12-13 18:27:37,942 basehttp 8664 33612 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:27:37,957 basehttp 8664 73884 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:28:58,151 basehttp 35232 31100 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:28:58,153 basehttp 35232 82460 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:29:01,848 basehttp 35232 74696 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:29:01,864 basehttp 35232 27840 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:34:41,287 basehttp 8288 5164 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:34:41,553 basehttp 8288 67460 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:34:41,600 basehttp 8288 78440 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:34:41,868 basehttp 8288 23148 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:34:45,417 basehttp 8288 30856 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:34:45,433 basehttp 8288 24464 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:34:45,682 basehttp 8288 14292 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:34:45,729 basehttp 8288 6040 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:34:45,738 basehttp 8288 47932 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:34:45,994 basehttp 8288 27972 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:34:48,220 basehttp 8288 25900 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:34:48,220 basehttp 8288 53240 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:34:48,467 basehttp 8288 77348 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:34:48,530 basehttp 8288 7624 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:34:48,530 basehttp 8288 36284 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:34:48,778 basehttp 8288 52192 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:34:50,501 basehttp 8288 78248 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:34:50,516 basehttp 8288 86480 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:34:50,764 basehttp 8288 83292 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:34:50,811 basehttp 8288 84888 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:34:50,818 basehttp 8288 78264 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:34:51,077 basehttp 8288 77500 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:34:53,324 basehttp 8288 60736 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:34:53,592 basehttp 8288 62304 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:34:53,637 basehttp 8288 33100 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:34:53,900 basehttp 8288 58216 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:34:57,955 basehttp 8288 81652 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:34:57,955 basehttp 8288 23256 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:34:58,219 basehttp 8288 38652 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:34:58,266 basehttp 8288 56912 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:34:58,266 basehttp 8288 15224 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:34:58,528 basehttp 8288 59008 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:35:02,659 basehttp 8288 44324 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:35:02,909 basehttp 8288 35080 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:35:02,971 basehttp 8288 70440 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:35:03,220 basehttp 8288 18056 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:35:12,386 basehttp 8288 37392 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:35:12,386 basehttp 8288 62408 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:35:12,649 basehttp 8288 18080 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:35:12,695 basehttp 8288 62620 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:35:12,696 basehttp 8288 26948 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:35:12,963 basehttp 8288 17052 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:35:14,774 basehttp 8288 6780 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:35:15,039 basehttp 8288 55684 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:35:15,087 basehttp 8288 80864 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:35:15,350 basehttp 8288 48548 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:35:21,192 basehttp 69496 73280 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:35:21,193 basehttp 69496 77624 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:35:21,455 basehttp 69496 81056 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:35:21,503 basehttp 69496 70984 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:35:21,503 basehttp 69496 13396 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:35:21,769 basehttp 69496 74072 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:35:23,769 basehttp 69496 832 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:35:23,770 basehttp 69496 12128 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:35:24,014 basehttp 69496 30588 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:35:24,077 basehttp 69496 49836 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:35:24,077 basehttp 69496 37680 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:35:24,327 basehttp 69496 66320 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:35:26,807 basehttp 69496 29820 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:35:27,075 basehttp 69496 54112 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:35:27,123 basehttp 69496 69164 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:35:27,388 basehttp 69496 36148 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:36:57,718 basehttp 69496 71288 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:36:57,985 basehttp 69496 61300 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:36:58,032 basehttp 69496 27244 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:36:58,295 basehttp 69496 74248 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:37:02,772 basehttp 69496 5192 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:37:03,034 basehttp 69496 54776 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:37:03,080 basehttp 69496 22016 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:37:03,346 basehttp 69496 86308 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:38:04,588 basehttp 69496 71456 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:38:04,854 basehttp 69496 82900 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:38:04,901 basehttp 69496 12784 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:38:05,166 basehttp 69496 68976 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:38:25,170 basehttp 72700 33804 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:38:25,171 basehttp 72700 29624 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:38:25,434 basehttp 72700 62152 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:38:25,480 basehttp 72700 8200 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:38:25,480 basehttp 72700 55460 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 18:38:25,746 basehttp 72700 44028 You're accessing the development server over HTTPS, but it only supports HTTP.
