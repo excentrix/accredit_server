@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Criteria,  AcademicYear, Template, DataSubmission, SubmissionData, SubmissionHistory, Template, Board
+from .models import Criteria,  AcademicYear, DashboardActivity, Template, DataSubmission, SubmissionData, SubmissionHistory, Template, Board
 
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
@@ -114,3 +114,49 @@ class BoardSerializer(serializers.ModelSerializer):
     class Meta:
         model = Board
         fields = ['id', 'name', 'code']
+        
+class DashboardStatsSerializer(serializers.Serializer):
+    total_submissions = serializers.IntegerField()
+    pending_review = serializers.IntegerField()
+    approved_submissions = serializers.IntegerField()
+    rejected_submissions = serializers.IntegerField()
+    completion_rate = serializers.FloatField()
+
+class ActivityTimelineSerializer(serializers.Serializer):
+    date = serializers.DateField()
+    submissions = serializers.IntegerField()
+    approvals = serializers.IntegerField()
+    rejections = serializers.IntegerField()
+
+class CriteriaCompletionSerializer(serializers.Serializer):
+    criterion_number = serializers.IntegerField()
+    criterion_name = serializers.CharField()
+    completed = serializers.IntegerField()
+    total = serializers.IntegerField()
+    percentage = serializers.SerializerMethodField()
+
+    def get_percentage(self, obj):
+        return round((obj['completed'] / obj['total'] * 100) if obj['total'] > 0 else 0, 2)
+
+class FacultyStatsSerializer(serializers.Serializer):
+    total_submissions = serializers.IntegerField()
+    pending_templates = serializers.IntegerField()
+    approved_submissions = serializers.IntegerField()
+    rejected_submissions = serializers.IntegerField()
+    department_progress = serializers.FloatField()
+    
+class DashboardActivitySerializer(serializers.ModelSerializer):
+    user = serializers.StringRelatedField(source=User.get_full_name)
+    department = serializers.StringRelatedField(source='department.name', allow_null=True)
+    template = serializers.SerializerMethodField()
+
+    class Meta:
+        model = DashboardActivity
+        fields = ['id', 'user', 'department', 'template', 'action', 'timestamp']
+
+    def get_template(self, obj):
+        return {
+            'code': obj.template.code,
+            'name': obj.template.name
+        }
+        

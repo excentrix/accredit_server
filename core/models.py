@@ -3,7 +3,7 @@ from django.db import models
 from django.utils.dateparse import parse_date
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email, URLValidator
-from user_management.models import CustomUser as User
+from user_management.models import CustomUser as User, Department
 
 
 class Criteria(models.Model):
@@ -339,6 +339,7 @@ class Template(models.Model):
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.utils import timezone
 
 User = get_user_model()
 
@@ -500,3 +501,15 @@ class SubmissionHistory(models.Model):
 
     class Meta:
         ordering = ['-performed_at']
+        
+class DashboardActivity(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE, null=True)
+    template = models.ForeignKey(Template, on_delete=models.CASCADE)
+    action = models.CharField(max_length=50)  # e.g., 'submitted', 'approved', 'rejected'
+    timestamp = models.DateTimeField(default=timezone.now)
+    academic_year = models.ForeignKey(AcademicYear, on_delete=models.CASCADE)
+    board = models.ForeignKey(Board, on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ['-timestamp']

@@ -1,3 +1,4 @@
+from datetime import timedelta
 from rest_framework import viewsets, status, permissions
 from rest_framework.filters import OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
@@ -21,13 +22,15 @@ import re
 from rest_framework.views import APIView
 
 from django.db import models
+from django.db.models.functions import TruncDate
+from django.db.models import Count, Q
 
 from user_management.serializers import UserSerializer, DepartmentSerializer
 from user_management.models import CustomUser as User, Department
 
 from .models import (
     AcademicYearTransition, Criteria, SubmissionHistory, AcademicYear, Template, 
-    DataSubmission, SubmissionData, Board, Template, DataSubmission
+    DataSubmission, SubmissionData, Board, Template, DataSubmission, DashboardActivity
 )
 
 from rest_framework.viewsets import ViewSet
@@ -35,7 +38,7 @@ from .services import DashboardService
 
 
 from .serializers import (
-    CriteriaSerializer, AcademicYearSerializer,
+    ActivityTimelineSerializer, CriteriaCompletionSerializer, CriteriaSerializer, AcademicYearSerializer, DashboardActivitySerializer, DashboardStatsSerializer, FacultyStatsSerializer,
     TemplateSerializer, DataSubmissionSerializer, SubmissionDataSerializer, BoardSerializer,
 )
 
@@ -2746,4 +2749,128 @@ class DashboardViewSet(ViewSet):
             academic_year_id, board_id, department_id
         )
         serializer = FacultyStatsSerializer(stats)
+        return Response(serializer.data)
+    
+    @action(detail=False, methods=['get'], url_path='activity-timeline')
+    def activity_timeline(self, request):
+        board_id = request.query_params.get('board_id')
+        academic_year = request.query_params.get('academic_year')
+        days = int(request.query_params.get('days', 30))
+        department_id = request.query_params.get('department_id')
+
+        start_date = timezone.now() - timedelta(days=days)
+
+        # Base queryset
+        queryset = DashboardActivity.objects.filter(
+            timestamp__gte=start_date,
+            academic_year_id=academic_year,
+            board_id=board_id
+        )
+
+        if department_id:
+            queryset = queryset.filter(department_id=department_id)
+
+        # Group by date and count activities
+        timeline_data = queryset.annotate(
+            date=TruncDate('timestamp')
+        ).values('date').annotate(
+            submissions=Count('id', filter=Q(action='submitted')),
+            approvals=Count('id', filter=Q(action='approved')),
+            rejections=Count('id', filter=Q(action='rejected'))
+        ).order_by('date')
+
+        return Response(timeline_data)
+
+    @action(detail=False, methods=['get'], url_path='criteria-completion')
+    def criteria_completion(self, request):
+        board_id = request.query_params.get('board_id')
+        academic_year = request.query_params.get('academic_year')
+
+        criteria_data = []
+        criteria = Template.objects.filter(
+            criteria__board_id=board_id
+        ).values('criteria__number', 'name').distinct()
+
+        for criterion in criteria:
+            templates = Template.objects.filter(
+                criteria__board_id=board_id,
+                criteria__number=criterion['criteria__number']
+            )
+            total = templates.count() * Department.objects.count()
+            completed = DataSubmission.objects.filter(
+                template__in=templates,
+                academic_year_id=academic_year,
+                status='approved'
+            ).count()
+
+            criteria_data.append({
+                'criterion_number': criterion['criteria__number'],
+                'criterion_name': criterion['name'],
+                'completed': completed,
+                'total': total,
+                'percentage': round((completed / total * 100) if total > 0 else 0, 2)
+            })
+
+        serializer = CriteriaCompletionSerializer(criteria_data, many=True)
+        return Response(serializer.data)
+
+    @action(detail=False, methods=['get'], url_path='faculty-stats')
+    def faculty_stats(self, request):
+        department_id = request.query_params.get('department_id')
+        academic_year = request.query_params.get('academic_year')
+        board_id = request.query_params.get('board_id')
+
+        if not department_id:
+            return Response(
+                {'error': 'Department ID is required'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # Get submissions for the department
+        submissions = DataSubmission.objects.filter(
+            department_id=department_id,
+            academic_year_id=academic_year,
+            template__criteria__board_id=board_id
+        )
+
+        # Calculate stats
+        total_submissions = submissions.count()
+        total_templates = Template.objects.filter(
+            criteria__board_id=board_id
+        ).count()
+        pending_templates = total_templates - submissions.count()
+        approved_submissions = submissions.filter(status='approved').count()
+        rejected_submissions = submissions.filter(status='rejected').count()
+
+        # Calculate department progress
+        department_progress = (approved_submissions / total_templates * 100) if total_templates > 0 else 0
+
+        stats = {
+            'total_submissions': total_submissions,
+            'pending_templates': pending_templates,
+            'approved_submissions': approved_submissions,
+            'rejected_submissions': rejected_submissions,
+            'department_progress': round(department_progress, 2)
+        }
+
+        serializer = FacultyStatsSerializer(stats)
+        return Response(serializer.data)
+
+    @action(detail=False, methods=['get'], url_path='recent-activity')
+    def recent_activity(self, request):
+        board_id = request.query_params.get('board_id')
+        academic_year = request.query_params.get('academic_year')
+        department_id = request.query_params.get('department_id')
+        limit = int(request.query_params.get('limit', 10))
+
+        queryset = DashboardActivity.objects.filter(
+            academic_year_id=academic_year,
+            board_id=board_id
+        )
+
+        if department_id:
+            queryset = queryset.filter(department_id=department_id)
+
+        queryset = queryset[:limit]
+        serializer = DashboardActivitySerializer(queryset, many=True)
         return Response(serializer.data)

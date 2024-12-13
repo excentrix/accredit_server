@@ -55,6 +55,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'core.middleware.APIErrorHandlerMiddleware',
+    'user_management.middleware.RBACMiddleware',
+    'user_management.middleware.AuditLogMiddleware',
 ]
 
 ROOT_URLCONF = 'accredit.urls'
@@ -233,6 +235,23 @@ LOGGING = {
         }
     }
 }
+
+RBAC_EXEMPT_PATHS = [
+    '/admin/',
+    '/user/token/',
+    '/user/token/refresh/',
+    '/user/register/',
+    '/user/logout/',
+    '/user/reset-password-request/',
+    '/user/reset-password/',
+    '/user/users/me/',
+    '/health/',
+    '/swagger/',
+    '/redoc/',
+    '/static/',
+    '/media/',
+    '/api/schema/',
+]
 
 HEALTH_CHECK_URL = '/health/'
 

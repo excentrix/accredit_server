@@ -1256,3 +1256,313 @@ ERROR 2024-12-13 18:38:25,434 basehttp 72700 62152 You're accessing the developm
 ERROR 2024-12-13 18:38:25,480 basehttp 72700 8200 You're accessing the development server over HTTPS, but it only supports HTTP.
 ERROR 2024-12-13 18:38:25,480 basehttp 72700 55460 You're accessing the development server over HTTPS, but it only supports HTTP.
 ERROR 2024-12-13 18:38:25,746 basehttp 72700 44028 You're accessing the development server over HTTPS, but it only supports HTTP.
+ERROR 2024-12-13 19:30:42,021 basehttp 48900 19664 "GET /api/dashboard/criteria-completion/?board_id=2&academic_year=1&board=2 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:30:42,033 basehttp 48900 31020 "GET /api/dashboard/activity-timeline/?board_id=2&academic_year=1&days=30&board=2 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:31:58,901 basehttp 48900 31020 "GET /api/dashboard/activity-timeline/?board_id=2&academic_year=1&days=30&board=2 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:31:58,905 basehttp 48900 19664 "GET /api/dashboard/criteria-completion/?board_id=2&academic_year=1&board=2 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:32:01,143 basehttp 48900 31020 "GET /api/dashboard/criteria-completion/?board_id=2&academic_year=1&board=2 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:32:01,143 basehttp 48900 19664 "GET /api/dashboard/activity-timeline/?board_id=2&academic_year=1&days=30&board=2 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:32:40,005 basehttp 48900 19664 "GET /api/dashboard/activity-timeline/?board_id=2&academic_year=1&days=30&board=2 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:32:40,032 basehttp 48900 31020 "GET /api/dashboard/criteria-completion/?board_id=2&academic_year=1&board=2 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:33:23,834 basehttp 48900 81380 "GET /api/dashboard/criteria-completion/?board_id=2&academic_year=1&board=2 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:33:23,853 basehttp 48900 19664 "GET /api/dashboard/activity-timeline/?board_id=2&academic_year=1&days=30&board=2 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:33:23,871 basehttp 48900 83656 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=2 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:33:24,052 basehttp 48900 81380 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=2 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:33:40,918 basehttp 48900 19664 "GET /api/dashboard/criteria-completion/?board_id=2&academic_year=1&board=2 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:33:40,955 basehttp 48900 81380 "GET /api/dashboard/activity-timeline/?board_id=2&academic_year=1&days=30&board=2 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:33:43,138 basehttp 48900 81380 "GET /api/dashboard/criteria-completion/?board_id=2&academic_year=1&board=2 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:33:43,178 basehttp 48900 19664 "GET /api/dashboard/activity-timeline/?board_id=2&academic_year=1&days=30&board=2 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:34:08,221 basehttp 48900 81380 "GET /api/dashboard/criteria-completion/?board_id=2&academic_year=1&board=2 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:34:08,253 basehttp 48900 19664 "GET /api/dashboard/activity-timeline/?board_id=2&academic_year=1&days=30&board=2 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:34:10,631 basehttp 48900 81380 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=2 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:34:10,632 basehttp 48900 31020 "GET /api/dashboard/criteria-completion/?board_id=2&academic_year=1&board=2 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:34:10,632 basehttp 48900 83656 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=2 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:34:10,646 basehttp 48900 32020 "GET /api/dashboard/activity-timeline/?board_id=2&academic_year=1&days=30&board=2 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:34:11,831 basehttp 48900 83656 "GET /api/dashboard/criteria-completion/?board_id=2&academic_year=1&board=2 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:34:11,875 basehttp 48900 32020 "GET /api/dashboard/activity-timeline/?board_id=2&academic_year=1&days=30&board=2 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:34:14,056 basehttp 48900 19664 "GET /api/dashboard/criteria-completion/?board_id=2&academic_year=1&board=2 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:34:14,117 basehttp 48900 83656 "GET /api/dashboard/activity-timeline/?board_id=2&academic_year=1&days=30&board=2 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:34:40,652 basehttp 48900 39088 "GET /api/dashboard/activity-timeline/?board_id=2&academic_year=1&days=30&board=2 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:34:40,655 basehttp 48900 83656 "GET /api/dashboard/criteria-completion/?board_id=2&academic_year=1&board=2 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:34:41,880 basehttp 48900 83656 "GET /api/dashboard/criteria-completion/?board_id=2&academic_year=1&board=2 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:34:41,910 basehttp 48900 39088 "GET /api/dashboard/activity-timeline/?board_id=2&academic_year=1&days=30&board=2 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:35:23,377 basehttp 48900 39088 "GET /api/dashboard/criteria-completion/?board_id=2&academic_year=1&board=2 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:35:23,377 basehttp 48900 83656 "GET /api/dashboard/activity-timeline/?board_id=2&academic_year=1&days=30&board=2 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:35:41,819 basehttp 48900 39088 "GET /api/dashboard/criteria-completion/?board_id=2&academic_year=1&board=2 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:35:41,861 basehttp 48900 83656 "GET /api/dashboard/activity-timeline/?board_id=2&academic_year=1&days=30&board=2 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:35:45,979 basehttp 48900 32020 "GET /api/dashboard/activity-timeline/?board_id=2&academic_year=1&days=30&board=2 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:35:45,980 basehttp 48900 39088 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=2 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:35:45,992 basehttp 48900 81380 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=2 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:35:46,022 basehttp 48900 31020 "GET /api/dashboard/criteria-completion/?board_id=2&academic_year=1&board=2 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:35:47,208 basehttp 48900 31020 "GET /api/dashboard/activity-timeline/?board_id=2&academic_year=1&days=30&board=2 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:35:47,250 basehttp 48900 81380 "GET /api/dashboard/criteria-completion/?board_id=2&academic_year=1&board=2 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:35:48,182 basehttp 48900 32020 "GET /api/dashboard/activity-timeline/?board_id=2&academic_year=1&days=30&board=2 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:35:48,206 basehttp 48900 39088 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=2 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:35:48,207 basehttp 48900 31020 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=2 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:35:48,207 basehttp 48900 19664 "GET /api/dashboard/criteria-completion/?board_id=2&academic_year=1&board=2 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:35:49,830 basehttp 48900 32020 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=2 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:35:49,848 basehttp 48900 85080 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=2 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:35:50,035 basehttp 48900 32020 "GET /api/dashboard/activity-timeline/?board_id=2&academic_year=1&days=30&board=2 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:35:50,058 basehttp 48900 85080 "GET /api/dashboard/criteria-completion/?board_id=2&academic_year=1&board=2 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:35:51,686 basehttp 48900 32020 "GET /api/dashboard/criteria-completion/?board_id=2&academic_year=1&board=2 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:35:51,715 basehttp 48900 85080 "GET /api/dashboard/activity-timeline/?board_id=2&academic_year=1&days=30&board=2 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:35:53,906 basehttp 48900 31020 "GET /api/dashboard/criteria-completion/?board_id=2&academic_year=1&board=2 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:35:53,938 basehttp 48900 82040 "GET /api/dashboard/activity-timeline/?board_id=2&academic_year=1&days=30&board=2 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:35:55,573 basehttp 48900 78376 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:35:55,622 basehttp 48900 31020 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:35:56,784 basehttp 48900 31020 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:35:56,811 basehttp 48900 82040 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:36:35,244 basehttp 48900 31020 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:36:35,263 basehttp 48900 82040 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:36:36,471 basehttp 48900 31020 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:36:36,479 basehttp 48900 82040 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:36:54,519 basehttp 48900 82040 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:36:54,528 basehttp 48900 31020 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:36:58,728 basehttp 48900 78376 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:36:58,764 basehttp 48900 85080 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:37:05,908 basehttp 48900 78376 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:37:05,908 basehttp 48900 82040 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:37:06,175 basehttp 48900 31020 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:37:06,175 basehttp 48900 32020 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:37:07,390 basehttp 48900 78376 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:37:07,398 basehttp 48900 82040 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:37:09,724 basehttp 48900 82040 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:37:09,756 basehttp 48900 85080 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:37:14,886 basehttp 48900 82040 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:37:14,924 basehttp 48900 32020 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:37:16,115 basehttp 48900 28204 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:37:16,174 basehttp 48900 78376 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:37:46,841 basehttp 48900 85080 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:37:46,841 basehttp 48900 78376 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:37:48,610 basehttp 48900 82040 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:37:48,636 basehttp 48900 85080 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:37:54,383 basehttp 48900 78376 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:37:54,385 basehttp 48900 85080 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:37:54,608 basehttp 48900 85080 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:37:54,671 basehttp 48900 82040 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:37:55,823 basehttp 48900 78376 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:37:55,919 basehttp 48900 32020 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:37:58,075 basehttp 48900 85080 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:37:58,142 basehttp 48900 78376 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:38:36,985 basehttp 48900 78376 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:38:37,011 basehttp 48900 85080 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:38:39,467 basehttp 48900 85080 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:38:39,508 basehttp 48900 32020 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:38:51,563 basehttp 48900 85080 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:38:51,565 basehttp 48900 31020 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:38:51,769 basehttp 48900 31020 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:38:51,807 basehttp 48900 78376 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:38:57,591 basehttp 48900 32020 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:38:57,632 basehttp 48900 78376 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:39:04,001 basehttp 48900 31020 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:39:04,023 basehttp 48900 85080 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:48:06,056 basehttp 48900 55788 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:48:06,067 basehttp 48900 23080 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:48:06,279 basehttp 48900 23080 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:48:06,282 basehttp 48900 55788 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:48:31,096 basehttp 48900 55788 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:48:31,111 basehttp 48900 29004 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:48:36,816 basehttp 48900 29004 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:48:36,816 basehttp 48900 72172 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:48:46,336 basehttp 48900 55788 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:48:46,366 basehttp 48900 29756 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:51:40,233 basehttp 48900 19916 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:51:40,233 basehttp 48900 23080 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:51:41,490 basehttp 48900 72172 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:51:41,490 basehttp 48900 29004 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:51:43,719 basehttp 48900 19916 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:51:43,720 basehttp 48900 23080 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:51:51,620 basehttp 48900 19916 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:51:51,626 basehttp 48900 72172 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:51:51,845 basehttp 48900 72172 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:51:51,873 basehttp 48900 29004 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:51:53,073 basehttp 48900 19916 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:51:53,109 basehttp 48900 55788 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:51:55,506 basehttp 48900 23080 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:51:55,534 basehttp 48900 29004 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-13 19:51:59,728 basehttp 48900 29004 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 123
+ERROR 2024-12-13 19:51:59,765 basehttp 48900 23080 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 127
+ERROR 2024-12-13 20:04:10,254 basehttp 28700 28244 "GET /api/dashboard/recent-activity/?board_id=1&academic_year=1&limit=10&board=1 HTTP/1.1" 500 423
+ERROR 2024-12-13 20:04:10,262 basehttp 28700 41636 "GET /api/dashboard/recent-activity/?academic_year=1&board_id=1&limit=10&board=1 HTTP/1.1" 500 423
+ERROR 2024-12-13 20:04:10,311 basehttp 28700 68136 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 423
+ERROR 2024-12-13 20:04:10,525 basehttp 28700 41636 "GET /api/dashboard/recent-activity/?academic_year=1&board_id=1&limit=10&board=1 HTTP/1.1" 500 423
+ERROR 2024-12-13 20:04:10,528 basehttp 28700 28244 "GET /api/dashboard/recent-activity/?board_id=1&academic_year=1&limit=10&board=1 HTTP/1.1" 500 423
+ERROR 2024-12-13 20:04:10,532 basehttp 28700 62980 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 423
+ERROR 2024-12-13 20:04:10,781 basehttp 28700 27312 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 591
+ERROR 2024-12-13 20:04:11,412 basehttp 28700 62980 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 591
+ERROR 2024-12-13 20:04:11,772 basehttp 28700 28244 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 423
+ERROR 2024-12-13 20:04:11,788 basehttp 28700 62980 "GET /api/dashboard/recent-activity/?academic_year=1&board_id=1&limit=10&board=1 HTTP/1.1" 500 423
+ERROR 2024-12-13 20:04:11,788 basehttp 28700 27312 "GET /api/dashboard/recent-activity/?board_id=1&academic_year=1&limit=10&board=1 HTTP/1.1" 500 423
+ERROR 2024-12-13 20:04:13,082 basehttp 28700 27312 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 591
+ERROR 2024-12-13 20:04:14,014 basehttp 28700 14000 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 423
+ERROR 2024-12-13 20:04:14,023 basehttp 28700 27312 "GET /api/dashboard/recent-activity/?board_id=1&academic_year=1&limit=10&board=1 HTTP/1.1" 500 423
+ERROR 2024-12-13 20:04:15,751 basehttp 28700 62980 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 591
+ERROR 2024-12-13 20:04:18,246 basehttp 28700 62980 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 423
+ERROR 2024-12-13 20:04:18,258 basehttp 28700 27312 "GET /api/dashboard/recent-activity/?board_id=1&academic_year=1&limit=10&board=1 HTTP/1.1" 500 423
+ERROR 2024-12-13 20:04:22,511 basehttp 28700 27312 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 591
+ERROR 2024-12-13 20:05:51,734 basehttp 21472 54860 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 591
+ERROR 2024-12-13 20:05:52,494 basehttp 21472 14632 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 591
+ERROR 2024-12-13 20:05:54,260 basehttp 21472 75000 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 591
+ERROR 2024-12-13 20:05:56,937 basehttp 21472 14632 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 591
+ERROR 2024-12-13 20:06:04,179 basehttp 21472 14632 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 591
+ERROR 2024-12-13 20:07:39,787 basehttp 45484 40408 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 59
+ERROR 2024-12-13 20:07:40,077 basehttp 45484 45636 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 59
+ERROR 2024-12-13 20:07:41,411 basehttp 45484 45636 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 59
+ERROR 2024-12-13 20:07:43,760 basehttp 45484 17068 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 59
+ERROR 2024-12-13 20:07:48,984 basehttp 45484 45636 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 59
+ERROR 2024-12-13 20:09:35,066 basehttp 32800 17784 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 59
+ERROR 2024-12-13 20:09:35,374 basehttp 32800 29428 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 59
+ERROR 2024-12-13 20:09:56,067 basehttp 32800 29428 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 59
+ERROR 2024-12-13 20:09:58,411 basehttp 32800 29428 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 59
+ERROR 2024-12-13 20:10:02,722 basehttp 32800 29428 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 59
+ERROR 2024-12-13 20:11:05,804 basehttp 43636 51484 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 583
+ERROR 2024-12-13 20:11:06,515 basehttp 43636 67340 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 583
+ERROR 2024-12-13 20:11:08,169 basehttp 43636 54332 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 583
+ERROR 2024-12-13 20:11:10,848 basehttp 43636 67340 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 583
+ERROR 2024-12-13 20:11:28,786 basehttp 184 48308 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 583
+ERROR 2024-12-13 20:13:51,289 basehttp 77976 34188 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 257
+ERROR 2024-12-13 20:13:51,550 basehttp 77976 47772 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 257
+ERROR 2024-12-13 20:13:52,766 basehttp 77976 76536 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 257
+ERROR 2024-12-13 20:13:54,989 basehttp 77976 48164 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 257
+ERROR 2024-12-13 20:13:59,216 basehttp 77976 76536 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 257
+ERROR 2024-12-13 20:36:55,627 views 23852 69612 Error updating department: name 'department_id' is not defined
+ERROR 2024-12-13 20:42:12,816 views 41144 61556 Error assigning role: [ErrorDetail(string='Role name is required', code='invalid')]
+ERROR 2024-12-13 20:47:29,981 views 77480 49032 Error revoking role: 'Request' object has no attribute 'params'
+ERROR 2024-12-13 20:48:36,257 views 86520 40208 Error revoking role: name 'role_name' is not defined
+ERROR 2024-12-14 01:23:42,042 basehttp 69448 56220 "GET /api/dashboard/recent-activity/?academic_year=NaN&board_id=1&limit=10&board=NaN HTTP/1.1" 500 113
+ERROR 2024-12-14 01:23:42,067 basehttp 69448 14264 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=NaN&days=30&board=NaN HTTP/1.1" 500 113
+ERROR 2024-12-14 01:23:42,067 basehttp 69448 24568 "GET /api/dashboard/recent-activity/?board_id=1&academic_year=NaN&limit=10&board=NaN HTTP/1.1" 500 113
+ERROR 2024-12-14 01:23:42,150 basehttp 69448 18972 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=NaN&board=NaN HTTP/1.1" 500 113
+ERROR 2024-12-14 01:23:42,267 basehttp 69448 56220 "GET /api/dashboard/recent-activity/?academic_year=NaN&board_id=1&limit=10&board=NaN HTTP/1.1" 500 113
+ERROR 2024-12-14 01:23:42,290 basehttp 69448 14264 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=NaN&days=30&board=NaN HTTP/1.1" 500 113
+ERROR 2024-12-14 01:23:42,310 basehttp 69448 24568 "GET /api/dashboard/recent-activity/?board_id=1&academic_year=NaN&limit=10&board=NaN HTTP/1.1" 500 113
+ERROR 2024-12-14 01:23:42,473 basehttp 69448 18972 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=NaN&board=NaN HTTP/1.1" 500 113
+ERROR 2024-12-14 01:23:43,509 basehttp 69448 18972 "GET /api/dashboard/recent-activity/?academic_year=NaN&board_id=1&limit=10&board=NaN HTTP/1.1" 500 113
+ERROR 2024-12-14 01:23:43,585 basehttp 69448 24568 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=NaN&days=30&board=NaN HTTP/1.1" 500 113
+ERROR 2024-12-14 01:23:43,622 basehttp 69448 14264 "GET /api/dashboard/recent-activity/?board_id=1&academic_year=NaN&limit=10&board=NaN HTTP/1.1" 500 113
+ERROR 2024-12-14 01:23:43,764 basehttp 69448 56220 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=NaN&board=NaN HTTP/1.1" 500 113
+ERROR 2024-12-14 01:23:45,799 basehttp 69448 24568 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=NaN&days=30&board=NaN HTTP/1.1" 500 113
+ERROR 2024-12-14 01:23:45,836 basehttp 69448 14264 "GET /api/dashboard/recent-activity/?board_id=1&academic_year=NaN&limit=10&board=NaN HTTP/1.1" 500 113
+ERROR 2024-12-14 01:23:46,055 basehttp 69448 59688 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=NaN&board=NaN HTTP/1.1" 500 113
+ERROR 2024-12-14 01:24:08,790 basehttp 69448 14264 "GET /api/dashboard/recent-activity/?board_id=1&academic_year=NaN&limit=10&board=NaN HTTP/1.1" 500 113
+ERROR 2024-12-14 01:24:08,791 basehttp 69448 56220 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=NaN&days=30&board=NaN HTTP/1.1" 500 113
+ERROR 2024-12-14 01:24:08,895 basehttp 69448 59688 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=NaN&board=NaN HTTP/1.1" 500 113
+ERROR 2024-12-14 01:24:23,707 basehttp 69448 24568 "GET /api/dashboard/recent-activity/?board_id=1&academic_year=NaN&limit=10&board=NaN HTTP/1.1" 500 113
+ERROR 2024-12-14 01:24:23,709 basehttp 69448 18972 "GET /api/dashboard/recent-activity/?academic_year=NaN&board_id=1&limit=10&board=NaN HTTP/1.1" 500 113
+ERROR 2024-12-14 01:24:23,713 basehttp 69448 56220 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=NaN&days=30&board=NaN HTTP/1.1" 500 113
+ERROR 2024-12-14 01:24:23,786 basehttp 69448 14264 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=NaN&board=NaN HTTP/1.1" 500 113
+ERROR 2024-12-14 01:24:23,926 basehttp 69448 24568 "GET /api/dashboard/recent-activity/?academic_year=NaN&board_id=1&limit=10&board=NaN HTTP/1.1" 500 113
+ERROR 2024-12-14 01:24:23,936 basehttp 69448 27004 "GET /api/dashboard/recent-activity/?board_id=1&academic_year=NaN&limit=10&board=NaN HTTP/1.1" 500 113
+ERROR 2024-12-14 01:24:23,948 basehttp 69448 18972 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=NaN&days=30&board=NaN HTTP/1.1" 500 113
+ERROR 2024-12-14 01:24:24,064 basehttp 69448 56220 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=NaN&board=NaN HTTP/1.1" 500 113
+ERROR 2024-12-14 02:19:30,019 basehttp 70732 71628 "GET /admin/user_management/auditlog/ HTTP/1.1" 500 419381
+ERROR 2024-12-14 02:26:51,787 middleware 59444 6840 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:26:51,788 basehttp 59444 6840 "GET /api/academic-years/ HTTP/1.1" 500 34
+ERROR 2024-12-14 02:26:51,815 middleware 59444 33348 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:26:51,816 basehttp 59444 33348 "GET /api/boards/ HTTP/1.1" 500 34
+ERROR 2024-12-14 02:26:57,427 middleware 59444 6840 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:26:57,427 basehttp 59444 6840 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 34
+ERROR 2024-12-14 02:26:57,454 middleware 59444 33348 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:26:57,455 basehttp 59444 33348 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 34
+ERROR 2024-12-14 02:26:57,638 middleware 59444 6840 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:26:57,639 basehttp 59444 6840 "GET /api/dashboard/recent-activity/?board_id=1&academic_year=1&limit=10&board=1 HTTP/1.1" 500 34
+ERROR 2024-12-14 02:26:57,669 middleware 59444 33348 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:26:57,669 basehttp 59444 33348 "GET /api/dashboard/recent-activity/?academic_year=1&board_id=1&limit=10&board=1 HTTP/1.1" 500 34
+ERROR 2024-12-14 02:26:58,680 middleware 59444 33348 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:26:58,680 basehttp 59444 33348 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 34
+ERROR 2024-12-14 02:26:58,689 middleware 59444 6840 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:26:58,690 basehttp 59444 6840 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 34
+ERROR 2024-12-14 02:26:58,875 middleware 59444 35588 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:26:58,876 basehttp 59444 35588 "GET /api/dashboard/recent-activity/?academic_year=1&board_id=1&limit=10&board=1 HTTP/1.1" 500 34
+ERROR 2024-12-14 02:26:58,885 middleware 59444 51556 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:26:58,886 basehttp 59444 51556 "GET /api/dashboard/recent-activity/?board_id=1&academic_year=1&limit=10&board=1 HTTP/1.1" 500 34
+ERROR 2024-12-14 02:27:04,685 middleware 59444 35588 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:27:04,687 basehttp 59444 35588 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 34
+ERROR 2024-12-14 02:27:04,693 middleware 59444 6840 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:27:04,694 basehttp 59444 6840 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 34
+ERROR 2024-12-14 02:27:04,694 middleware 59444 33348 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:27:04,694 middleware 59444 51556 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:27:04,695 basehttp 59444 33348 "GET /api/dashboard/recent-activity/?board_id=1&academic_year=1&limit=10&board=1 HTTP/1.1" 500 34
+ERROR 2024-12-14 02:27:04,695 basehttp 59444 51556 "GET /user/users/me/ HTTP/1.1" 500 34
+ERROR 2024-12-14 02:27:04,896 middleware 59444 35588 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:27:04,896 basehttp 59444 35588 "GET /api/dashboard/recent-activity/?academic_year=1&board_id=1&limit=10&board=1 HTTP/1.1" 500 34
+ERROR 2024-12-14 02:27:04,905 middleware 59444 6840 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:27:04,906 basehttp 59444 6840 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 34
+ERROR 2024-12-14 02:27:04,926 middleware 59444 33348 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:27:04,928 basehttp 59444 33348 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 34
+ERROR 2024-12-14 02:27:04,930 middleware 59444 51556 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:27:04,931 basehttp 59444 51556 "GET /api/dashboard/recent-activity/?board_id=1&academic_year=1&limit=10&board=1 HTTP/1.1" 500 34
+ERROR 2024-12-14 02:27:04,987 middleware 59444 72592 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:27:04,988 basehttp 59444 72592 "GET /user/users/me/ HTTP/1.1" 500 34
+ERROR 2024-12-14 02:27:05,122 middleware 59444 6840 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:27:05,123 basehttp 59444 6840 "GET /api/dashboard/recent-activity/?academic_year=1&board_id=1&limit=10&board=1 HTTP/1.1" 500 34
+ERROR 2024-12-14 02:27:05,559 middleware 59444 35588 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:27:05,559 basehttp 59444 35588 "GET /user/users/me/ HTTP/1.1" 500 34
+ERROR 2024-12-14 02:27:05,766 middleware 59444 72592 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:27:05,766 basehttp 59444 72592 "GET /user/users/me/ HTTP/1.1" 500 34
+ERROR 2024-12-14 02:27:05,776 middleware 59444 35588 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:27:05,776 basehttp 59444 35588 "POST /user/logout/ HTTP/1.1" 500 34
+ERROR 2024-12-14 02:27:05,987 middleware 59444 72592 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:27:05,987 basehttp 59444 72592 "POST /user/logout/ HTTP/1.1" 500 34
+ERROR 2024-12-14 02:27:57,514 middleware 59444 6840 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:27:57,515 basehttp 59444 6840 "GET /api/academic-years/ HTTP/1.1" 500 34
+ERROR 2024-12-14 02:27:57,538 middleware 59444 35588 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:27:57,539 basehttp 59444 35588 "GET /api/boards/ HTTP/1.1" 500 34
+ERROR 2024-12-14 02:28:04,248 middleware 59444 6840 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:28:04,248 middleware 59444 72592 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:28:04,249 basehttp 59444 6840 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 34
+ERROR 2024-12-14 02:28:04,249 basehttp 59444 72592 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 34
+ERROR 2024-12-14 02:28:04,266 middleware 59444 35588 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:28:04,268 middleware 59444 33348 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:28:04,268 basehttp 59444 35588 "GET /user/users/me/ HTTP/1.1" 500 34
+ERROR 2024-12-14 02:28:04,268 middleware 59444 51556 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:28:04,269 basehttp 59444 33348 "GET /api/dashboard/recent-activity/?academic_year=1&board_id=1&limit=10&board=1 HTTP/1.1" 500 34
+ERROR 2024-12-14 02:28:04,269 basehttp 59444 51556 "GET /api/dashboard/recent-activity/?board_id=1&academic_year=1&limit=10&board=1 HTTP/1.1" 500 34
+ERROR 2024-12-14 02:28:04,466 middleware 59444 6840 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:28:04,467 middleware 59444 76804 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:28:04,468 basehttp 59444 6840 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 34
+ERROR 2024-12-14 02:28:04,468 basehttp 59444 76804 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 34
+ERROR 2024-12-14 02:28:04,478 middleware 59444 72592 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:28:04,479 basehttp 59444 72592 "GET /user/users/me/ HTTP/1.1" 500 34
+ERROR 2024-12-14 02:28:04,487 middleware 59444 51556 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:28:04,488 basehttp 59444 51556 "GET /api/dashboard/recent-activity/?board_id=1&academic_year=1&limit=10&board=1 HTTP/1.1" 500 34
+ERROR 2024-12-14 02:28:04,498 middleware 59444 35588 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:28:04,499 basehttp 59444 35588 "GET /api/dashboard/recent-activity/?academic_year=1&board_id=1&limit=10&board=1 HTTP/1.1" 500 34
+ERROR 2024-12-14 02:28:04,887 middleware 59444 33348 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:28:04,888 basehttp 59444 33348 "GET /user/users/me/ HTTP/1.1" 500 34
+ERROR 2024-12-14 02:28:05,024 middleware 59444 35588 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:28:05,025 basehttp 59444 35588 "POST /user/logout/ HTTP/1.1" 500 34
+ERROR 2024-12-14 02:28:05,110 middleware 59444 33348 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:28:05,111 basehttp 59444 33348 "POST /user/logout/ HTTP/1.1" 500 34
+ERROR 2024-12-14 02:28:31,520 middleware 85944 17116 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:28:31,521 basehttp 85944 17116 "GET /api/boards/ HTTP/1.1" 500 34
+ERROR 2024-12-14 02:28:31,539 middleware 85944 56460 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:28:31,540 basehttp 85944 56460 "GET /api/academic-years/ HTTP/1.1" 500 34
+ERROR 2024-12-14 02:28:36,970 middleware 85944 17116 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:28:36,971 basehttp 85944 17116 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 34
+ERROR 2024-12-14 02:28:36,972 middleware 85944 56460 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:28:36,973 basehttp 85944 56460 "GET /user/users/me/ HTTP/1.1" 500 34
+ERROR 2024-12-14 02:28:37,177 middleware 85944 56460 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:28:37,178 basehttp 85944 56460 "GET /api/dashboard/recent-activity/?board_id=1&academic_year=1&limit=10&board=1 HTTP/1.1" 500 34
+ERROR 2024-12-14 02:28:37,229 middleware 85944 17116 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:28:37,230 basehttp 85944 17116 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 34
+ERROR 2024-12-14 02:28:37,251 middleware 85944 80096 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:28:37,252 basehttp 85944 80096 "GET /api/dashboard/activity-timeline/?board_id=1&academic_year=1&days=30&board=1 HTTP/1.1" 500 34
+ERROR 2024-12-14 02:28:37,268 middleware 85944 84532 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:28:37,269 basehttp 85944 84532 "GET /api/dashboard/recent-activity/?academic_year=1&board_id=1&limit=10&board=1 HTTP/1.1" 500 34
+ERROR 2024-12-14 02:28:37,283 middleware 85944 50972 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:28:37,284 basehttp 85944 50972 "GET /user/users/me/ HTTP/1.1" 500 34
+ERROR 2024-12-14 02:28:37,436 middleware 85944 17116 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:28:37,439 basehttp 85944 17116 "GET /api/dashboard/recent-activity/?board_id=1&academic_year=1&limit=10&board=1 HTTP/1.1" 500 34
+ERROR 2024-12-14 02:28:37,449 middleware 85944 80096 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:28:37,451 basehttp 85944 80096 "GET /api/dashboard/criteria-completion/?board_id=1&academic_year=1&board=1 HTTP/1.1" 500 34
+ERROR 2024-12-14 02:28:37,504 middleware 85944 84532 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:28:37,505 basehttp 85944 84532 "GET /api/dashboard/recent-activity/?academic_year=1&board_id=1&limit=10&board=1 HTTP/1.1" 500 34
+ERROR 2024-12-14 02:28:37,772 middleware 85944 56460 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:28:37,773 basehttp 85944 56460 "GET /user/users/me/ HTTP/1.1" 500 34
+ERROR 2024-12-14 02:28:37,974 middleware 85944 50972 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:28:37,975 basehttp 85944 50972 "GET /user/users/me/ HTTP/1.1" 500 34
+ERROR 2024-12-14 02:28:38,008 middleware 85944 56460 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:28:38,009 basehttp 85944 56460 "POST /user/logout/ HTTP/1.1" 500 34
+ERROR 2024-12-14 02:28:38,172 middleware 85944 50972 Unexpected error in RBAC middleware: 'CustomUser' object is not subscriptable
+ERROR 2024-12-14 02:28:38,173 basehttp 85944 50972 "POST /user/logout/ HTTP/1.1" 500 34

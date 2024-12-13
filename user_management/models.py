@@ -5,6 +5,7 @@ from django.core.cache import cache
 from django.conf import settings
 from django.core.exceptions import ValidationError
 import uuid
+from rest_framework import serializers
 
 class AuditModelMixin(models.Model):
     created_by = models.ForeignKey(
@@ -256,6 +257,18 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         if not any(char.islower() for char in password):
             raise ValidationError("Password must contain at least one lowercase letter.")
         
+    def update(self, instance, validated_data):
+        department_id = validated_data.pop('department_id', None)
+        if department_id:
+            try:
+                department = Department.objects.get(id=department_id)
+                instance.department = department
+            except Department.DoesNotExist:
+                raise serializers.ValidationError({
+                    'department_id': 'Department not found'
+                })
+        
+        return super().update(instance, validated_data)
 class AuditLog(AuditModelMixin):
     ACTION_CHOICES = [
         ('create', 'Create'),

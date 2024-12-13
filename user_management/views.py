@@ -115,58 +115,58 @@ class UserViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(user)
         return Response(serializer.data)
 
-    @action(detail=True, methods=['post'], permission_classes=[IsAdmin])
+    @action(detail=True, methods=['post'], permission_classes=[IsAdmin], url_path='assign-role')
     def assign_role(self, request, pk=None):
         try:
             with transaction.atomic():
                 user = self.get_object()
-                role_name = request.data.get('role')
-                if not role_name:
+                role_id = request.data.get('role_id')
+                if not role_id:
                     raise ValidationError("Role name is required")
 
-                role = Role.objects.get(name=role_name)
+                role = Role.objects.get(id=role_id)
                 user.roles.add(role)
 
                 # Clear user's permission cache
                 cache_key = f"user_permissions_{user.id}"
                 cache.delete(cache_key)
 
-                logger.info(f"Role {role_name} assigned to user {user.username}")
+                logger.info(f"Role {role_id} assigned to user {user.username}")
                 return StandardResponse.success(
                     UserSerializer(user).data,
-                    message=f'Role {role_name} assigned to user {user.username}'
+                    message=f'Role {role_id} assigned to user {user.username}'
                 )
         except Role.DoesNotExist:
-            logger.warning(f"Role not found: {role_name}")
-            raise NotFound(f"Role '{role_name}' not found.")
+            logger.warning(f"Role not found: {role_id}")
+            raise NotFound(f"Role '{role_id}' not found.")
         except Exception as e:
             logger.error(f"Error assigning role: {str(e)}")
             return StandardResponse.error(str(e))
 
-    @action(detail=True, methods=['post'], permission_classes=[IsAdmin])
+    @action(detail=True, methods=['post'], permission_classes=[IsAdmin], url_path='revoke-role')
     def revoke_role(self, request, pk=None):
         try:
             with transaction.atomic():
                 user = self.get_object()
-                role_name = request.data.get('role')
-                if not role_name:
+                role_id = request.data.get('role_id')
+                if not role_id:
                     raise ValidationError("Role name is required")
 
-                role = Role.objects.get(name=role_name)
+                role = Role.objects.get(id=role_id)
                 user.roles.remove(role)
 
                 # Clear user's permission cache
                 cache_key = f"user_permissions_{user.id}"
                 cache.delete(cache_key)
 
-                logger.info(f"Role {role_name} revoked from user {user.username}")
+                logger.info(f"Role {role_id} revoked from user {user.username}")
                 return StandardResponse.success(
                     UserSerializer(user).data,
-                    message=f'Role {role_name} revoked from user {user.username}'
+                    message=f'Role {role_id} revoked from user {user.username}'
                 )
         except Role.DoesNotExist:
-            logger.warning(f"Role not found: {role_name}")
-            raise NotFound(f"Role '{role_name}' not found.")
+            logger.warning(f"Role not found: {role_id}")
+            raise NotFound(f"Role '{role_id}' not found.")
         except Exception as e:
             logger.error(f"Error revoking role: {str(e)}")
             return StandardResponse.error(str(e))
@@ -230,6 +230,18 @@ class UserViewSet(viewsets.ModelViewSet):
         """Get only direct permissions for a user (excluding role permissions)."""
         user = self.get_object()
         permissions = user.user_permissions.all()
+        
+        AdminLog.objects.create(
+            user=request.user,
+            action='view',
+            module='user',
+            details={
+                'user_id': str(user.id),
+                'username': user.username
+            },
+            status='success'
+        )
+        
         serializer = PermissionSerializer(permissions, many=True)
         return Response(serializer.data)
 
@@ -238,8 +250,74 @@ class UserViewSet(viewsets.ModelViewSet):
         """Get only permissions from user's roles."""
         user = self.get_object()
         permissions = Permission.objects.filter(roles__in=user.roles.all()).distinct()
+        
+        AdminLog.objects.create(
+            user=request.user,
+            action='view',
+            module='user',
+            details={
+                'user_id': str(user.id),
+                'username': user.username
+            },
+            status='success'
+        )
+        
         serializer = PermissionSerializer(permissions, many=True)
         return Response(serializer.data)
+
+    @action(detail=True, methods=['put', 'patch'], url_path='department')
+    def department(self, request, pk=None):
+        """
+        Assign or update a user's department.
+        """
+        
+        try:
+            user = self.get_object()
+            department_code = request.data.get('department_code')
+            
+            if not department_code:
+                return StandardResponse.error(
+                    "Department code is required", 
+                    status_code=status.HTTP_400_BAD_REQUEST
+                )
+
+            try:
+                department = Department.objects.get(code=department_code)
+            except Department.DoesNotExist:
+                return StandardResponse.error(
+                    "Department not found", 
+                    status_code=status.HTTP_404_NOT_FOUND
+                )
+
+            # Update user's department
+            user.department = department
+            user.save()
+
+            # Log the change
+            AuditLog.objects.create(
+                user=request.user,
+                action='update',
+                module='user',
+                details={
+                    'user_id': str(user.id),
+                    'department_id': str(department.id),
+                    'department_name': department.name
+                },
+                status='success'
+            )
+
+            serializer = self.get_serializer(user)
+            return StandardResponse.success(
+                data=serializer.data,
+                message=f"Department updated successfully for user {user.username}"
+            )
+
+        except Exception as e:
+            logger.error(f"Error updating department: {str(e)}")
+            return StandardResponse.error(
+                str(e),
+                status_code=status.HTTP_400_BAD_REQUEST
+            )
         
 class RoleViewSet(viewsets.ModelViewSet):
     queryset = Role.objects.all()
